@@ -11,7 +11,9 @@
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
     "shadcn": "pnpm dlx shadcn@latest add",
-    "shadcn:all": "pnpm dlx shadcn@latest add -a -y -o"
+    "shadcn:all": "pnpm dlx shadcn@latest add -a -y -o",
+    "steiger": "npx steiger ./src",
+    "steiger:watch": "npx steiger ./src --watch"
   },
   "dependencies": {
     "@workspace/ui": "workspace:*",
@@ -22,11 +24,13 @@
     "react-dom": "^19.2.1"
   },
   "devDependencies": {
+    "@feature-sliced/steiger-plugin": "^0.5.7",
     "@types/node": "^20.19.9",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
+    "steiger": "^0.5.11",
     "typescript": "^5.9.2"
   }
 }

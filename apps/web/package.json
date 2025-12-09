@@ -17,11 +17,19 @@
   },
   "dependencies": {
     "@workspace/ui": "workspace:*",
+    "github-slugger": "^2.0.0",
+    "glob": "^13.0.0",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.475.0",
+    "mdx-bundler": "^10.1.1",
     "next": "^15.4.8",
     "next-themes": "^0.4.6",
     "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react-dom": "^19.2.1",
+    "rehype-pretty-code": "^0.14.1",
+    "shiki": "^3.19.0",
+    "sucrase": "^3.35.1",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@feature-sliced/steiger-plugin": "^0.5.7",

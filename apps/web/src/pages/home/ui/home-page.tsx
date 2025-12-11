@@ -20,12 +20,12 @@ export const HomePage = () => {
                 Abstract
               </span>
               <br />
-              <span className="text-accent">
+              <span className="text-border dark:text-accent">
                 Impression
               </span>
             </h1>
             <div className="flex gap-2 items-center">
-              <div className="w-16 h-px bg-accent" />
+              <div className="w-16 h-px bg-border dark:bg-accent" />
               <p className="text-muted-foreground font-light text-sm">
                 선과 텍스트의 결
               </p>

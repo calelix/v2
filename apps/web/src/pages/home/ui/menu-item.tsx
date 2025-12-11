@@ -13,9 +13,9 @@ export const MenuItem = ({
 }: MenuItemProps) => {
   return (
     <div className="group relative p-4 cursor-pointer transition-all duration-300">
-      <div className="absolute top-0 left-0 right-0 h-px bg-muted transition-all duration-500 group-hover:bg-accent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-border dark:bg-muted transition-all duration-500 group-hover:bg-muted-foreground dark:group-hover:bg-accent" />
 
-      <div className="absolute left-0 top-0 bottom-0 w-px bg-muted opacity-40 transition-all duration-500 group-hover:bg-accent group-hover:opacity-100" />
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-border dark:bg-muted opacity-40 transition-all duration-500 group-hover:bg-muted-foreground dark:group-hover:bg-accent dark:group-hover:opacity-100" />
 
       {/* Content */}
       <div className="space-y-3">
@@ -41,14 +41,14 @@ export const MenuItem = ({
           </p>
         </div>
 
-        <div className="w-0 opacity-0 transition-all duration-300 origin-left group-hover:w-full group-hover:opacity-100">
-          <div className="h-px bg-accent" />
+        <div className="w-0 opacity-0 transition-all duration-300 origin-left group-hover:w-full dark:group-hover:opacity-100">
+          <div className="h-px bg-border dark:bg-accent" />
         </div>
       </div>
 
-      <div className="absolute right-0 top-0 bottom-0 w-px bg-muted opacity-20 transition-all duration-500 group-hover:bg-accent group-hover:opacity-100" />
+      <div className="absolute right-0 top-0 bottom-0 w-px bg-border dark:bg-muted opacity-20 transition-all duration-500 group-hover:bg-muted-foreground dark:group-hover:bg-accent dark:group-hover:opacity-100" />
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-muted opacity-20 transition-all duration-500 group-hover:bg-accent group-hover:opacity-100" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-border dark:bg-muted opacity-20 transition-all duration-500 group-hover:bg-muted-foreground dark:group-hover:bg-accent dark:group-hover:opacity-100" />
     </div>
   )
 }

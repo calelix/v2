@@ -9,7 +9,7 @@ export const HomeFooter = () => {
 
       {/* HomeFooter Contents */}
 
-      <div className="pt-8 border-t border-muted">
+      <div className="pt-8 border-t border-border dark:border-muted">
         <p className="text-xs text-muted-foreground font-light text-center">
           Copyright {currentYear}. © {process.env.NEXT_PUBLIC_AUTHOR}
         </p>

@@ -1,7 +1,8 @@
-import { ModeToggle } from "@/shared/ui"
 import { IconMenu2 } from "@tabler/icons-react"
 
 import { Button } from "@workspace/ui/components/button"
+
+import { ModeToggle } from "@/shared/ui"
 
 export const HomeHeader = () => {
   return (
@@ -11,7 +12,7 @@ export const HomeHeader = () => {
           <span className="text-primary">
             —
           </span>
-          <span className="uppercase text-lg font-light tracking-widest">
+          <span className="capitalize text-lg font-light tracking-widest">
             Calelix
           </span>
         </div>

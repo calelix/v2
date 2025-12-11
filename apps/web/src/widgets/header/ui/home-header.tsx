@@ -18,7 +18,7 @@ export const HomeHeader = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" className="size-9">
+          <Button variant="ghost" className="size-9 md:hidden">
             <IconMenu2 className="size-5" />
           </Button>
           <ModeToggle />

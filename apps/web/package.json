@@ -39,6 +39,7 @@
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
     "steiger": "^0.5.11",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.9.2"
   }
 }

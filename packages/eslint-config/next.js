@@ -152,6 +152,8 @@ export const nextJsConfig = [
         "error",
         "always",
       ],
+      // Allow any type
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ]

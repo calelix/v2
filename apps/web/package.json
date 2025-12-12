@@ -16,6 +16,7 @@
     "steiger:watch": "npx steiger ./src --watch"
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.35.0",
     "@workspace/ui": "workspace:*",
     "github-slugger": "^2.0.0",
     "glob": "^13.0.0",
@@ -39,6 +40,7 @@
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
     "steiger": "^0.5.11",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.9.2"
   }
 }

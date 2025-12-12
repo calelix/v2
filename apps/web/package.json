@@ -16,6 +16,8 @@
     "steiger:watch": "npx steiger ./src --watch"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-slot": "^1.2.4",
     "@tabler/icons-react": "^3.35.0",
     "@workspace/ui": "workspace:*",
     "github-slugger": "^2.0.0",

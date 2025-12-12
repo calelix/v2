@@ -35,7 +35,7 @@ export const MenuItem = ({
         </p>
 
         {/* Description */}
-        <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:max-h-24 group-hover:opacity-100">
+        <div className="max-h-24 sm:max-h-0 sm:opacity-0 overflow-hidden transition-all duration-300 sm:group-hover:max-h-24 sm:group-hover:opacity-100">
           <p className="text-xs text-muted-foreground font-light leading-relaxed pt-2">
             {item.description}
           </p>

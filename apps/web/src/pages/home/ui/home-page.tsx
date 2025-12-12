@@ -1,7 +1,7 @@
 import { HomeHeader } from "@/widgets/header"
 import { HomeFooter } from "@/widgets/footer"
-import { MENU_ITEMS } from "../config/menu-items"
-import { MenuItem } from "./menu-item"
+// import { MENU_ITEMS } from "../config/menu-items"
+// import { MenuItem } from "./menu-item"
 
 export const HomePage = () => {
 
@@ -47,7 +47,7 @@ export const HomePage = () => {
           </div>
         </section>
 
-        <section className="mt-24 mb-32">
+        {/* <section className="mt-24 mb-32">
           <div className="mb-12">
             <h2 className="text-2xl font-light tracking-wider text-primary mb-2">
               Explore
@@ -58,7 +58,7 @@ export const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-4">
             {MENU_ITEMS.map((item) => <MenuItem key={item.id} item={item} />)}
           </div>
-        </section>
+        </section> */}
 
         <div className="my-24 relative">
           <div className="absolute left-0 right-0 top-1/2 h-px bg-gradient-to-r from-transparent via-primary via-50% to-transparent opacity-20" />

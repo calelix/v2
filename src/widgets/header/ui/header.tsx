@@ -6,7 +6,7 @@ import { cn } from "@/shared/lib/utils/tailwindcss"
 import { buttonVariants } from "@/shared/ui/shadcn/button"
 import { ModeToggle } from "@/shared/ui/mode-toggle/mode-toggle"
 import { BrandLogo } from "@/shared/ui/logo/brand-logo"
-// import { navigations } from "../config/navigations"
+import { navigations } from "../config/navigations"
 import { informations } from "../config/informations"
 
 type HeaderProps = React.ComponentProps<"header">
@@ -26,7 +26,7 @@ export const Header = ({
           >
             <BrandLogo className="w-5 text-primary" />
           </Link>
-          {/* <nav className="flex items-center justify-between">
+          <nav className="flex items-center justify-between">
             {navigations.map((item) => (
               <Link
                 key={item.href}
@@ -36,7 +36,7 @@ export const Header = ({
                 {item.label}
               </Link>
             ))}
-          </nav> */}
+          </nav>
         </div>
         <div className="flex items-center ml-auto">
           <Link

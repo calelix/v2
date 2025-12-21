@@ -11,7 +11,7 @@ export const BlogHomePage = () => {
             Powered by Caffeine & Confusion
           </h1>
           <p className="mt-4 text-xs/relaxed text-muted-foreground">
-            Can{"'"}t start my day without Americano. For real. One cup to wake up, two to function, three for... just habit. This is a space for caffeine lovers.
+            Can{"'"}t start my day without Americano. For real. One cup to wake up, two to function, three for... just habit. Every post here is written by a caffeine lover.
           </p>
         </div>
       </main>

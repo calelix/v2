@@ -47,7 +47,7 @@ export const Header = ({
           >
             <IconBrandGithub />
             <span className="sr-only">
-              JGPARK Github
+              Calelix Github
             </span>
           </Link>
           <ModeToggle />

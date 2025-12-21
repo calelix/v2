@@ -9,9 +9,16 @@ import {
 
 export const BlogHomePage = () => {
   return (
-    <div className="px-4 lg:px-0">
-      <Header className="py-12" />
-      <main className="w-full max-w-4xl mx-auto h-svh">
+    <div
+      className="px-4 lg:px-0"
+      style={
+        {
+          "--header-height": "calc(var(--spacing)*32)",
+        } as React.CSSProperties
+      }
+    >
+      <Header className="h-32" />
+      <main className="w-full max-w-4xl mx-auto h-[calc(100svh-(var(--header-height)))]">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
             <h1 className="text-sm font-bold">

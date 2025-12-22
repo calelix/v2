@@ -16,7 +16,7 @@ export const Header = ({
   ...props
 }: HeaderProps) => {
   return (
-    <header className={cn("flex items-center w-full max-w-4xl mx-auto", className)} {...props}>
+    <header className={cn("flex items-center w-full max-w-2xl mx-auto", className)} {...props}>
       <div className="flex items-center gap-4">
         <Link
           href="/"

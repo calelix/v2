@@ -1,5 +1,6 @@
 export {
-  inter,
   geistSans,
   geistMono,
+  hahmlet,
+  pretendard,
 } from "./fonts"

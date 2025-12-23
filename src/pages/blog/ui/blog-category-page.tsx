@@ -4,9 +4,11 @@ import {
   format,
   parseISO,
 } from "date-fns"
+import { IconArrowRight } from "@tabler/icons-react"
 
 import { Header } from "@/widgets/header"
 import {
+  type Post,
   type CategoryMetadata,
   EmptyPost,
 } from "@/entities/post"
@@ -19,7 +21,7 @@ import { Separator } from "@/shared/ui/shadcn/separator"
 interface BlogCategoryPageProps {
   category: string
   metadata: CategoryMetadata
-  posts: any[]
+  posts: Post[]
 }
 
 export const BlogCategoryPage = ({
@@ -42,7 +44,7 @@ export const BlogCategoryPage = ({
       <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
-            <h1 className="text-base font-bold">
+            <h1 className="text-lg font-bold">
               {metadata.name}
             </h1>
           </FadeUpItem>
@@ -58,32 +60,33 @@ export const BlogCategoryPage = ({
             <div className="flex flex-col gap-8">
               {posts.map((post) => (
                 <article key={post.slug}>
-                  <div className="flex flex-row items-start justify-between">
-                    <div className="flex flex-col basis-1/5">
-                      <time
-                        dateTime={post.frontmatter.publishedAt}
-                        className="text-xs/relaxed text-muted-foreground"
-                      >
-                        {format(parseISO(post.frontmatter.publishedAt), "dd MMM yyyy")}
-                      </time>
+                  <Link href={`/blog/${category}/${post.slug}`} className="group flex flex-row items-start justify-between gap-2">
+                    <div className="hidden md:flex md:w-1/5 justify-start">
+                      <div className="flex flex-col gap-2 md:gap-4 min-w-0">
+                        <time dateTime={post.frontmatter.publishedAt} className="text-xs/relaxed text-muted-foreground">
+                          {format(parseISO(post.frontmatter.publishedAt), "dd MMM yyyy")}
+                        </time>
+                      </div>
                     </div>
-                    <div className="flex flex-col basis-3/5">
-                      <h2 className="truncate text-sm font-semibold">
-                        {post.frontmatter.title}
-                      </h2>
-                      <p className="truncate mt-4 text-xs/relaxed text-muted-foreground">
-                        {post.frontmatter.description}
-                      </p>
+                    <div className="flex w-full md:w-3/5 justify-start">
+                      <div className="flex flex-col gap-2 md:gap-4 min-w-0">
+                        <h2 className="text-sm font-semibold">
+                          {post.frontmatter.title}
+                        </h2>
+                        <p className="truncate text-xs/relaxed text-muted-foreground">
+                          {post.frontmatter.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex flex-col basis-1/5 items-end">
-                      <Link
-                        href={`/blog/${category}/${post.slug}`}
-                        className="text-xs/relaxed hover:underline hover:underline-offset-2"
-                      >
-                        Learn More
-                      </Link>
+                    <div className="hidden md:flex md:w-1/5 justify-end">
+                      <div className="group flex flex-col gap-2 md:gap-4 min-w-0">
+                        <span className="text-xs/relaxed group-hover:underline group-hover:underline-offset-4 group-hover:decoration-muted-foreground">
+                          Learn More
+                        </span>
+                        <IconArrowRight className="size-4" />
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </article>
               ))}
 

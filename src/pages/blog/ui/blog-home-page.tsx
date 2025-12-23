@@ -21,7 +21,7 @@ export const BlogHomePage = () => {
       <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
-            <h1 className="text-base font-bold">
+            <h1 className="text-lg font-bold">
               Powered by Caffeine & Confusion
             </h1>
           </FadeUpItem>
@@ -37,7 +37,7 @@ export const BlogHomePage = () => {
             <div className="flex flex-col gap-8">
               <Link href="/blog/craft">
                 <article className="group">
-                  <h2 className="text-sm font-medium group-hover:text-primary transition-colors duration-250">
+                  <h2 className="text-sm font-semibold group-hover:text-primary transition-colors duration-250">
                     Craft
                   </h2>
                   <p className="mt-2 text-xs/relaxed text-muted-foreground">
@@ -47,7 +47,7 @@ export const BlogHomePage = () => {
               </Link>
               <Link href="/blog/insight">
                 <article className="group">
-                  <h2 className="text-sm font-medium group-hover:text-primary transition-colors duration-250">
+                  <h2 className="text-sm font-semibold group-hover:text-primary transition-colors duration-250">
                     Insight
                   </h2>
                   <p className="mt-2 text-xs/relaxed text-muted-foreground">

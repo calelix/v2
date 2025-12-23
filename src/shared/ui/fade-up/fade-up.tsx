@@ -9,7 +9,6 @@ interface FadeUpContainerProps extends React.ComponentProps<typeof motion.div> {
   staggerDelay?: number
   delay?: number
   viewportTrigger?: boolean
-  onAnimationComplete?: () => void
 }
 
 export const FadeUpContainer = ({

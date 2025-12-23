@@ -4,6 +4,7 @@ import {
   format,
   parseISO,
 } from "date-fns"
+import { IconArrowRight } from "@tabler/icons-react"
 
 import { Header } from "@/widgets/header"
 import {
@@ -58,32 +59,33 @@ export const BlogCategoryPage = ({
             <div className="flex flex-col gap-8">
               {posts.map((post) => (
                 <article key={post.slug}>
-                  <div className="flex flex-row items-start justify-between">
-                    <div className="flex flex-col basis-1/5">
-                      <time
-                        dateTime={post.frontmatter.publishedAt}
-                        className="text-xs/relaxed text-muted-foreground"
-                      >
-                        {format(parseISO(post.frontmatter.publishedAt), "dd MMM yyyy")}
-                      </time>
+                  <Link href={`/blog/${category}/${post.slug}`} className="group flex flex-row items-start justify-between gap-2">
+                    <div className="hidden md:flex md:w-1/5 justify-start">
+                      <div className="flex flex-col gap-2 md:gap-4 min-w-0">
+                        <time dateTime={post.frontmatter.publishedAt} className="text-xs/relaxed text-muted-foreground">
+                          {format(parseISO(post.frontmatter.publishedAt), "dd MMM yyyy")}
+                        </time>
+                      </div>
                     </div>
-                    <div className="flex flex-col basis-3/5">
-                      <h2 className="truncate text-sm font-semibold">
-                        {post.frontmatter.title}
-                      </h2>
-                      <p className="truncate mt-4 text-xs/relaxed text-muted-foreground">
-                        {post.frontmatter.description}
-                      </p>
+                    <div className="flex w-full md:w-3/5 justify-start">
+                      <div className="flex flex-col gap-2 md:gap-4 min-w-0">
+                        <h2 className="text-sm font-semibold">
+                          {post.frontmatter.title}
+                        </h2>
+                        <p className="truncate text-xs/relaxed text-muted-foreground">
+                          {post.frontmatter.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex flex-col basis-1/5 items-end">
-                      <Link
-                        href={`/blog/${category}/${post.slug}`}
-                        className="text-xs/relaxed hover:underline hover:underline-offset-2"
-                      >
-                        Learn More
-                      </Link>
+                    <div className="hidden md:flex md:w-1/5 justify-end">
+                      <div className="group flex flex-col gap-2 md:gap-4 min-w-0">
+                        <span className="text-xs/relaxed group-hover:underline group-hover:underline-offset-4 group-hover:decoration-muted-foreground">
+                          Learn More
+                        </span>
+                        <IconArrowRight className="size-4" />
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </article>
               ))}
 

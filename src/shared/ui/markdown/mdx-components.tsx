@@ -25,6 +25,33 @@ export const MDXComponents = ({
 
 const components: MDXContentProps["components"] = {
   h1: (props: React.ComponentProps<"h1">) => (
-    <h1 {...props} />
+    <h1 className="text-lg font-bold" {...props} />
+  ),
+  h2: (props: React.ComponentProps<"h2">) => (
+    <h2
+      className="text-sm font-semibold not-first:mt-6"
+      {...props}
+    />
+  ),
+  h3: (props: React.ComponentProps<"h3">) => (
+    <h3 className="text-sm font-medium" {...props} />
+  ),
+  p: (props: React.ComponentProps<"p">) => (
+    <p
+      className="text-xs/relaxed text-muted-foreground not-first:mt-2"
+      {...props}
+    />
+  ),
+  strong: (props: React.ComponentProps<"strong">) => (
+    <strong
+      className="font-medium in-[p]:text-foreground"
+      {...props}
+    />
+  ),
+  blockquote: (props: React.ComponentProps<"blockquote">) => (
+    <blockquote
+      className="mt-6 pl-6 border-l-2 italic font-serif [&>p]:before:content-['\201C'] [&>p]:after:content-['\201D']"
+      {...props}
+    />
   ),
 }

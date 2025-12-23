@@ -8,6 +8,7 @@ import { IconArrowRight } from "@tabler/icons-react"
 
 import { Header } from "@/widgets/header"
 import {
+  type Post,
   type CategoryMetadata,
   EmptyPost,
 } from "@/entities/post"
@@ -20,7 +21,7 @@ import { Separator } from "@/shared/ui/shadcn/separator"
 interface BlogCategoryPageProps {
   category: string
   metadata: CategoryMetadata
-  posts: any[]
+  posts: Post[]
 }
 
 export const BlogCategoryPage = ({

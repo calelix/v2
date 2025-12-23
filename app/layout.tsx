@@ -2,9 +2,10 @@ import type { Metadata } from "next"
 
 import { ThemeProvider } from "@/app/providers"
 import {
-  inter,
   geistSans,
   geistMono,
+  hahmlet,
+  pretendard,
 } from "@/app/fonts"
 import "@/app/styles/globals.css"
 
@@ -19,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} ${pretendard.variable} font-sans antialiased`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

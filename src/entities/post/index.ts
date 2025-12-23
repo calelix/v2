@@ -10,5 +10,6 @@ export type {
 } from "./model/category"
 
 export { getPostsByCategory } from "./lib/posts"
+export { getBundleMDX } from "./lib/load-mdx"
 
 export { EmptyPost } from "./ui/empty-post"

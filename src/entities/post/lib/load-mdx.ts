@@ -3,6 +3,8 @@ import path from "path"
 import matter from "gray-matter"
 import { bundleMDX } from "mdx-bundler"
 
+import { PostFrontmatter } from "../model/post"
+
 export const DATA_PATH = path.join(process.cwd(), "content/blog")
 
 export const getBundleMDX = async (category: string, slug: string) => {
@@ -18,7 +20,7 @@ export const getBundleMDX = async (category: string, slug: string) => {
   })
 
   return {
-    frontmatter: source.frontmatter,
+    frontmatter: source.frontmatter as PostFrontmatter,
     code
   }
 }

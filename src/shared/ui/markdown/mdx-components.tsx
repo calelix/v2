@@ -25,7 +25,10 @@ export const MDXComponents = ({
 
 const components: MDXContentProps["components"] = {
   h1: (props: React.ComponentProps<"h1">) => (
-    <h1 className="text-lg font-bold" {...props} />
+    <h1
+      className="text-lg font-bold not-first:mt-6"
+      {...props}
+    />
   ),
   h2: (props: React.ComponentProps<"h2">) => (
     <h2
@@ -34,7 +37,10 @@ const components: MDXContentProps["components"] = {
     />
   ),
   h3: (props: React.ComponentProps<"h3">) => (
-    <h3 className="text-sm font-medium" {...props} />
+    <h3
+      className="text-sm font-medium not-first:mt-4"
+      {...props}
+    />
   ),
   p: (props: React.ComponentProps<"p">) => (
     <p
@@ -51,6 +57,12 @@ const components: MDXContentProps["components"] = {
   blockquote: (props: React.ComponentProps<"blockquote">) => (
     <blockquote
       className="mt-6 pl-6 border-l-2 italic font-serif [&>p]:before:content-['\201C'] [&>p]:after:content-['\201D']"
+      {...props}
+    />
+  ),
+  pre: (props: React.ComponentProps<"pre">) => (
+    <pre
+      className="w-full overflow-x-auto"
       {...props}
     />
   ),

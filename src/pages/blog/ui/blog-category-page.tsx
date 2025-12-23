@@ -44,7 +44,7 @@ export const BlogCategoryPage = ({
       <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
-            <h1 className="text-base font-bold">
+            <h1 className="text-lg font-bold">
               {metadata.name}
             </h1>
           </FadeUpItem>

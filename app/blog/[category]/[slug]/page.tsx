@@ -22,6 +22,6 @@ export default async function Page({
   }
 
   return (
-    <BlogSlugPage frontmatter={bundledMDX.frontmatter} code={bundledMDX.code} />
+    <BlogSlugPage category={category} frontmatter={bundledMDX.frontmatter} code={bundledMDX.code} />
   )
 }

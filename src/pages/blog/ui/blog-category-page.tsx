@@ -70,7 +70,7 @@ export const BlogCategoryPage = ({
                     </div>
                     <div className="flex w-full md:w-3/5 justify-start">
                       <div className="flex flex-col gap-2 md:gap-4 min-w-0">
-                        <h2 className="text-sm font-semibold">
+                        <h2 className="text-base font-semibold">
                           {post.frontmatter.title}
                         </h2>
                         <p className="truncate text-xs/relaxed text-muted-foreground">

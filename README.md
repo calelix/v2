@@ -1,3 +1,3 @@
-# Personal Web Site v2
+# Personal Website v2
 
 https://jgpark.in/

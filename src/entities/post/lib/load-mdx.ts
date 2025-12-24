@@ -3,6 +3,10 @@ import path from "path"
 import matter from "gray-matter"
 import { bundleMDX } from "mdx-bundler"
 import rehypePrettyCode from "rehype-pretty-code"
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+} from "@shikijs/transformers"
 import { visit } from "unist-util-visit"
 
 import { PostFrontmatter } from "../model/post"
@@ -30,6 +34,10 @@ export const getBundleMDX = async (category: string, slug: string) => {
               light: "github-light",
             },
             keepBackground: false,
+            transformers: [
+              transformerNotationDiff(),
+              transformerNotationHighlight(),
+            ],
           },
         ],
         rehypeMetaAttributes,

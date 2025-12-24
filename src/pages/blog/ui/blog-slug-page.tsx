@@ -6,6 +6,7 @@ import {
 } from "date-fns"
 
 import { Header } from "@/widgets/header"
+import { Giscus } from "@/widgets/comments"
 import { type PostFrontmatter } from "@/entities/post"
 import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
 import {
@@ -36,25 +37,25 @@ export const BlogSlugPage = ({
       }
     >
       <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
-        <FadeUpContainer className="flex flex-col gap-4">
+      <main className="w-full max-w-2xl mx-auto">
+        <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
             <Link href={`/blog/${category}`} className="text-xs/relaxed text-muted-foreground capitalize">
               {category}
             </Link>
           </FadeUpItem>
           <FadeUpItem>
-            <h1 className="text-lg font-bold">
+            <h1 className="mt-4 text-lg font-bold">
               {frontmatter.title}
             </h1>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="text-xs/relaxed text-muted-foreground">
+            <p className="mt-4 text-xs/relaxed text-muted-foreground">
               Published on {format(parseISO(frontmatter.publishedAt), "MMMM dd, yyyy")}
             </p>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="text-xs/relaxed">
+            <p className="mt-4 text-xs/relaxed">
               {frontmatter.description}
             </p>
           </FadeUpItem>
@@ -65,6 +66,7 @@ export const BlogSlugPage = ({
             <div id="markdown-content">
               <MDXComponents code={code} />
             </div>
+            <Giscus />
           </FadeUpItem>
         </FadeUpContainer>
       </main>

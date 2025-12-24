@@ -41,7 +41,7 @@ export const BlogCategoryPage = ({
       }
     >
       <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
+      <main className="w-full max-w-2xl mx-auto">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
             <h1 className="text-lg font-bold">
@@ -70,7 +70,7 @@ export const BlogCategoryPage = ({
                     </div>
                     <div className="flex w-full md:w-3/5 justify-start">
                       <div className="flex flex-col gap-2 md:gap-4 min-w-0">
-                        <h2 className="text-sm font-semibold">
+                        <h2 className="text-base font-semibold">
                           {post.frontmatter.title}
                         </h2>
                         <p className="truncate text-xs/relaxed text-muted-foreground">

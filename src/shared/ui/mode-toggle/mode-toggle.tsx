@@ -13,10 +13,14 @@ export const ModeToggle = () => {
   const { theme, systemTheme, setTheme } = useTheme()
 
   const handleClick = () => {
-    if (systemTheme === "light" || theme === "light") {
-      setTheme("dark")
-    } else if (systemTheme === "dark" || theme === "dark") {
-      setTheme("light")
+    const newTheme = (systemTheme === "light" || theme === "light") ? "dark" : "light"
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setTheme(newTheme)
+      })
+    } else {
+      setTheme(newTheme)
     }
   }
 

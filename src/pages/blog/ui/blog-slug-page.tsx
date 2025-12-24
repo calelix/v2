@@ -36,7 +36,7 @@ export const BlogSlugPage = ({
       }
     >
       <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
+      <main className="w-full max-w-2xl mx-auto">
         <FadeUpContainer className="flex flex-col gap-4">
           <FadeUpItem>
             <Link href={`/blog/${category}`} className="text-xs/relaxed text-muted-foreground capitalize">

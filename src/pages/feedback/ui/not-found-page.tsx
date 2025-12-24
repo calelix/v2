@@ -29,8 +29,8 @@ export const NotFoundPage = () => {
       }
     >
       <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
-        <div className="flex flex-col items-center gap-8 h-[calc(100%-var(--header-height))]">
+      <main className="w-full max-w-2xl mx-auto">
+        <div className="flex flex-col items-center gap-8 min-h-[calc(100svh-var(--header-height)*2)]">
           <Empty>
             <EmptyHeader>
               <EmptyTitle>

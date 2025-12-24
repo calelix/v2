@@ -18,7 +18,7 @@ export const BlogHomePage = () => {
       }
     >
       <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto h-[calc(100svh-(var(--header-height)))]">
+      <main className="w-full max-w-2xl mx-auto">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
             <h1 className="text-lg font-bold">

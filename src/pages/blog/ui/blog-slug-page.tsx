@@ -6,6 +6,7 @@ import {
 } from "date-fns"
 
 import { Header } from "@/widgets/header"
+import { Giscus } from "@/widgets/comments"
 import { type PostFrontmatter } from "@/entities/post"
 import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
 import {
@@ -65,6 +66,7 @@ export const BlogSlugPage = ({
             <div id="markdown-content">
               <MDXComponents code={code} />
             </div>
+            <Giscus />
           </FadeUpItem>
         </FadeUpContainer>
       </main>

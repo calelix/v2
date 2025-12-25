@@ -12,8 +12,12 @@ export type {
 export {
   getCategories,
   getAllPosts,
+  getCategoryMetadata,
   getPostsByCategory,
 } from "./lib/posts"
-export { getBundleMDX } from "./lib/load-mdx"
+export {
+  getBundleMDX,
+  getPostFrontmatter,
+} from "./lib/load-mdx"
 
 export { EmptyPost } from "./ui/empty-post"

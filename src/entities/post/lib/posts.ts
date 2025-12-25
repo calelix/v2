@@ -43,6 +43,18 @@ export const getAllPosts = (directory: string): Array<{ category: string; slug: 
   })
 }
 
+export const getCategoryMetadata = (directory: string, category: string): CategoryMetadata => {
+  const contentDir = path.join(process.cwd(), "content", directory, category)
+
+  if (!fs.existsSync(contentDir)) {
+    throw new Error(`Category ${category} not found.`)
+  }
+
+  const metadataPath = path.join(contentDir, "metadata.json")
+
+  return JSON.parse(fs.readFileSync(metadataPath, "utf8")) as CategoryMetadata
+}
+
 export const getPostsByCategory = (directory: string, category: string): CategoryWithPosts => {
   const contentDir = path.join(process.cwd(), "content", directory, category)
 

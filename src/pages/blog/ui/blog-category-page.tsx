@@ -7,6 +7,7 @@ import {
 import { IconArrowRight } from "@tabler/icons-react"
 
 import { Header } from "@/widgets/header"
+import { AppBreadcrumb } from "@/widgets/breadcrumb"
 import {
   type Post,
   type CategoryMetadata,
@@ -44,7 +45,10 @@ export const BlogCategoryPage = ({
       <main className="w-full max-w-2xl mx-auto">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
-            <h1 className="text-lg font-bold">
+            <AppBreadcrumb />
+          </FadeUpItem>
+          <FadeUpItem>
+            <h1 className="mt-8 text-lg font-bold">
               {metadata.name}
             </h1>
           </FadeUpItem>

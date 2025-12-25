@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 import {
   format,
   parseISO,
@@ -7,6 +5,7 @@ import {
 
 import { Header } from "@/widgets/header"
 import { Giscus } from "@/widgets/comments"
+import { AppBreadcrumb } from "@/widgets/breadcrumb"
 import { type PostFrontmatter } from "@/entities/post"
 import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
 import {
@@ -16,13 +15,11 @@ import {
 import { Separator } from "@/shared/ui/shadcn/separator"
 
 interface BlogSlugPageProps {
-  category: string
   frontmatter: PostFrontmatter
   code: string
 }
 
 export const BlogSlugPage = ({
-  category,
   frontmatter,
   code,
 }: BlogSlugPageProps) => {
@@ -40,12 +37,10 @@ export const BlogSlugPage = ({
       <main className="w-full max-w-2xl mx-auto">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
-            <Link href={`/blog/${category}`} className="text-xs/relaxed text-muted-foreground capitalize">
-              {category}
-            </Link>
+            <AppBreadcrumb />
           </FadeUpItem>
           <FadeUpItem>
-            <h1 className="mt-4 text-lg font-bold">
+            <h1 className="mt-8 text-lg font-bold">
               {frontmatter.title}
             </h1>
           </FadeUpItem>

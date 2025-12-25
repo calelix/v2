@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation"
 
 import { BlogSlugPage } from "@/pages/blog"
-import { getBundleMDX } from "@/entities/post"
+import {
+  getAllPosts,
+  getBundleMDX,
+} from "@/entities/post"
 
 interface PageProps {
   params: Promise<{
@@ -24,4 +27,13 @@ export default async function Page({
   return (
     <BlogSlugPage category={category} frontmatter={bundledMDX.frontmatter} code={bundledMDX.code} />
   )
+}
+
+export async function generateStaticParams() {
+  const posts = getAllPosts("blog")
+
+  return posts.map(({ category, slug }) => ({
+    category,
+    slug,
+  }))
 }

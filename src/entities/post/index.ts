@@ -11,6 +11,7 @@ export type {
 
 export {
   getCategories,
+  getAllPosts,
   getPostsByCategory,
 } from "./lib/posts"
 export { getBundleMDX } from "./lib/load-mdx"

@@ -22,6 +22,27 @@ export const getCategories = (directory: string): string[] => {
     .map(item => item.name)
 }
 
+export const getAllPosts = (directory: string): Array<{ category: string; slug: string }> => {
+  const categories = getCategories(directory)
+
+  return categories.flatMap(category => {
+    const contentDir = path.join(process.cwd(), "content", directory, category)
+
+    if (!fs.existsSync(contentDir)) {
+      return []
+    }
+
+    const files = fs.readdirSync(contentDir)
+
+    return files
+      .filter(file => file.endsWith(".md") || file.endsWith(".mdx"))
+      .map(file => ({
+        category,
+        slug: file.replace(/\.(md|mdx)$/, ""),
+      }))
+  })
+}
+
 export const getPostsByCategory = (directory: string, category: string): CategoryWithPosts => {
   const contentDir = path.join(process.cwd(), "content", directory, category)
 

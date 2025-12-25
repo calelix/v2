@@ -8,6 +8,20 @@ import {
 } from "../model/category"
 import { type Post } from "../model/post"
 
+export const getCategories = (directory: string): string[] => {
+  const contentDir = path.join(process.cwd(), "content", directory)
+
+  if (!fs.existsSync(contentDir)) {
+    return []
+  }
+
+  const items = fs.readdirSync(contentDir, { withFileTypes: true })
+
+  return items
+    .filter(item => item.isDirectory())
+    .map(item => item.name)
+}
+
 export const getPostsByCategory = (directory: string, category: string): CategoryWithPosts => {
   const contentDir = path.join(process.cwd(), "content", directory, category)
 

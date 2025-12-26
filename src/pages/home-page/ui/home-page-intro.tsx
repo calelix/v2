@@ -15,8 +15,8 @@ interface HomePageIntroProps {
   onComplete: () => void
 }
 
-const ANIMATION_DURATION = 1.5
-const COMPLETE_DELAY = 0.5
+const ANIMATION_DURATION = 1.25
+const COMPLETE_DELAY = 0.25
 
 export const HomePageIntro = ({
   onComplete,

@@ -1,4 +1,6 @@
-export const sections = [
+import { Section } from "../model/section"
+
+export const sections: Section[] = [
   {
     id: "blog",
     title: "Blog",

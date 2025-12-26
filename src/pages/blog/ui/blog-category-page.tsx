@@ -7,6 +7,7 @@ import {
 import { IconArrowRight } from "@tabler/icons-react"
 
 import { Header } from "@/widgets/header"
+import { Footer } from "@/widgets/footer"
 import { AppBreadcrumb } from "@/widgets/breadcrumb"
 import {
   type Post,
@@ -38,11 +39,12 @@ export const BlogCategoryPage = ({
       style={
         {
           "--header-height": "calc(var(--spacing)*32)",
+          "--footer-height": "calc(var(--spacing)*32)",
         } as React.CSSProperties
       }
     >
       <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto">
+      <main className="w-full max-w-2xl mx-auto min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
         <FadeUpContainer className="flex flex-col">
           <FadeUpItem>
             <AppBreadcrumb />
@@ -101,6 +103,7 @@ export const BlogCategoryPage = ({
           </FadeUpItem>
         </FadeUpContainer>
       </main>
+      <Footer className="h-32" />
     </div>
   )
 }

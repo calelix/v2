@@ -5,6 +5,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 
 import { HomePageIntro } from "./home-page-intro"
+import { SectionCarousel } from "./section-carousel"
 
 export const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -49,6 +50,7 @@ export const HomePage = () => {
               I take my time here. This place isn{"'"}t in a hurry.
             </p>
           </motion.div>
+          <SectionCarousel />
         </motion.div>
       </main>
       <div aria-hidden="true" className="h-32" />

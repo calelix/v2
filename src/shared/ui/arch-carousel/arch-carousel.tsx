@@ -39,8 +39,8 @@ const OPACITY_DECREASE_RATE = 0.2 // 한 칸당 투명도 감소율 (20%)
 const SCALE_MIN = 0.75 // 최소 크기 비율 (75%)
 const VISIBILITY_THRESHOLD = 2 // 가시성 임계값 칸수
 
-// 자동 스크롤 간격 (2.5초)
-const AUTOPLAY_INTERVAL = 2500
+// 자동 스크롤 간격 (5초)
+const AUTOPLAY_INTERVAL = 5000
 
 interface CarouselItemStyle {
   x: number

@@ -64,8 +64,8 @@ const CarouselCard = ({
   return (
     <motion.div
       className={cn(
-        "group relative overflow-hidden rounded-lg border p-3 sm:p-4 md:p-5",
-        "backdrop-blur-sm transition-all duration-300",
+        "relative overflow-hidden rounded-lg border p-3 sm:p-4 md:p-5",
+        "transition-all duration-300",
         "w-[160px] h-[200px] sm:w-[180px] sm:h-[230px] md:w-[200px] md:h-[260px]",
         item.published
           ? "border-primary bg-muted cursor-pointer"

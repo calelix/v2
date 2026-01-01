@@ -23,7 +23,7 @@ export const Header = ({
           id="header-logo"
           aria-label="Go to home page"
         >
-          <BrandLogo className="w-5 text-primary" />
+          <BrandLogo className="w-5 text-primary pointer-events-none" />
         </Link>
         <nav className="flex items-center justify-between">
           {navigations.map((item) => (

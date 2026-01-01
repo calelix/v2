@@ -81,6 +81,11 @@ export const getPostsByCategory = (directory: string, category: string): Categor
       }
     })
     .filter(post => post.frontmatter.status === "published")
+    .sort((a, b) => {
+      const dateA = new Date(a.frontmatter.publishedAt).getTime()
+      const dateB = new Date(b.frontmatter.publishedAt).getTime()
+      return dateB - dateA
+    })
 
   return {
     category,

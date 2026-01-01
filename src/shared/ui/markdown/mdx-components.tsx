@@ -68,7 +68,7 @@ const components: MDXContentProps["components"] = {
   ),
   blockquote: (props: React.ComponentProps<"blockquote">) => (
     <blockquote
-      className="mt-6 pl-6 border-l-2 italic font-serif [&>p]:before:content-['\201C'] [&>p]:after:content-['\201D']"
+      className="my-6 pl-6 border-l-2 italic font-serif [&>p]:before:content-['\201C'] [&>p]:after:content-['\201D']"
       {...props}
     />
   ),

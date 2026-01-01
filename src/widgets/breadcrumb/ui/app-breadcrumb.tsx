@@ -34,12 +34,12 @@ export const AppBreadcrumb = () => {
               <BreadcrumbItem>
                 {isCurrentPage ? (
                   <BreadcrumbPage className="capitalize">
-                    {path}
+                    {path.replace(/-/g, " ")}
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
                     <Link href={href} className="capitalize">
-                      {path}
+                      {path.replace(/-/g, " ")}
                     </Link>
                   </BreadcrumbLink>
                 )}

@@ -66,7 +66,7 @@ export const BlogCategoryPage = ({
             <div className="flex flex-col gap-8">
               {posts.map((post) => (
                 <article key={post.slug}>
-                  <Link href={`/blog/${category}/${post.slug}`} className="group flex flex-row items-start justify-between gap-2">
+                  <Link href={`/blog/${category}/${post.slug}`} className="flex flex-row items-start justify-between gap-2">
                     <div className="hidden md:flex md:w-1/5 justify-start">
                       <div className="flex flex-col gap-2 md:gap-4 min-w-0">
                         <time dateTime={post.frontmatter.publishedAt} className="text-xs/relaxed text-muted-foreground">
@@ -76,7 +76,7 @@ export const BlogCategoryPage = ({
                     </div>
                     <div className="flex w-full md:w-3/5 justify-start">
                       <div className="flex flex-col gap-2 md:gap-4 min-w-0">
-                        <h2 className="text-base font-semibold">
+                        <h2 className="text-base font-semibold hover:underline hover:underline-offset-4 hover:decoration-muted-foreground">
                           {post.frontmatter.title}
                         </h2>
                         <p className="truncate text-xs/relaxed text-muted-foreground">
@@ -87,7 +87,7 @@ export const BlogCategoryPage = ({
                     <div className="hidden md:flex md:w-1/5 justify-end">
                       <div className="group flex flex-col gap-2 md:gap-4 min-w-0">
                         <span className="text-xs/relaxed group-hover:underline group-hover:underline-offset-4 group-hover:decoration-muted-foreground">
-                          Learn More
+                          Read more
                         </span>
                         <IconArrowRight className="size-4" />
                       </div>

@@ -12,6 +12,9 @@ import "@/app/styles/globals.css"
 export const metadata: Metadata = {
   title: "JGPARK",
   description: "JGPARK - Frontend Engineer",
+  icons: {
+    icon: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({

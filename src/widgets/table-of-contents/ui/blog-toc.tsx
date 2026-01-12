@@ -14,7 +14,7 @@ import {
 } from "@/shared/ui/table-of-contents/toc"
 
 interface BlogTocProps extends React.ComponentProps<"div"> {
-  contentId: string
+  contentId?: string
 }
 
 export const BlogToc = ({

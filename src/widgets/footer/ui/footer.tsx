@@ -7,10 +7,12 @@ export const Footer = ({
   ...props
 }: FooterProps) => {
   return (
-    <footer className={cn("flex items-center w-full max-w-2xl mx-auto", className)} {...props}>
-      <p className="text-xs/relaxed text-muted-foreground">
-        &copy; {new Date().getFullYear()} JGPARK
-      </p>
+    <footer className={cn("flex items-center w-full", className)} {...props}>
+      <div className="container flex items-center">
+        <p className="text-xs/relaxed text-muted-foreground">
+          &copy; {new Date().getFullYear()} JGPARK
+        </p>
+      </div>
     </footer>
   )
 }

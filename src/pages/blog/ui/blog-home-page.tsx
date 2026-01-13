@@ -11,7 +11,6 @@ import {
 export const BlogHomePage = () => {
   return (
     <div
-      className="px-4 lg:px-0"
       style={
         {
           "--header-height": "calc(var(--spacing)*32)",
@@ -19,9 +18,9 @@ export const BlogHomePage = () => {
         } as React.CSSProperties
       }
     >
-      <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
-        <FadeUpContainer className="flex flex-col">
+      <Header className="sticky top-0 z-50 h-(--header-height) bg-background" />
+      <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
+        <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <h1 className="text-lg font-bold">
               Powered by Caffeine & Confusion
@@ -57,11 +56,21 @@ export const BlogHomePage = () => {
                   </p>
                 </article>
               </Link>
+              <Link href="/blog/digest">
+                <article className="group">
+                  <h2 className="text-base font-semibold group-hover:text-primary transition-colors duration-250">
+                    Digest
+                  </h2>
+                  <p className="mt-2 text-xs/relaxed text-muted-foreground">
+                    Turning knowledge into understanding. Making it truly mine.
+                  </p>
+                </article>
+              </Link>
             </div>
           </FadeUpItem>
         </FadeUpContainer>
       </main>
-      <Footer className="h-32" />
+      <Footer className="h-(--footer-height)" />
     </div>
   )
 }

@@ -35,7 +35,6 @@ export const BlogCategoryPage = ({
 
   return (
     <div
-      className="px-4 lg:px-0"
       style={
         {
           "--header-height": "calc(var(--spacing)*32)",
@@ -43,9 +42,9 @@ export const BlogCategoryPage = ({
         } as React.CSSProperties
       }
     >
-      <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
-        <FadeUpContainer className="flex flex-col">
+      <Header className="sticky top-0 z-50 h-(--header-height) bg-background" />
+      <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
+        <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <AppBreadcrumb />
           </FadeUpItem>
@@ -79,7 +78,7 @@ export const BlogCategoryPage = ({
                         <h2 className="text-base font-semibold hover:underline hover:underline-offset-4 hover:decoration-muted-foreground">
                           {post.frontmatter.title}
                         </h2>
-                        <p className="truncate text-xs/relaxed text-muted-foreground">
+                        <p className="line-clamp-1 text-xs/relaxed text-muted-foreground">
                           {post.frontmatter.description}
                         </p>
                       </div>
@@ -103,7 +102,7 @@ export const BlogCategoryPage = ({
           </FadeUpItem>
         </FadeUpContainer>
       </main>
-      <Footer className="h-32" />
+      <Footer className="h-(--footer-height)" />
     </div>
   )
 }

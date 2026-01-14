@@ -61,17 +61,17 @@ export const BlogToc = ({
     <div {...props}>
       <div className="relative">
         <div
-          className={cn("pointer-events-none absolute top-0 left-0 right-0 h-24 bg-linear-to-b from-background to-transparent", {
+          className={cn("pointer-events-none absolute top-0 left-0 right-0 h-16 bg-linear-to-b from-background to-transparent", {
             "hidden": isAtTop,
           })}
         />
-        <div ref={setScrollContainerRef} className="w-full h-[50vh] overflow-y-auto">
+        <div ref={setScrollContainerRef} className="w-full h-fit max-h-[50vh] overflow-y-auto no-scrollbar">
           <div className="w-full h-full">
-            <div ref={topRef} className="pointer-events-none h-0" />
             <TableOfContents aria-labelledby="on-this-page-heading" className="h-fit">
               <TableOfContentsTitle id="on-this-page-heading" className="sticky top-0 bg-background h-6 text-xs/relaxed">
                 On This Page
               </TableOfContentsTitle>
+              <div ref={topRef} className="pointer-events-none h-px" />
               <TableOfContentsList className="w-full text-xs/relaxed text-muted-foreground">
                 {toc.map((item) => (
                   <TableOfContentsItem key={item.slug} indent>
@@ -92,12 +92,12 @@ export const BlogToc = ({
                   </TableOfContentsItem>
                 ))}
               </TableOfContentsList>
+              <div ref={bottomRef} className="pointer-events-none h-px" />
             </TableOfContents>
-            <div ref={bottomRef} className="pointer-events-none h-0" />
           </div>
         </div>
         <div
-          className={cn("pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-linear-to-t from-background to-transparent", {
+          className={cn("pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-background to-transparent", {
             "hidden": isAtBottom,
           })}
         />

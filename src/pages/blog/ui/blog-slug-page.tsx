@@ -35,7 +35,7 @@ export const BlogSlugPage = ({
         } as React.CSSProperties
       }
     >
-      <div id="container" className="overflow-y-auto max-h-svh scroll-pt-32 scroll-smooth">
+      <div id="container" className="overflow-y-auto max-h-svh scroll-smooth">
         <Header className="sticky top-0 z-50 h-(--header-height) bg-background" />
         <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
           <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
@@ -61,7 +61,7 @@ export const BlogSlugPage = ({
               <Separator className="my-8 lg:my-12" />
             </FadeUpItem>
             <FadeUpItem>
-              <div id="markdown-content">
+              <div id="markdown-content" className="[&>h1]:scroll-mt-32 [&>h2]:scroll-mt-32 [&>h3]:scroll-mt-32">
                 <MDXComponents code={code} />
               </div>
               <Giscus />

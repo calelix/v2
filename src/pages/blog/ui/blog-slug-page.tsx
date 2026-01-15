@@ -1,3 +1,5 @@
+"use client"
+
 import {
   format,
   parseISO,
@@ -7,23 +9,33 @@ import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"
 import { Giscus } from "@/widgets/comments"
 import { AppBreadcrumb } from "@/widgets/breadcrumb"
+import { PostNavigation } from "@/widgets/post-navigation"
 import { BlogToc } from "@/widgets/table-of-contents"
-import { type PostFrontmatter } from "@/entities/post"
-import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
+import {
+  type Post,
+  type PostFrontmatter,
+} from "@/entities/post"
 import {
   FadeUpContainer,
   FadeUpItem,
 } from "@/shared/ui/fade-up/fade-up"
+import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
 import { Separator } from "@/shared/ui/shadcn/separator"
 
 interface BlogSlugPageProps {
+  category: string
   frontmatter: PostFrontmatter
   code: string
+  prev: Post | null
+  next: Post | null
 }
 
 export const BlogSlugPage = ({
+  category,
   frontmatter,
   code,
+  prev,
+  next,
 }: BlogSlugPageProps) => {
 
   return (
@@ -61,9 +73,10 @@ export const BlogSlugPage = ({
               <Separator className="my-8 lg:my-12" />
             </FadeUpItem>
             <FadeUpItem>
-              <div id="markdown-content" className="[&>h1]:scroll-mt-32 [&>h2]:scroll-mt-32 [&>h3]:scroll-mt-32">
+              <article id="markdown-content" className="[&>h1]:scroll-mt-32 [&>h2]:scroll-mt-32 [&>h3]:scroll-mt-32">
                 <MDXComponents code={code} />
-              </div>
+              </article>
+              <PostNavigation prev={prev} next={next} category={category} />
               <Giscus />
             </FadeUpItem>
           </FadeUpContainer>

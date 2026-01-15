@@ -112,11 +112,11 @@ export const getAdjacentPost = (
     }
   }
 
-  const prev = posts[index - 1] ?? null
-  const next = posts[index + 1] ?? null
+  const older = posts[index + 1] ?? null
+  const newer = posts[index - 1] ?? null
 
   return {
-    prev,
-    next,
+    prev: older,
+    next: newer,
   }
 }

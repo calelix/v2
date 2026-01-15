@@ -12,21 +12,30 @@ import { Button } from "@/shared/ui/shadcn/button"
 
 const SHOW_AFTER_SCROLL_POSITION = 300
 
+type VisibilityMode = "always" | "scroll"
+
 interface ScrollToTopButtonProps extends React.ComponentProps<typeof Button> {
   container?: string
+  visibilityMode?: VisibilityMode
 }
 
 export const ScrollToTopButton = ({
   children,
   className,
   container,
+  visibilityMode = "scroll",
   ...rest
 }: ScrollToTopButtonProps) => {
-  const [isVisible, setIsVisible] = useState(() => getInitialVisibility(container))
+  const [isVisible, setIsVisible] = useState(() => getInitialVisibility(visibilityMode, container))
 
   const scrollContainerRef = useRef<HTMLElement | Window | null>(null)
 
   const toggleVisibility = useCallback(() => {
+    if (visibilityMode === "always") {
+      setIsVisible(true)
+      return
+    }
+
     const current = scrollContainerRef.current
     if (!current) return
 
@@ -35,7 +44,7 @@ export const ScrollToTopButton = ({
       : (current as HTMLElement).scrollTop
 
     setIsVisible(scrollTop > SHOW_AFTER_SCROLL_POSITION)
-  }, [])
+  }, [visibilityMode])
 
   const scrollToTop = useCallback(() => {
     const current = scrollContainerRef.current
@@ -49,6 +58,10 @@ export const ScrollToTopButton = ({
   }, [])
 
   useEffect(() => {
+    if (visibilityMode === "always") {
+      return
+    }
+
     const currentContainer =
       container
         ? (document.querySelector(container) as HTMLElement | null) ?? window
@@ -61,7 +74,7 @@ export const ScrollToTopButton = ({
     return () => {
       currentContainer.removeEventListener("scroll", toggleVisibility)
     }
-  }, [container, toggleVisibility])
+  }, [container, toggleVisibility, visibilityMode])
 
   return (
     <Button
@@ -77,7 +90,11 @@ export const ScrollToTopButton = ({
   )
 }
 
-const getInitialVisibility = (container?: string) => {
+const getInitialVisibility = (visibilityMode: VisibilityMode, container?: string) => {
+  if (visibilityMode === "always") {
+    return true
+  }
+
   if (typeof window === "undefined") {
     return false
   }

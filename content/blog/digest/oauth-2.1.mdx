@@ -1,0 +1,140 @@
+---
+status: 'draft'
+title: 'OAuth 2.1 알아보기 (SPA·프론트엔드 관점)'
+description: 'OAuth 2.1이 등장한 배경부터 Implicit Flow 제거, PKCE 필수화까지 핵심 변경점을 정리한다.'
+publishedAt: '2026-01-11T14:07:31.748871Z'
+author:
+  name: 'jgpark'
+  picture: 'https://avatars.githubusercontent.com/u/150231680?v=4'
+slug: 'oauth-2.1'
+---
+
+**OAuth**는 사용자의 민감한 인증 정보를 직접 받지 않고 한 애플리케이션이 다른 애플리케이션의 정보에 제한적으로 접근 권한을 위임하는 표준이다.
+
+예를들면, 사용자가 비밀번호 노출 없이 소셜 로그인을 수행하고, 서비스는 인가 결과로 발급된 토큰을 통해 소셜 제공자가 허용한 범위의 사용자 정보를 조회한다.
+
+OAuth 2.1은 OAuth 2.0에서 발생하던 보안 취약점 보완하기 위해, 검증된 보안 흐름을 표준으로 강제하기 위해 등장했다.
+
+2.1은 새로운 인증 메커니즘을 도입하지 않았다. 소셜 로그인 등 사용자 인가 시나리오에서 선택지를 하나로 강제한 것이다.
+
+## OAuth 2.0의 문제점
+
+한 줄로 정리하면 OAuth 2.0의 문제점은 **많은 선택지를 규칙 없이 허용한 것**에 있다. 여러 인가 절차의 플로우가 정의되어 있는데, 이를 기반으로 인가 로직을 구현해야한다.
+
+하지만, Implicit Flow와 같이 구조적으로 보안 취약점이 있는 방식도 존재했고, 동일한 플로우라 하더라도 구현 방식에 따라 토큰 탈취, XSS, CSRF 등의 문제가 발생할 수 있다.
+
+## Implicit Flow는 무엇인가?
+
+Implicit Flow는 주로 브라우저 기반 SPA에서 Client Secret을 안전하게 보관할 수 없다는 전제하에, 서버 없이 즉시 토큰을 사용해야 하는 요구를 충족하기 위해 설계된 방식이다. 그러나, 토큰을 브라우저에 직접 노출하는 한계로 인해 현재는 Deprecated 되었다.
+
+### Implicit Flow의 동작 흐름
+
+Implicit Flow의 흐름을 살펴보면,
+
+1. Client(사용자가 이용하려는 서비스)가 사용자(Resource Owner)를 인증 및 권한을 부여하는 서버(Authorization Server)로 리다이렉트한다.
+
+2. Authorization Server가 로그인 페이지를 제공하고, 사용자가 로그인을 하고 권한을 승인한다.
+
+3. Authorization Server가 Access Token을 발급하고 이를 포함하여 Client의 Redirect URI로 사용자를 리다이렉트한다.
+
+4. Client가 URL을 파싱하고, 그 안에 포함된 Access Token을 추출한다.
+
+    이를 Client가 메모리 또는 웹 스토리지 등에 저장한 뒤, 보호된 자원을 제공하는 서버(Resource Server)의 API를 호출 시 Authorization 헤더에 포함하여 사용한다.
+
+5. Resource Server는 전달된 Access Token을 검증한 뒤, 해당 토큰에 부여된 권한에 따라 사용자 정보를 제공한다.
+
+### Implicit Flow의 보안 취약점
+
+위 Implicit Flow의 흐름을 토대로 살펴보면,
+
+Implcit Flow에서는 Access Token이 URL Fragment(`#`)로 전달된다.
+```perl
+https://example.jgpark.in/callback#access_token=...&token_type=Bearer&expires_in=3600
+```
+
+- 3번의 단계에서 토큰이 브라우저 URI, History, JS 컨텍스트(JS 코드가 접근 가능)에 노출된다.
+
+- 4번의 단계에서 JS가 토큰을 반드시 다뤄야하고 XSS 발생 시 토큰은 즉시 탈취 가능하며 보호 장치가 없다.
+
+- 5번의 단계에서 탈취된 토큰인지 Resource Server는 구분할 방법이 없다.
+
+즉, 토큰이 탈취되면 Resource Server는 이를 정상 사용자 요청과 구분할 수 없기 때문에 사용자 계정으로 이루어지는 행위의 실제 수행자가 공격자가 될 수 있음을 의미한다.
+
+정리하면, **Access Token 전달 경로의 문제점은 토큰이 브라우저에 직접 노출되는 구조 그 자체**이다.
+
+## OAuth 2.1의 보안 강화
+
+OAuth 2.1은 앞선 서론에서 이야기했듯 SPA를 포함한 모든 클라이언트 유형에 대해 Authorization Code Flow와 PKCE를 유일한 표준으로 채택했다.
+
+그리고, Implicit Flow 등이 구조적 보안 취약점과 설계 철학 위반으로 제거되었다.
+
+### OAuth 2.1의 핵심 변화 요약
+
+1. 취약한 Flow를 제거하고 Authorization Code Flow + PKCE를 강제한다.
+
+    사용자·브라우저·토큰이 직접 노출되는 설계를 전면 폐기하고, 안전한 단일 Flow만 허용한다.
+
+2. 토큰 탈취를 전제로 설계를 강화한다.
+
+    Access Token은 탈취 시 즉시 권한이 이전되는 Bearer Token임을 전제로, HTTPS 강제와 토큰 노출 경로를 구조적으로 제거한다.
+
+3. 인가 응답 탈취를 구조적으로 차단한다.
+
+    Redirect URI Exact Match와 PKCE를 통해 Authorization Code가 의도한 Client 외부로 유출되거나 악용되는 것을 방지한다.
+
+### OAuth 2.1의 동작 흐름
+
+Authorization Code + PKCE의 흐름을 살펴보면,
+
+1. 클라이언트에서 Code Verifier와 Code Challenge, State를 생성
+
+    - Code Verifier는, 클라이언트만 알고 있어야 하는 인가 요청 이전에 생성하는 고난수 문자열이다.
+    - Code Challenge는, Code Verifier를 변환한 Code challenge method(보통 SHA256)를 통해 변환한 값이다.
+    - State는, 클라이언트가 생성하는 요청 식별자이고 CSRF 방어를 목적으로 하는 문자열이다.
+
+2. Authorization Server로 Redirect (인가 요청)
+
+    - 오직 Authorization Code 발급만을 요청한다.
+
+3. 사용자 인증 및 권한 동의
+
+    - Authorization Server는 사용자에게 인증 화면을 제공한다.
+    - 필요한 권한(scope)에 대한 동의를 요구한다.
+
+4. Authorization Code 발급 및 Redirect
+
+    - 로그인과 동의가 완료되면, Authorization Server는 Authorization Code를 발급한다.
+    - 이 코드는, 짧은 시간 동안 유효하며 한 번만 사용할 수 있다.
+    - Authorization Server는 사용자를 다시 클라이언드로 돌려보낸다.
+
+5. Authorization Server의 Token Endpoint로 Authorization Code 교환
+
+    - 클라이언트는 Authorization Server의 Token Endpoint에 요청을 보낸다.
+    - 이 요청에는, 발급받은 Authorization Code와 Code Verifier를 보낸다.
+    - Authorization Server는 이 Code가 유효한지, 사용되지 않았는지, Code Verifier를 해시했을 때 처음에 받은 Code Challenge와 일치하는지 확인한다. 이 검증을 통과하면, 이 인가 요청을 시작한 클라이언트가 맞다고 판단한다.
+
+6. Access Token 발급
+
+    - Authorization Server는 Access Token을 발급한다.
+    - 보호된 Resource에 접근할 수 있는 권한 증표이며 Redirect가 아닌 응답 본문으로 전달된다.
+
+7. Resource Server 접근
+
+    - 클라이언트는 Access Token을 사용해서 Resource Server에 자원을 요청한다.
+    - Resource Server는 토큰이 유효한지, 만료되지 않았는지, 그리고 권한을 확인한 뒤, 허용된 데이터만 반환한다.
+
+### OAuth 2.1이 해결하지 않는 문제
+
+OAuth 2.1은 인가 흐름을 안전하게 만드는 표준이다. SPA 환경에서 발생하는 모든 보안 문제를 해결하는 만능은 아니다. *토큰을 어떻게 다룰 것인가?*에 대한 책임은 여전히 클라이언트 구현에 남아 있다.
+
+Access Token을 어디에 저장·관리해야 하는지에 대해 규정하지 않는다. XSS, CSRF 등 런타임 보안 문제는 여전히 클라이언트의 책임이다.
+
+## 결론
+
+현재 가장 보수적인 최선의 접근은 아래라고 생각된다.
+
+- Access Token은 서버(BFF)에서만 보관하고 브라우저로 노출하지 않는다.
+
+- 브라우저는 HttpOnly + Secure Cookie 기반 세션만 유지하며 JS 접근을 차단한다.
+
+- SPA ↔ BFF ↔ Authorization Server 구조로 인가 흐름과 토큰 사용을 분리한다.

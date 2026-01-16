@@ -56,7 +56,7 @@ const components: MDXContentProps["components"] = {
   ),
   p: (props: React.ComponentProps<"p">) => (
     <p
-      className="text-xs/relaxed text-muted-foreground not-first:mt-2"
+      className="text-xs/relaxed text-muted-foreground not-first:mt-1"
       {...props}
     />
   ),
@@ -78,9 +78,15 @@ const components: MDXContentProps["components"] = {
       {...props}
     />
   ),
+  ol: (props: React.ComponentProps<"ol">) => (
+    <ol
+      className="list-decimal my-2 ml-4"
+      {...props}
+    />
+  ),
   li: (props: React.ComponentProps<"li">) => (
     <li
-      className="mt-1 text-xs/relaxed text-muted-foreground"
+      className="not-first:mt-3 text-xs/relaxed text-muted-foreground"
       {...props}
     />
   ),
@@ -211,14 +217,14 @@ const components: MDXContentProps["components"] = {
 
     if (isLiveCode) {
       return (
-        <div className="flex mt-6 h-96">
+        <div className="flex mt-2 h-96">
           {childrenElement}
         </div>
       )
     }
 
     return (
-      <div className="flex mt-6">
+      <div className="flex mt-2">
         <div className="flex flex-1 rounded-sm min-w-0 overflow-hidden bg-zinc-100 dark:bg-zinc-900">
           <pre
             className={cn(

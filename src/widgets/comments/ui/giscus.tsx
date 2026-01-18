@@ -68,7 +68,7 @@ export const Giscus = () => {
   }, [theme, systemTheme])
 
   return (
-    <section className={cn("flex items-center justify-center w-full min-h-114 my-8 lg:my-12")}>
+    <section className={cn("flex items-center justify-center w-full min-h-114 mt-8 lg:mt-12")}>
       <div id={COMMENTS_ID} className="size-full" />
     </section>
   )

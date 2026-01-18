@@ -93,3 +93,30 @@ export const getPostsByCategory = (directory: string, category: string): Categor
     posts,
   }
 }
+
+export const getAdjacentPost = (
+  directory: string,
+  category: string,
+  slug: string
+) => {
+  const { posts } = getPostsByCategory(directory, category)
+
+  const index = posts.findIndex(post => post.slug === slug)
+
+  const isPostNotFound = index === -1
+
+  if (isPostNotFound) {
+    return {
+      prev: null,
+      next: null,
+    }
+  }
+
+  const older = posts[index + 1] ?? null
+  const newer = posts[index - 1] ?? null
+
+  return {
+    prev: older,
+    next: newer,
+  }
+}

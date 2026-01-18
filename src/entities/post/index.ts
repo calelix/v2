@@ -14,6 +14,7 @@ export {
   getAllPosts,
   getCategoryMetadata,
   getPostsByCategory,
+  getAdjacentPost,
 } from "./lib/posts"
 export {
   getBundleMDX,

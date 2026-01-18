@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 
 import { BlogSlugPage } from "@/pages/blog"
 import {
+  getAdjacentPost,
   getAllPosts,
   getBundleMDX,
   getPostFrontmatter,
@@ -45,8 +46,16 @@ export default async function Page({
     notFound()
   }
 
+  const { prev, next } = getAdjacentPost("blog", category, slug)
+
   return (
-    <BlogSlugPage frontmatter={bundledMDX.frontmatter} code={bundledMDX.code} />
+    <BlogSlugPage
+      category={category}
+      frontmatter={bundledMDX.frontmatter}
+      code={bundledMDX.code}
+      prev={prev}
+      next={next}
+    />
   )
 }
 

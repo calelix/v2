@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 
 import { Header } from "@/widgets/header"
+import { Footer } from "@/widgets/footer"
 import { Button } from "@/shared/ui/shadcn/button"
 import {
   Empty,
@@ -21,16 +22,16 @@ export const NotFoundPage = () => {
 
   return (
     <div
-      className="px-4 lg:px-0"
       style={
         {
           "--header-height": "calc(var(--spacing)*32)",
+          "--footer-height": "calc(var(--spacing)*32)",
         } as React.CSSProperties
       }
     >
-      <Header className="h-32" />
-      <main className="w-full max-w-2xl mx-auto">
-        <div className="flex flex-col items-center gap-8 min-h-[calc(100svh-var(--header-height)*2)]">
+      <Header className="sticky top-0 z-50 h-(--header-height) bg-background" />
+      <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
+        <div className="flex flex-col w-full max-w-4xl shrink-0">
           <Empty>
             <EmptyHeader>
               <EmptyTitle>
@@ -48,6 +49,7 @@ export const NotFoundPage = () => {
           </Empty>
         </div>
       </main>
+      <Footer className="h-(--footer-height)" />
     </div>
   )
 }

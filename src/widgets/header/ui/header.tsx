@@ -16,40 +16,42 @@ export const Header = ({
   ...props
 }: HeaderProps) => {
   return (
-    <header className={cn("flex items-center w-full max-w-2xl mx-auto", className)} {...props}>
-      <div className="flex items-center gap-4">
-        <Link
-          href="/"
-          id="header-logo"
-          aria-label="Go to home page"
-        >
-          <BrandLogo className="w-5 text-primary pointer-events-none" />
-        </Link>
-        <nav className="flex items-center justify-between">
-          {navigations.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={buttonVariants({ variant: "ghost", size: "lg" })}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-      <div className="flex items-center ml-auto">
-        <Link
-          href={informations.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={buttonVariants({ variant: "ghost", size: "lg" })}
-        >
-          <IconBrandGithub />
-          <span className="sr-only">
-            Calelix Github
-          </span>
-        </Link>
-        <ModeToggle />
+    <header className={cn("flex items-center w-full", className)} {...props}>
+      <div className="container flex items-center">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            id="header-logo"
+            aria-label="Go to home page"
+          >
+            <BrandLogo className="w-5 text-primary pointer-events-none" />
+          </Link>
+          <nav className="flex items-center justify-between">
+            {navigations.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={buttonVariants({ variant: "ghost", size: "lg" })}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="flex items-center ml-auto">
+          <Link
+            href={informations.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({ variant: "ghost", size: "lg" })}
+          >
+            <IconBrandGithub />
+            <span className="sr-only">
+              Calelix Github
+            </span>
+          </Link>
+          <ModeToggle />
+        </div>
       </div>
     </header>
   )

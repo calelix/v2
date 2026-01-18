@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 import {
   getMDXComponent,
@@ -93,6 +94,22 @@ const components: MDXContentProps["components"] = {
   hr: (props: React.ComponentProps<"hr">) => (
     <hr className="my-4" {...props} />
   ),
+  img: (props: React.ComponentProps<typeof Image>) => {
+    const { src, alt, width, height, children, ...rest } = props
+    return (
+      <Image
+        src={src}
+        alt={alt || "Uncaptioned"}
+        width={width ?? 896}
+        height={height ?? 504}
+        sizes="(max-width: 768px) 100vw, 889px"
+        className="aspect-video object-cover"
+        {...rest}
+      >
+        {children}
+      </Image>
+    )
+  },
   a: ({
     target = "_blank",
     href,

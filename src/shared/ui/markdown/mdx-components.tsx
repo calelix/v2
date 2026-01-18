@@ -74,19 +74,19 @@ const components: MDXContentProps["components"] = {
   ),
   ul: (props: React.ComponentProps<"ul">) => (
     <ul
-      className="list-disc my-2 ml-4"
+      className="my-1.5 ml-4 list-[revert]"
       {...props}
     />
   ),
   ol: (props: React.ComponentProps<"ol">) => (
     <ol
-      className="list-decimal my-2 ml-4"
+      className="my-1.5 ml-4 list-[revert]"
       {...props}
     />
   ),
   li: (props: React.ComponentProps<"li">) => (
     <li
-      className="not-first:mt-3 text-xs/relaxed text-muted-foreground"
+      className="text-xs/relaxed text-muted-foreground [&+li]:mt-1"
       {...props}
     />
   ),

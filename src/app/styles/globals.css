@@ -141,6 +141,10 @@
   @apply w-full max-w-4xl mx-auto px-4 lg:px-8;
 }
 
+.container-sm {
+  @apply w-full max-w-2xl mx-auto px-4 lg:px-8;
+}
+
 ::view-transition-group(root) {
   animation-duration: 0.75s;
   /* ease-out-expo */

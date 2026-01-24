@@ -1,6 +1,10 @@
+import * as React from "react"
 import Link from "next/link"
 
+import { IconArrowRight } from "@tabler/icons-react"
+
 import { Separator } from "@/shared/ui/shadcn/separator"
+import { Button } from "@/shared/ui/shadcn/button"
 import {
   FadeUpContainer,
   FadeUpItem,
@@ -44,19 +48,15 @@ export const HomePage = () => {
             <Separator className="my-8 lg:my-12" />
           </FadeUpItem>
           <FadeUpItem>
-            <div className="flex flex-col gap-8">
-              <Link href="/blog">
-                <article className="group">
-                  <h2 className="text-base font-semibold group-hover:text-primary transition-colors duration-250">
-                    블로그
-                  </h2>
-                  <p className="mt-2 text-xs/relaxed text-muted-foreground">
-                    지난 날을 떠올리다 보면, 기억은 종종 파편처럼 흩어져 잘 떠오르지 않을 때가 있습니다.
-                    간혹 적어 두었던 글과 순간들 역시 여기저기 흩어져 있었습니다.
-                    이제는 그 조각들을 한곳에 모아두고 싶었습니다.
-                  </p>
-                </article>
-              </Link>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <Button variant="outline" asChild className="flex items-center justify-between">
+                <Link href="/blog">
+                  <span>
+                    Blog
+                  </span>
+                  <IconArrowRight className="size-3" />
+                </Link>
+              </Button>
             </div>
           </FadeUpItem>
         </FadeUpContainer>

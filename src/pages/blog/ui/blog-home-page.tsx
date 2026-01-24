@@ -23,12 +23,15 @@ export const BlogHomePage = () => {
         <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <h1 className="text-lg font-bold">
-              Powered by Caffeine & Confusion
+              Blog
             </h1>
           </FadeUpItem>
-          <FadeUpItem>
-            <p className="mt-4 text-xs/relaxed text-muted-foreground">
-              Can{"'"}t start my day without Americano. For real. One cup to wake up, two to function, three for... just habit. Every post here is written by a caffeine lover.
+          <FadeUpItem className="mt-2">
+            <p className="text-xs/relaxed text-muted-foreground">
+              지난 날을 떠올리다 보면, 기억은 종종 파편처럼 흩어져 잘 떠오르지 않을 때가 있습니다.
+            </p>
+            <p className="text-xs/relaxed text-muted-foreground">
+              간혹 적어 두었던 글과 순간들 역시 여기저기 흩어져 있었습니다. 이제는 그 조각들을 한곳에 모아두고 싶었습니다.
             </p>
           </FadeUpItem>
           <FadeUpItem>
@@ -42,7 +45,7 @@ export const BlogHomePage = () => {
                     Craft
                   </h2>
                   <p className="mt-2 text-xs/relaxed text-muted-foreground">
-                    Building stuff. Breaking stuff. Fixing stuff. Repeat.
+                    무언가를 만들고, 부수고, 고치고. 이 과정을 반복한다.
                   </p>
                 </article>
               </Link>
@@ -52,7 +55,7 @@ export const BlogHomePage = () => {
                     Insight
                   </h2>
                   <p className="mt-2 text-xs/relaxed text-muted-foreground">
-                    Thoughts brewed slowly. With time. Lots of time.
+                    생각은 천천히, 오랜 시간에 걸쳐, 서서히 싹텄다.
                   </p>
                 </article>
               </Link>
@@ -62,7 +65,7 @@ export const BlogHomePage = () => {
                     Digest
                   </h2>
                   <p className="mt-2 text-xs/relaxed text-muted-foreground">
-                    Turning knowledge into understanding. Making it truly mine.
+                    지식을 이해로 바꾸고, 진정으로 내 것으로 만들다.
                   </p>
                 </article>
               </Link>

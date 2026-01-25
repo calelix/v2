@@ -7,15 +7,17 @@ import { cn } from "@/shared/lib/utils/tailwindcss"
 import { Spinner } from "@/shared/ui/shadcn/spinner"
 
 interface ImageCardProps {
-  src: string
-  alt: string
-  place: string
+  image: {
+    src: string
+    alt: string
+    place: string
+  }
+  priority: boolean
 }
 
 export const ImageCard = ({
-  src,
-  alt,
-  place,
+  image,
+  priority,
 }: ImageCardProps) => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false)
 
@@ -36,11 +38,12 @@ export const ImageCard = ({
           </div>
         )}
         <Image
-          src={src}
-          alt={alt}
+          src={image.src}
+          alt={image.alt}
           fill
           sizes="320px"
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          priority={priority}
           onLoad={handleImageLoad}
           onError={handleImageError}
           className={cn("object-cover grayscale dark:opacity-75 hover:grayscale-25 transition duration-300", {
@@ -52,7 +55,7 @@ export const ImageCard = ({
       <figcaption className="text-muted-foreground pt-2 text-xs">
         Shot in{" "}
         <span className="text-accent font-semibold">
-          {place}
+          {image.place}
         </span>
       </figcaption>
     </figure>

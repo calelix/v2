@@ -64,8 +64,8 @@ export const MomentsHomePage = () => {
               <FadeUpItem>
                 <ScrollArea className="w-full rounded-md whitespace-nowrap">
                   <div className="flex w-max space-x-4 pb-4">
-                    {images.map((image) => (
-                      <ImageCard key={image.src} src={image.src} alt={image.alt} place={image.place} />
+                    {images.map((image, index) => (
+                      <ImageCard key={image.src} image={image} priority={index < 2} />
                     ))}
                   </div>
                   <ScrollBar orientation="horizontal" />

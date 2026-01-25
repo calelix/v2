@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 
 import { IconArrowRight } from "@tabler/icons-react"
 
@@ -16,6 +15,7 @@ import {
   ScrollBar,
 } from "@/shared/ui/shadcn/scroll-area"
 import { Separator } from "@/shared/ui/shadcn/separator"
+import { ImageCard } from "./image-card"
 
 const images = [
   { src: "/images/moments/example/01.jpg", alt: "Image 1", place: "Osaka, Japan" },
@@ -65,23 +65,7 @@ export const MomentsHomePage = () => {
                 <ScrollArea className="w-full rounded-md whitespace-nowrap">
                   <div className="flex w-max space-x-4 pb-4">
                     {images.map((image) => (
-                      <figure key={image.src} className="shrink-0">
-                        <div className="relative w-80 h-60 overflow-hidden rounded-md">
-                          <Image
-                            src={image.src}
-                            alt={image.alt}
-                            className="object-cover grayscale dark:opacity-75 hover:grayscale-25 transition duration-300"
-                            fill
-                            sizes="320px"
-                          />
-                        </div>
-                        <figcaption className="text-muted-foreground pt-2 text-xs">
-                          Shot in{" "}
-                          <span className="text-accent font-semibold">
-                            {image.place}
-                          </span>
-                        </figcaption>
-                      </figure>
+                      <ImageCard key={image.src} src={image.src} alt={image.alt} place={image.place} />
                     ))}
                   </div>
                   <ScrollBar orientation="horizontal" />

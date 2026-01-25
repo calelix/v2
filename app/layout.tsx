@@ -5,7 +5,6 @@ import {
   geistSans,
   geistMono,
   hahmlet,
-  pretendard,
 } from "@/app/fonts"
 import "@/app/styles/globals.css"
 
@@ -24,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} ${pretendard.variable} font-sans antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} font-sans antialiased`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

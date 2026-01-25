@@ -5,15 +5,17 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: var(--font-pretendard);
-  src: local('Pretendard');
+  font-family: "Pretendard";
+  src: url("/fonts/PretendardVariable.woff2");
+  font-weight: 45 920;
+  font-display: swap;
   unicode-range: U+AC00-D7A3, U+1100-11FF, U+3130-318F, U+A960-A97F, U+D7B0-D7FF;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), var(--font-pretendard);
+  --font-sans: "Pretendard", var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-hahmlet);
   --color-sidebar-ring: var(--sidebar-ring);

@@ -131,7 +131,7 @@
   }
 
   html {
-    @apply scroll-smooth overscroll-none;
+    @apply scroll-smooth;
   }
 
   body {

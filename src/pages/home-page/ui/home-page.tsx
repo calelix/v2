@@ -57,6 +57,14 @@ export const HomePage = () => {
                   <IconArrowRight className="size-3" />
                 </Link>
               </Button>
+              <Button variant="outline" asChild className="flex items-center justify-between">
+                <Link href="/moments">
+                  <span>
+                    Moments
+                  </span>
+                  <IconArrowRight className="size-3" />
+                </Link>
+              </Button>
             </div>
           </FadeUpItem>
         </FadeUpContainer>

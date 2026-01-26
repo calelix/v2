@@ -1,29 +1,18 @@
 "use client"
 
-import * as React from "react"
-
-import { IconArrowRight } from "@tabler/icons-react"
+import { Suspense } from "react"
 
 import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"
+import { Separator } from "@/shared/ui/shadcn/separator"
 import {
   FadeUpContainer,
   FadeUpItem,
 } from "@/shared/ui/fade-up/fade-up"
-import {
-  ScrollArea,
-  ScrollBar,
-} from "@/shared/ui/shadcn/scroll-area"
-import { Separator } from "@/shared/ui/shadcn/separator"
-import { ImageCard } from "./image-card"
-
-const images = [
-  { src: "/images/moments/example/01.jpg", alt: "Image 1", place: "Osaka, Japan" },
-  { src: "/images/moments/example/02.jpg", alt: "Image 2", place: "Osaka, Japan" },
-  { src: "/images/moments/example/03.jpg", alt: "Image 3", place: "Gunma, Japan" },
-  { src: "/images/moments/example/04.jpg", alt: "Image 4", place: "Tokyo, Japan" },
-  { src: "/images/moments/example/05.jpg", alt: "Image 5", place: "Osaka, Japan" },
-]
+import { ErrorBoundary } from "@/shared/ui/error-boundary/error-boundary"
+import { MomentsGallery } from "./moments-gallery"
+import { MomentsGallerySkeleton } from "./moments-gallery-skeleton"
+import { MomentsGalleryError } from "./moments-gallery-error"
 
 export const MomentsHomePage = () => {
   return (
@@ -35,11 +24,11 @@ export const MomentsHomePage = () => {
         } as React.CSSProperties
       }
     >
-      <div className="fixed z-100 top-4 left-1/2 -translate-x-1/2 px-2.5 py-1.5 sm:px-4 sm:py-2 bg-foreground backdrop-blur-sm rounded-full shadow-lg">
+      {/* <div className="fixed z-100 top-4 left-1/2 -translate-x-1/2 px-2.5 py-1.5 sm:px-4 sm:py-2 bg-foreground backdrop-blur-sm rounded-full shadow-lg">
         <p className="text-xs font-medium text-background">
           페이지 준비중입니다
         </p>
-      </div>
+      </div> */}
       <Header className="sticky top-0 z-50 h-(--header-height) bg-background" />
       <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
         <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
@@ -60,24 +49,11 @@ export const MomentsHomePage = () => {
             <Separator className="my-8 lg:my-12" />
           </FadeUpItem>
           <FadeUpItem>
-            <div className="flex flex-col gap-8">
-              <FadeUpItem>
-                <ScrollArea className="w-full rounded-md whitespace-nowrap">
-                  <div className="flex w-max space-x-4 pb-4">
-                    {images.map((image, index) => (
-                      <ImageCard key={image.src} image={image} priority={index < 2} />
-                    ))}
-                  </div>
-                  <ScrollBar orientation="horizontal" />
-                </ScrollArea>
-                <div className="flex items-center justify-end gap-2 mt-4 text-muted-foreground">
-                  <span className="text-xs">
-                    스크롤하여 더 보기
-                  </span>
-                  <IconArrowRight className="size-4 animate-pulse" />
-                </div>
-              </FadeUpItem>
-            </div>
+            <ErrorBoundary fallback={<MomentsGalleryError />}>
+              <Suspense fallback={<MomentsGallerySkeleton />}>
+                <MomentsGallery />
+              </Suspense>
+            </ErrorBoundary>
           </FadeUpItem>
         </FadeUpContainer>
       </main>

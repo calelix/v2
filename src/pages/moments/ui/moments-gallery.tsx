@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer"
 
 import { Spinner } from "@/shared/ui/shadcn/spinner"
 import { useMomentsInfiniteQuery } from "../model/use-moments-infinite"
-import { ImageCard } from "./image-card"
+import { MomentCard } from "./moment-card"
 
 export const MomentsGallery = () => {
   const {
@@ -33,7 +33,7 @@ export const MomentsGallery = () => {
   })
 
   const allImages = React.useMemo(
-    () => data?.pages.flatMap((page) => page.images) ?? [],
+    () => data.pages.flatMap((page) => page.images),
     [data]
   )
 
@@ -43,11 +43,7 @@ export const MomentsGallery = () => {
         <div className="overflow-x-auto overflow-y-hidden scrollbar-thin">
           <div className="flex w-max space-x-4 pb-4">
             {allImages.map((image, index) => (
-              <ImageCard
-                key={image.src}
-                image={image}
-                priority={index < 2}
-              />
+              <MomentCard key={image.src} image={image} priority={index < 2} />
             ))}
             {hasNextPage && (
               <div ref={sentinelRef} className="flex shrink-0 items-center justify-center w-80 h-60">

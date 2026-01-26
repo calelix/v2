@@ -6,19 +6,19 @@ import Image from "next/image"
 import { cn } from "@/shared/lib/utils/tailwindcss"
 import { Spinner } from "@/shared/ui/shadcn/spinner"
 
-interface ImageCardProps {
+interface MomentCardProps {
   image: {
     src: string
-    alt: string
-    place: string
+    country: string
+    city: string
   }
   priority: boolean
 }
 
-export const ImageCard = ({
+export const MomentCard = ({
   image,
   priority,
-}: ImageCardProps) => {
+}: MomentCardProps) => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false)
 
   const handleImageLoad = () => {
@@ -39,7 +39,7 @@ export const ImageCard = ({
         )}
         <Image
           src={image.src}
-          alt={image.alt}
+          alt={`${image.city}, ${image.country}`}
           fill
           sizes="320px"
           loading={priority ? "eager" : "lazy"}
@@ -54,8 +54,8 @@ export const ImageCard = ({
       </div>
       <figcaption className="text-muted-foreground pt-2 text-xs">
         Shot in{" "}
-        <span className="text-accent font-semibold">
-          {image.place}
+        <span className="text-accent font-semibold capitalize">
+          {image.city}, {image.country}
         </span>
       </figcaption>
     </figure>

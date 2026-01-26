@@ -1,12 +1,15 @@
 import type { Metadata } from "next"
 
-import { ThemeProvider } from "@/app/providers"
+import "@/app/styles/globals.css"
 import {
   geistSans,
   geistMono,
   hahmlet,
 } from "@/app/fonts"
-import "@/app/styles/globals.css"
+import {
+  QueryProvider,
+  ThemeProvider,
+} from "@/app/providers"
 
 export const metadata: Metadata = {
   title: "JGPARK",
@@ -25,7 +28,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} font-sans antialiased`}>
         <ThemeProvider>
-          {children}
+          <QueryProvider>
+            {children}
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

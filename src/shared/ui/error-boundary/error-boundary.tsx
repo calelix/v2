@@ -1,9 +1,9 @@
 import * as React from "react"
 
 interface ErrorBoundaryProps extends Omit<React.ComponentProps<"div">, "onError"> {
-  key: React.Key
   children?: React.ReactNode
-  onError: (error: Error) => void
+  fallback?: React.ReactNode | ((error: Error, reset: () => void) => React.ReactNode)
+  onError?: (error: Error) => void
 }
 
 interface ErrorBoundaryState {
@@ -21,10 +21,30 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 
   override componentDidCatch(error: Error) {
-    this.props.onError(error)
+    if (this.props.onError) {
+      this.props.onError(error)
+    }
+  }
+
+  resetError = () => {
+    this.setState({ error: undefined })
   }
 
   override render() {
-    return this.state.error ? null : this.props.children
+    const { fallback, children } = this.props
+
+    if (this.state.error) {
+      if (typeof fallback === "function") {
+        return fallback(this.state.error, this.resetError)
+      }
+
+      if (fallback) {
+        return fallback
+      }
+
+      return null
+    }
+
+    return children
   }
 }

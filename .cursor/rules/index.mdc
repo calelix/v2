@@ -1,0 +1,17 @@
+---
+alwaysApply: true
+---
+
+Cursor Rules
+
+> 최신 업데이트: 2026년 01월 29일 00:00
+
+# Cursor Rules Index
+
+## Git
+- @git/git-commit-convention.mdc
+- @git/pull-request-convention.mdc
+
+## Testing
+- @testing/testing-guide.mdc
+- @testing/unit-test.mdc

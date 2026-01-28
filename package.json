@@ -12,7 +12,9 @@
     "shadcn:all": "pnpm dlx shadcn@latest add -a -y -o",
     "steiger": "npx steiger ./src",
     "steiger:watch": "npx steiger ./src --watch",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
@@ -48,14 +50,17 @@
     "@eslint/js": "^9.39.2",
     "@feature-sliced/steiger-plugin": "^0.5.7",
     "@next/eslint-plugin-next": "^16.1.0",
+    "@playwright/test": "^1.58.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.91.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.2",
+    "@vitest/coverage-v8": "4.0.18",
     "eslint": "^9",
     "eslint-config-next": "16.1.0",
     "eslint-config-prettier": "^10.1.8",

@@ -2,37 +2,44 @@ import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/shared/lib/utils/tailwindcss"
 
-type TableOfContentsProps = React.ComponentPropsWithRef<"nav">
+interface TableOfContentsProps extends React.ComponentProps<"nav"> {
+  asChild?: boolean
+}
 
 const TableOfContents = ({
+  asChild = false,
   className,
   children,
   ...props
 }: TableOfContentsProps) => {
+  const Comp = asChild ? Slot : "nav"
+
   return (
-    <aside>
-      <nav className={cn(className)} {...props}>
-        {children}
-      </nav>
-    </aside>
+    <Comp className={cn(className)} {...props}>
+      {children}
+    </Comp>
   )
 }
 
-interface TableOfContentsListProps extends React.ComponentPropsWithRef<"ul"> {
+interface TableOfContentsListProps extends React.ComponentProps<"ol"> {
+  asChild?: boolean
   indent?: boolean
 }
 
 const TableOfContentsList = ({
+  asChild = false,
   indent,
   className,
   ...props
 }: TableOfContentsListProps) => {
+  const Comp = asChild ? Slot : "ol"
+
   return (
-    <ul className={cn("list-none", indent && "pl-4", className)} {...props} />
+    <Comp className={cn("list-none", indent && "pl-4", className)} {...props} />
   )
 }
 
-interface TableOfContentsTitleProps extends React.ComponentPropsWithRef<"p"> {
+interface TableOfContentsTitleProps extends React.ComponentProps<"p"> {
   asChild?: boolean
 }
 
@@ -48,31 +55,39 @@ const TableOfContentsTitle = ({
   )
 }
 
-interface TableOfContentsItemProps extends React.ComponentPropsWithRef<"li"> {
+interface TableOfContentsItemProps extends React.ComponentProps<"li"> {
+  asChild?: boolean
   indent?: boolean
 }
 
 const TableOfContentsItem = ({
+  asChild = false,
   indent,
   className,
   ...props
 }: TableOfContentsItemProps) => {
+  const Comp = asChild ? Slot : "li"
+
   return (
-    <li className={cn("pt-2", indent && "ml-4", className)} {...props} />
+    <Comp className={cn("pt-2", indent && "ml-4", className)} {...props} />
   )
 }
 
-interface TableOfContentsLinkProps extends React.ComponentPropsWithRef<"a"> {
+interface TableOfContentsLinkProps extends React.ComponentProps<"a"> {
+  asChild?: boolean
   isActive?: boolean
 }
 
 const TableOfContentsLink = ({
+  asChild = false,
   isActive,
   className,
   ...props
 }: TableOfContentsLinkProps) => {
+  const Comp = asChild ? Slot : "a"
+
   return (
-    <a className={cn(isActive && "text-foreground", className)} {...props} />
+    <Comp className={cn(isActive && "text-foreground", className)} {...props} />
   )
 }
 

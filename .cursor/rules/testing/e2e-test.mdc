@@ -1,0 +1,600 @@
+---
+alwaysApply: true
+---
+
+E2E Testing Guide
+
+> 최신 업데이트: 2026년 01월 29일 02:00
+
+# E2E 테스트 가이드
+
+핵심 사용자 여정을 실제 브라우저에서 처음부터 끝까지 테스트
+
+---
+
+# 정의
+
+**E2E (End-to-End) 테스트:**
+- 전체 사용자 여정을 실제 브라우저에서 검증
+- 여러 페이지를 거치는 완전한 플로우
+- 프로덕션 환경과 최대한 동일한 조건
+- 프론트엔드 테스트 중 가장 신뢰도가 높지만 가장 느리고 불안정함
+
+**특징:**
+- 실행 속도: 느림
+- 테스트 환경: 실제 브라우저 + 실제 서버
+- 범위: 전체 사용자 플로우
+- 도구: Playwright (멀티 브라우저, 자동 대기, 병렬 실행)
+
+**철학:**
+> Critical User Journey만 테스트한다. 모든 엣지 케이스는 Integration/Unit 테스트에서 다룬다.
+
+E2E 테스트는 전체 테스트의 약 2-5%를 차지하는 최소한의 테스트여야 한다.
+
+---
+
+# 언제 사용하는가
+
+## E2E 테스트가 적합한 경우
+
+E2E 테스트는 비즈니스 핵심 경로에만 적용해야 한다. Happy path만 검증한다.
+
+### 핵심 비즈니스 플로우
+- 회원가입 → 로그인 → 대시보드 진입
+- 상품 검색 → 장바구니 추가 → 결제 → 완료
+- 글 작성 → 저장 → 게시 → 확인
+
+실패 시 비즈니스 ROI에 직접 영향을 주는 경로만 테스트한다.
+
+### 수익 창출 경로
+- 구매 플로우
+- 구독 플로우
+- 결제 플로우
+
+### 권한별 시나리오
+- 비로그인 사용자의 접근 제한 및 리다이렉트
+- 일반 사용자의 기본 기능 사용
+- 관리자의 추가 기능 및 관리 페이지 접근
+
+### 여러 페이지 통합
+- 페이지 간 이동 시 상태 유지
+- 네비게이션 플로우
+- 전체 사용자 여정의 일관성
+
+---
+
+## E2E 테스트가 부적합한 경우
+
+### 엣지 케이스
+Integration 또는 Unit 테스트로 처리한다. E2E는 Happy path 중심이다.
+
+### 단일 컴포넌트 검증
+Integration 테스트로 충분하다. E2E는 플로우를 테스트하는 것이다.
+
+### 순수 로직
+Unit 테스트로 분리한다.
+
+### 모든 Validation 케이스
+Integration 테스트에서 다룬다. E2E는 대표 케이스만 검증한다.
+
+---
+
+# E2E vs Browser 테스트
+
+## Browser 테스트
+
+가상 DOM으로 불가능한 브라우저 전용 기능을 실제 브라우저에서 테스트한다. 단일 컴포넌트나 페이지 수준에서 특정 브라우저 API를 검증한다.
+
+**목적:**
+- Portal, Focus trap, IntersectionObserver 등 브라우저 기능
+- 단일 컴포넌트/페이지의 특정 동작
+
+**범위:**
+- 좁음 (컴포넌트 단위)
+- 기능 중심
+
+---
+
+## E2E 테스트
+
+전체 사용자 여정을 처음부터 끝까지 검증한다. 여러 페이지와 기능이 통합된 시나리오를 테스트한다.
+
+**목적:**
+- 사용자 여정 (User Journey) 검증
+- 여러 페이지를 거치는 비즈니스 플로우
+
+**범위:**
+- 넓음 (전체 플로우)
+- 시나리오 중심
+
+---
+
+# 테스트 대상
+
+## 1. Critical Path
+
+가장 많은 사용자가 거치는 정상적인 사용 흐름만 테스트한다. 성공 시나리오를 중심으로 모든 단계가 정상 동작하고 최종 목표를 달성하는지 검증한다.
+
+**검증 항목:**
+- 페이지 간 이동이 정상적으로 동작
+- 각 단계에서 입력한 데이터가 다음 단계에서 유지
+- 최종 목표 달성 (예: 주문 완료, 회원가입 성공)
+- URL, 페이지 제목, 주요 UI 요소의 표시
+
+---
+
+## 2. 권한별 시나리오
+
+사용자 권한에 따라 다른 경로를 테스트한다.
+
+**검증 항목:**
+- 비로그인 사용자: 보호된 페이지 접근 시 로그인 페이지로 리다이렉트
+- 일반 사용자: 기본 기능 접근 및 사용
+- 관리자: 관리자 전용 페이지 및 기능 접근
+
+---
+
+## 3. 크로스 브라우저
+
+모든 테스트를 모든 브라우저에서 실행하지 않는다. Critical path만 선택적으로 크로스 브라우저 테스트를 수행한다.
+
+**테스트 대상:**
+- Chromium (필수)
+- Firefox (권장)
+- WebKit/Safari (선택)
+
+브라우저별 차이가 예상되는 기능만 크로스 브라우저 테스트를 적용한다.
+
+---
+
+## 4. 에러 시나리오
+
+주요 에러 상황에서의 사용자 경험을 검증한다. 모든 엣지 케이스가 아닌 핵심 에러만 다룬다.
+
+**검증 항목:**
+- 네트워크 오류 시 적절한 메시지 표시
+- 권한 없음(403), 리소스 없음(404), 서버 오류(500) 등에 대한 대체 UI
+- 에러 상황에서의 복구 경로 제공
+
+---
+
+# 테스트 작성 원칙
+
+## 1. 최소화 원칙
+
+E2E 테스트는 전체 테스트의 2-5% 이하로 유지한다. Critical path만 테스트하고 나머지는 하위 레벨에서 다룬다.
+
+**이유:**
+- Integration 테스트 대비 10-100배 느림
+- Flaky test(테스트를 반복 실행할 때 일관되게 통과하거나 실패하지 않고, 간헐적으로 실패하는 테스트)가 되기 쉬움
+- 유지보수 비용이 높음
+
+**목표:**
+- 핵심 비즈니스 플로우만 선정
+
+---
+
+## 2. Happy Path 중심
+
+E2E는 정상 플로우만 테스트한다. 엣지 케이스와 세부 validation은 Integration/Unit 테스트에서 충분히 다룬다.
+
+**원칙:**
+- E2E: 성공 시나리오
+- Integration/Unit: 엣지 케이스, validation, 예외 처리
+
+E2E는 통합 검증용이지 모든 케이스를 다루는 도구가 아니다.
+
+---
+
+## 3. 독립성
+
+각 E2E 테스트는 독립적으로 실행 가능해야 한다. 테스트 간 공유 상태가 없어야 병렬 실행이 가능하고 디버깅이 쉽다.
+
+**방법:**
+- 테스트별로 별도의 사용자 계정 사용
+- 테스트 전 setup으로 필요한 데이터 준비
+- 테스트 후 cleanup으로 데이터 정리
+- 실행 순서에 무관하게 동작
+
+---
+
+## 4. 안정성
+
+Playwright는 자동 대기 기능을 제공한다. 요소가 나타날 때까지, 클릭 가능할 때까지, 네트워크 요청이 완료될 때까지 자동으로 대기한다.
+
+**추가 안정화 방법:**
+- 명시적 대기: waitForSelector, waitForURL 등 사용
+- 재시도 로직: retries 설정으로 일시적 실패 극복
+- 타임아웃 설정: 적절한 타임아웃으로 무한 대기 방지
+
+Sleep이나 고정 대기 시간 사용을 피하고 조건 기반 대기를 사용한다.
+
+---
+
+# 테스트 데이터 전략
+
+## 독립적 데이터
+
+테스트별로 고유한 데이터를 사용하여 충돌을 방지한다. UUID나 timestamp를 사용해 고유성을 보장한다.
+
+## Test Fixtures
+
+공통 setup 코드를 Fixtures로 추상화한다. 인증된 사용자 상태, 초기 데이터 등을 재사용 가능하게 만든다. Playwright Fixtures는 자동 cleanup을 지원한다.
+
+## Mock vs Real API
+
+E2E 테스트의 진정한 철학은 프로덕션과 동일한 환경에서 검증하는 것이다. 하지만 실무에서는 안정성과 속도를 위해 Mock API를 병행한다.
+
+**Real API (우선):**
+- 실제 통합 검증
+- E2E 본연의 목적
+- 더 높은 신뢰도
+- Critical path에 필수
+
+**Mock API (보조):**
+- 빠른 실행 (속도 확보)
+- Flaky test 방지 (안정성 확보)
+- 에러 시나리오 테스트 용이
+- 네트워크 불안정 제거
+
+**권장 전략:**
+- **Critical path는 Real API 사용** (최종 검증)
+- 개발/CI 환경에서는 Mock API로 속도 확보
+- Nightly 빌드에서 Real API로 최종 검증
+- 에러 시나리오는 Mock API로 테스트
+
+---
+
+# 안정성 확보
+
+## Flaky Test 방지
+
+Flaky test는 E2E의 가장 큰 문제이다. 다음 원인을 제거하여 안정성을 확보한다.
+
+**타이밍 이슈:**
+- Playwright 자동 대기 활용
+- 명시적 waitFor 사용
+- Sleep 사용 금지
+
+**공유 상태:**
+- 테스트별 독립적 데이터 사용
+- 테스트 격리 철저히
+
+**네트워크 불안정:**
+- 재시도 로직 설정
+- Mock API 사용 고려
+
+**비결정적 요소:**
+- 시간을 고정 (page.evaluate(() => ...)로 클라이언트 시간 제어)
+- 랜덤 값 제거 또는 시드 고정
+
+---
+
+## 디버깅
+
+**도구:**
+- --headed 모드: 브라우저를 직접 보면서 실행
+- --debug 모드: 단계별 디버깅
+- Screenshot on failure: 실패 시 자동 스크린샷
+- Video recording: 전체 실행 과정 녹화
+- Trace viewer: 상세한 실행 기록 확인
+
+---
+
+# 성능 최적화
+
+## 병렬 실행
+
+Playwright는 기본적으로 병렬 실행을 지원한다. Worker 수를 조절하여 최적의 성능을 얻는다. 단, 테스트 간 공유 데이터가 없어야 한다.
+
+## 선택적 실행
+
+**PR:**
+- Critical path만 실행 (5-10개)
+- 빠른 피드백 제공
+
+**Main 병합:**
+- 전체 E2E 테스트
+- 크로스 브라우저 포함
+
+**Nightly:**
+- 확장 시나리오
+- 성능 테스트
+
+## 캐싱
+
+빌드 결과, 인증 상태(Storage state) 등을 캐싱하여 실행 시간을 단축한다.
+
+---
+
+# CI/CD 통합
+
+## 실행 전략
+
+E2E 테스트는 비용이 크므로 단계별로 선택적으로 실행한다.
+
+**PR 단계:**
+- Critical path만 (5-10개)
+- 빠른 피드백으로 개발 속도 유지
+
+**Main 병합 후:**
+- 전체 E2E 테스트
+- 크로스 브라우저 테스트 포함
+
+**Nightly:**
+- 확장 시나리오 및 성능 테스트
+
+---
+
+## 실패 처리
+
+**실패 시 수집 정보:**
+- Screenshot, Video, Trace
+- 아티팩트로 업로드하여 디버깅 지원
+
+**알림:**
+- PR 블로킹으로 병합 방지
+- Slack 알림으로 담당자 즉시 인지
+
+---
+
+# 안티패턴
+
+## 피해야 할 것
+
+### 1. 모든 케이스를 E2E로 테스트
+
+매우 느리고 유지보수가 어렵다. Flaky test를 양산한다. Critical path만 E2E로 테스트하고 엣지 케이스는 Integration 테스트로 처리한다.
+
+### 2. 단일 컴포넌트나 기능을 E2E로 테스트
+
+Integration 테스트로 충분하다. E2E는 여러 페이지를 거치는 플로우를 테스트하는 것이다.
+
+### 3. 테스트 간 의존성
+
+실행 순서에 의존하면 병렬 실행이 불가능하고 디버깅이 어렵다. 각 테스트가 독립적으로 setup하고 cleanup한다.
+
+### 4. 과도한 Assertion
+
+너무 많은 assertion은 테스트를 느리게 만들고 유지보수를 어렵게 한다. 핵심만 검증하고 최종 결과에 집중한다.
+
+### 5. Sleep/Wait 남용
+
+고정된 대기 시간은 불필요하게 느리고 불안정하다. Playwright 자동 대기를 활용하고 명시적 조건 대기를 사용한다.
+
+---
+
+# 커버리지 목표
+
+E2E 테스트는 **"모든 것을 테스트"**가 아닌 **"Critical Path만 완벽하게 검증"**하는 것이 목표다.
+
+**E2E 테스트 커버리지:**
+- Critical path: 100% (핵심 비즈니스 플로우)
+- 권한별 시나리오: 100% (주요 권한 경로)
+- Happy path: 100% (정상 사용 흐름)
+- 엣지 케이스: 0% (Integration/Unit에서 처리)
+
+엣지 케이스를 E2E에서 0%로 하는 이유는 **속도와 안정성**이다. 모든 validation과 예외 상황은 Integration/Unit 테스트에서 충분히 다루고, E2E는 실제 사용자가 거치는 핵심 경로만 검증한다.
+
+**비율:**
+- 전체 테스트의 2-5%
+
+**철학 우선:**
+- 커버리지 수치보다 **핵심 비즈니스 플로우 보호**가 목적
+- 의미 없는 E2E 테스트 추가 금지
+- 테스트 개수가 적은 것은 문제가 아니라 전략이다
+
+---
+---
+---
+
+# 라이브러리 사용 가이드
+
+아래는 Playwright 사용 시 참고할 구체적인 API 가이드이다.
+
+---
+
+## Page 객체
+
+기본적인 페이지 조작 메서드.
+
+**페이지 이동 및 대기:**
+- `page.goto(url)`: 지정한 URL로 이동
+- `page.waitForLoadState('networkidle')`: 네트워크 요청이 완료될 때까지 대기
+- `page.waitForURL(url)`: 특정 URL로 이동할 때까지 대기
+
+**사용자 동작:**
+- `page.click(selector)`: 요소 클릭
+- `page.fill(selector, text)`: Input에 텍스트 입력 (기존 값 제거 후)
+- `page.type(selector, text)`: 키보드 입력 시뮬레이션
+- `page.press(selector, key)`: 특정 키 입력 (Enter, Escape 등)
+- `page.selectOption(selector, value)`: Select 요소에서 옵션 선택
+
+---
+
+## Locator
+
+요소를 찾는 방법. 접근성을 고려한 순서대로 사용한다.
+
+**추천 순서:**
+
+1. **role (가장 권장):**
+   - `page.getByRole('button', { name: '제출' })`
+   - ARIA role 기반으로 검색
+   - 접근성 자동 검증
+
+2. **label:**
+   - `page.getByLabel('이메일')`
+   - Form 요소의 label로 검색
+
+3. **text:**
+   - `page.getByText('환영합니다')`
+   - 보이는 텍스트로 검색
+
+4. **testId (최후의 수단):**
+   - `page.getByTestId('submit-btn')`
+   - 다른 방법이 모두 불가능할 때만 사용
+
+**피해야 할 Selector:**
+- CSS class (구현에 의존)
+- XPath (복잡하고 읽기 어려움)
+- 위치 기반 (nth-child, first-child 등)
+
+---
+
+## Assertions
+
+Playwright는 자동 재시도를 지원하는 assertion을 제공한다.
+
+**페이지 검증:**
+- `await expect(page).toHaveURL(url)`: URL 확인
+- `await expect(page).toHaveTitle(title)`: 페이지 제목 확인
+
+**요소 검증:**
+- `await expect(locator).toBeVisible()`: 요소가 보이는지 확인
+- `await expect(locator).toBeHidden()`: 요소가 숨겨졌는지 확인
+- `await expect(locator).toBeEnabled()`: 요소가 활성화되었는지 확인
+- `await expect(locator).toBeDisabled()`: 요소가 비활성화되었는지 확인
+- `await expect(locator).toHaveText(text)`: 텍스트 내용 확인
+- `await expect(locator).toHaveValue(value)`: Input 값 확인
+
+---
+
+## 명시적 대기
+
+자동 대기로 해결되지 않는 경우에만 명시적 대기를 사용한다.
+
+**네트워크 대기:**
+- `page.waitForLoadState('load')`: 페이지 로드 완료
+- `page.waitForLoadState('domcontentloaded')`: DOM 로드 완료
+- `page.waitForLoadState('networkidle')`: 네트워크 요청 완료
+
+**요소 대기:**
+- `page.waitForSelector(selector)`: 요소가 나타날 때까지
+- `page.waitForSelector(selector, { state: 'hidden' })`: 요소가 사라질 때까지
+
+**URL/함수 대기:**
+- `page.waitForURL(url)`: 특정 URL로 이동
+- `page.waitForFunction(() => ...)`: 조건이 참이 될 때까지
+
+---
+
+## Test Fixtures
+
+공통 setup/teardown(테스트가 끝난 뒤 정리(clean-up) 작업)을 재사용한다.
+
+**사용 예:**
+```typescript
+import { test as base } from '@playwright/test'
+
+const test = base.extend<{ authenticatedPage: Page }>({
+  authenticatedPage: async ({ page }, use) => {
+    // Setup: 로그인 수행
+    await page.goto('/login')
+    await page.fill('[name="email"]', 'user@example.com')
+    await page.fill('[name="password"]', 'password')
+    await page.click('button[type="submit"]')
+    await page.waitForURL('/dashboard')
+    
+    // 테스트에 전달
+    await use(page)
+    
+    // 테스트 실행 후 필요한 정리 작업은 use() 이후에 작성
+  }
+})
+
+test('대시보드 접근', async ({ authenticatedPage }) => {
+  await expect(authenticatedPage).toHaveURL('/dashboard')
+})
+```
+
+---
+
+## Storage State
+
+인증 상태를 저장하고 재사용하여 테스트 속도를 높인다.
+
+**저장:**
+```typescript
+await page.context().storageState({ path: 'auth.json' })
+```
+
+**재사용:**
+```typescript
+const context = await browser.newContext({ storageState: 'auth.json' })
+const page = await context.newPage()
+```
+
+**주의사항:**
+
+Storage state는 쿠키와 로컬스토리지를 포함하므로 테스트 간 격리에 주의해야 한다.
+
+- **테스트별 독립성 확보**: 공유 storage state를 사용할 경우 테스트 간 간섭 가능
+- **병렬 실행 시 충돌**: 같은 파일을 공유하면 Race condition 발생 가능
+- **권장 방법**: 테스트별로 고유한 사용자 계정 사용 또는 테스트마다 context 초기화
+- **CI 환경**: 병렬 worker마다 별도 storage state 파일 사용
+
+---
+
+## Page Object Model (선택)
+
+테스트가 많아지면 Page Object Model을 도입하여 유지보수성을 높인다. 로그인/로그아웃, 데이터 초기화 등 setup/cleanup 로직도 포함한다.
+
+**예시:**
+```typescript
+class LoginPage {
+  constructor(private page: Page) {}
+  
+  async goto() {
+    await this.page.goto('/login')
+  }
+  
+  async login(email: string, password: string) {
+    await this.page.fill('[name="email"]', email)
+    await this.page.fill('[name="password"]', password)
+    await this.page.click('button[type="submit"]')
+    await this.page.waitForURL('/dashboard')
+  }
+  
+  async logout() {
+    await this.page.click('[data-testid="user-menu"]')
+    await this.page.click('text=로그아웃')
+    await this.page.waitForURL('/login')
+  }
+}
+
+class DashboardPage {
+  constructor(private page: Page) {}
+  
+  async goto() {
+    await this.page.goto('/dashboard')
+  }
+  
+  async clearUserData() {
+    // 테스트 후 데이터 정리
+    await this.page.evaluate(() => {
+      localStorage.clear()
+      sessionStorage.clear()
+    })
+  }
+}
+```
+
+**사용 예:**
+```typescript
+test('사용자 로그인 플로우', async ({ page }) => {
+  const loginPage = new LoginPage(page)
+  const dashboardPage = new DashboardPage(page)
+  
+  // Setup
+  await loginPage.goto()
+  await loginPage.login('user@example.com', 'password')
+  
+  // Verify
+  await expect(page).toHaveURL('/dashboard')
+  
+  // Cleanup
+  await loginPage.logout()
+  await dashboardPage.clearUserData()
+})
+```

@@ -1,0 +1,264 @@
+---
+alwaysApply: true
+---
+
+# Testing Guide
+
+> 최신 업데이트: 2026년 01월 29일 00:00
+
+# 프론트엔드 테스트 전략 가이드
+
+---
+
+# 프론트엔드 테스트 레벨 정의
+
+## Unit 테스트
+
+### 정의
+
+- UI 없이 단일 책임 단위의 로직 검증
+- 의존성은 mock 가능
+- 빠르게 실행되는 최소 단위 테스트
+
+### 특징
+
+- 실행 속도: 매우 빠름
+- 테스트 환경: Node.js
+- 범위: 함수 / 로직 입력 → 출력
+
+### 테스트 대상
+
+- 유틸리티 함수
+- 복잡한 계산 로직
+- 데이터 변환 함수
+- Validation 로직
+- Domain / Permission evaluator 등 UI와 독립적인 비즈니스 로직
+
+---
+
+## Integration 테스트 (기본 선택)
+
+### 정의
+
+- 컴포넌트 + 로직 + 상태를 통합하여 테스트
+- 사용자 관점에서 상호작용 검증
+- 실제 사용 방식과 유사한 환경
+
+Testing Library 철학 기반:
+
+render → userEvent → screen assertion
+
+### 특징
+
+- 실행 속도: 빠름
+- 테스트 환경: 가상 DOM (jsdom)
+- 범위: 컴포넌트 + 자식 + 상태 + 이벤트
+
+### 테스트 대상
+
+- 일반 컴포넌트
+- 사용자 상호작용
+- 상태 변화와 UI 반영
+- 조건부 렌더링
+- 폼 입력 및 검증
+- API 호출 이후 UI 반영
+- router / localStorage 등 side effect 포함 컴포넌트
+
+---
+
+## Browser 테스트 (Component E2E 성격)
+
+### 정의
+
+- 가상 DOM으로 불가능한 브라우저 전용 기능을 실제 브라우저에서 테스트
+- 단일 컴포넌트 또는 단일 페이지 중심
+- Playwright Component Test 또는 페이지 단위 테스트
+
+### 특징
+
+- 실행 속도: 중간
+- 테스트 환경: 실제 브라우저
+- 범위: 브라우저 API 의존 기능
+
+### 테스트 대상
+
+- Portal (body 직접 렌더링)
+- Focus trap / Focus restoration
+- 복잡한 키보드 네비게이션
+- IntersectionObserver
+- Drag & Drop
+- 실제 CSS 레이아웃 계산
+
+접근성 / 인터랙션을 직접 구현한 경우에만 필요  
+검증된 라이브러리 사용 시 생략 가능
+
+---
+
+## E2E (End-to-End) 테스트
+
+### 정의
+
+- 전체 사용자 여정을 실제 브라우저에서 처음부터 끝까지 테스트
+- 여러 페이지, 여러 기능 통합
+- 실제 프로덕션 환경과 최대한 동일
+
+### 특징
+
+- 실행 속도: 느림
+- 테스트 환경: 실제 브라우저 + 실제 서버
+- 범위: 전체 사용자 플로우
+
+### 테스트 대상
+
+- CUJ (Critical User Journey)
+- 핵심 비즈니스 플로우
+- 여러 페이지를 거치는 시나리오
+- 권한별 사용자 시나리오
+- 실패 시 비즈니스 ROI에 직접 영향 주는 경로
+
+---
+
+# Testing Trophy 전략
+
+          /\
+         /  \      E2E
+        / 적게\
+       /------\
+      /        \   Integration
+     /    가장   \
+    /     많이    \ 
+   /--------------\
+  /                \   Unit
+ /        적당히      \
+/---------------------\
+          Static
+
+---
+
+### 우선순위
+
+1. Static Analysis (TypeScript + Linter)
+2. Integration 테스트 – 기본 선택
+3. Unit 테스트
+4. E2E 테스트
+
+권장 비율:
+
+- Integration: ~90%
+- Unit: ~5%
+- Browser: ~3%
+- E2E: ~2%
+
+---
+
+# 테스트 의사결정 프로세스
+
+## Step 1: 테스트가 필요한가?
+
+아래 중 하나라도 YES면 테스트 대상이다:
+
+- 사용자 이벤트를 직접 처리하는가?
+- 조건에 따라 다르게 렌더링하거나 동작하는가?
+- 내부 state를 관리하는가?
+- 계산 / validation / 데이터 변환을 수행하는가?
+- 비즈니스 규칙이 포함되어 있는가?
+- 브라우저 동작에 의존하는 interaction이 있는가?
+- API 호출 / localStorage / router 등 side effect가 있는가?
+
+아래에 해당하면 테스트하지 않는다:
+
+- Logic-less Presentational / Wrapper Components
+  - children / props passthrough
+  - className 병합만 수행
+  - 스타일 또는 layout 전용
+  - 외부 로직 호출만 하고 자체 로직 없음
+
+---
+
+## Step 2: 어떤 레벨로 테스트하는가?
+
+### 기본 선택: Integration (~90%)
+
+대부분의 경우에 해당
+
+- 컴포넌트 + 로직 통합 테스트
+- 사용자 관점 상호작용
+- 사용자 플로우 검증
+
+적용 대상:
+
+- 일반적인 컴포넌트
+- 상태 + UI 결합
+- 폼, 리스트, 테이블, 카드 등
+
+---
+
+### 예외 1: Unit (~5%)
+
+순수 로직만 분리할 때
+
+- 복잡한 계산 함수
+- 유틸리티 함수
+- 많은 엣지 케이스가 있는 함수
+- UI와 독립적인 비즈니스 로직
+
+---
+
+### 예외 2: Browser (~3%)
+
+가상 DOM으로 불가능한 브라우저 기능
+
+- Portal
+- Focus 관리
+- 키보드 네비게이션
+- IntersectionObserver
+- Drag & Drop
+
+---
+
+### 예외 3: E2E (~2%)
+
+Critical User Journey만
+
+- 회원가입 → 로그인 → 대시보드
+- 상품 선택 → 장바구니 → 결제
+- 핵심 수익 경로
+
+Happy path(사용자가 문제 없이 정상적으로 목표를 달성하는 가장 대표적인 흐름) 중심
+
+---
+
+# 안티패턴
+
+## 하지 말 것
+
+### 모든 컴포넌트에 3가지 레벨 다 테스트  
+Integration 하나로 충분
+
+### Wrapper 컴포넌트 테스트  
+의미 없음
+
+### E2E로 모든 엣지 케이스 테스트  
+느리고 불안정
+
+### Implementation Detail 테스트  
+내부 구현 검증 금지
+
+### Snapshot 테스트 남용  
+구체적인 assertion 사용
+
+---
+
+# 핵심 원칙
+
+## 기본은 Integration  
+고민되면 Integration
+
+## 사용자 관점 테스트  
+보이는 것 / 하는 동작 / 결과
+
+## Implementation Detail 무시  
+외부 행동만 검증
+
+## Wrapper는 테스트 안 함  
+스타일 / props 전달만 하면 제외

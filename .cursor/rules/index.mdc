@@ -15,3 +15,5 @@ Cursor Rules
 ## Testing
 - @testing/testing-guide.mdc
 - @testing/unit-test.mdc
+- @testing/integration-test.mdc
+- @testing/e2e-test.mdc

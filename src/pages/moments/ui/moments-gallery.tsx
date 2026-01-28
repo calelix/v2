@@ -17,7 +17,11 @@ export const MomentsGallery = () => {
     isFetchingNextPage,
   } = useMomentsInfiniteQuery()
 
-  const fetchNext = React.useEffectEvent(() => {
+  const fetchNext = React.useEffectEvent((visible: boolean) => {
+    if (!visible) {
+      return
+    }
+
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage()
     }
@@ -25,11 +29,7 @@ export const MomentsGallery = () => {
 
   const { ref: sentinelRef } = useInView({
     threshold: 0.5,
-    onChange: (visible) => {
-      if (visible) {
-        fetchNext()
-      }
-    },
+    onChange: fetchNext,
   })
 
   const allImages = React.useMemo(

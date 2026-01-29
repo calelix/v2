@@ -4,6 +4,10 @@ import * as React from "react"
 
 import { IconArrowRight } from "@tabler/icons-react"
 import { useInView } from "react-intersection-observer"
+import {
+  useWheel,
+  useDrag,
+} from "@use-gesture/react"
 
 import { Spinner } from "@/shared/ui/shadcn/spinner"
 import { useMomentsInfiniteQuery } from "../model/use-moments-infinite"
@@ -17,15 +21,17 @@ export const MomentsGallery = () => {
     isFetchingNextPage,
   } = useMomentsInfiniteQuery()
 
-  const fetchNext = React.useEffectEvent((visible: boolean) => {
-    if (!visible) {
-      return
-    }
+  const fetchNext = React.useEffectEvent(
+    (visible: boolean) => {
+      if (!visible) {
+        return
+      }
 
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage()
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage()
+      }
     }
-  })
+  )
 
   const { ref: sentinelRef } = useInView({
     threshold: 0.5,
@@ -37,10 +43,34 @@ export const MomentsGallery = () => {
     [data]
   )
 
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null)
+
+  useWheel(
+    ({ delta: [dx, dy], event }) => {
+      event.preventDefault()
+
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft += dx + dy
+      }
+    },
+    { target: scrollContainerRef, eventOptions: { passive: false } }
+  )
+
+  useDrag(
+    ({ movement: [mx], memo = scrollContainerRef.current?.scrollLeft ?? 0 }) => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = memo - mx
+      }
+
+      return memo
+    },
+    { target: scrollContainerRef }
+  )
+
   return (
     <>
       <div className="relative">
-        <div className="overflow-x-auto overflow-y-hidden scrollbar-thin">
+        <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-hidden scrollbar-thin">
           <div className="flex w-max space-x-4 pb-4">
             {allImages.map((image, index) => (
               <MomentCard key={image.src} image={image} priority={index < 2} />

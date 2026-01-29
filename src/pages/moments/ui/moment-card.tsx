@@ -30,7 +30,7 @@ export const MomentCard = ({
   }
 
   return (
-    <figure className="shrink-0">
+    <figure className="shrink-0 select-none pointer-events-none">
       <div className="relative w-80 h-60 overflow-hidden rounded-md">
         {!isImageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-muted/25 z-10">

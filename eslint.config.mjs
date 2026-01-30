@@ -5,6 +5,7 @@ import pluginReact from "eslint-plugin-react"
 import pluginReactHooks from "eslint-plugin-react-hooks"
 import pluginImport from "eslint-plugin-import"
 import pluginBoundaries from "eslint-plugin-boundaries"
+import pluginJsxA11y from "eslint-plugin-jsx-a11y"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
@@ -33,6 +34,14 @@ const eslintConfig = [
     rules: {
       ...pluginNext.configs.recommended.rules,
       ...pluginNext.configs["core-web-vitals"].rules,
+    },
+  },
+  {
+    plugins: {
+      "jsx-a11y": pluginJsxA11y,
+    },
+    rules: {
+      ...pluginJsxA11y.flatConfigs.recommended.rules,
     },
   },
   {

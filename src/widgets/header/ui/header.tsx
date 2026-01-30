@@ -46,9 +46,7 @@ export const Header = ({
             className={buttonVariants({ variant: "ghost", size: "lg" })}
           >
             <IconBrandGithub />
-            <span className="sr-only">
-              Calelix Github
-            </span>
+            <span className="sr-only">Calelix Github</span>
           </Link>
           <ModeToggle />
         </div>

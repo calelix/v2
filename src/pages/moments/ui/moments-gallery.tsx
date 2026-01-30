@@ -73,7 +73,7 @@ export const MomentsGallery = () => {
         <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-hidden scrollbar-thin">
           <div className="flex w-max space-x-4 pb-4">
             {allImages.map((image, index) => (
-              <MomentCard key={image.src} image={image} priority={index < 2} />
+              <MomentCard key={image.src} image={image} preload={index < 2} />
             ))}
             {hasNextPage && (
               <div ref={sentinelRef} className="flex shrink-0 items-center justify-center w-80 h-60">

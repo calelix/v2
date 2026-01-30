@@ -12,12 +12,12 @@ interface MomentCardProps {
     country: string
     city: string
   }
-  priority: boolean
+  preload: boolean
 }
 
 export const MomentCard = ({
   image,
-  priority,
+  preload,
 }: MomentCardProps) => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false)
 
@@ -42,8 +42,8 @@ export const MomentCard = ({
           alt={`${image.city}, ${image.country}`}
           fill
           sizes="320px"
-          loading={priority ? "eager" : "lazy"}
-          priority={priority}
+          loading={preload ? "eager" : "lazy"}
+          preload={preload}
           onLoad={handleImageLoad}
           onError={handleImageError}
           className={cn("object-cover grayscale dark:opacity-75 hover:grayscale-25 transition duration-300", {

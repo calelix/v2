@@ -238,14 +238,13 @@ const ArchCarousel = ({
       }}
     >
       <div
-        onKeyDown={handleKeyDown}
+        onKeyDownCapture={handleKeyDown}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn("relative", className)}
         role="region"
         aria-roledescription="carousel"
         aria-label="Arch carousel"
-        tabIndex={0}
         {...props}
       >
         {children}

@@ -42,6 +42,7 @@ const eslintConfig = [
     },
     rules: {
       ...pluginJsxA11y.flatConfigs.recommended.rules,
+      "jsx-a11y/control-has-associated-label": "error",
     },
   },
   {

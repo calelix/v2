@@ -45,22 +45,50 @@ export const MomentsGallery = () => {
 
   const scrollContainerRef = React.useRef<HTMLDivElement>(null)
 
+  const handleKeyDown = React.useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!scrollContainerRef.current) return
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault()
+        scrollContainerRef.current.scrollTo({
+          left: scrollContainerRef.current.scrollLeft - 100,
+          behavior: "smooth",
+        })
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault()
+        scrollContainerRef.current.scrollTo({
+          left: scrollContainerRef.current.scrollLeft + 100,
+          behavior: "smooth",
+        })
+      }
+    }, []
+  )
+
   useWheel(
     ({ delta: [dx, dy], event }) => {
+      if (!scrollContainerRef.current) return
+
       event.preventDefault()
 
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollLeft += dx + dy
-      }
+      scrollContainerRef.current.scrollLeft += dx + dy
     },
     { target: scrollContainerRef, eventOptions: { passive: false } }
   )
 
   useDrag(
-    ({ movement: [mx], memo = scrollContainerRef.current?.scrollLeft ?? 0 }) => {
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollLeft = memo - mx
+    ({
+      movement: [mx],
+      memo = scrollContainerRef.current?.scrollLeft ?? 0,
+      event,
+    }) => {
+      if (!scrollContainerRef.current) return
+
+      if (!(event instanceof PointerEvent)) {
+        return
       }
+
+      scrollContainerRef.current.scrollLeft = memo - mx
 
       return memo
     },
@@ -70,7 +98,12 @@ export const MomentsGallery = () => {
   return (
     <>
       <div className="relative">
-        <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-hidden scrollbar-thin">
+        <div
+          ref={scrollContainerRef}
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          className="overflow-x-auto overflow-y-hidden scrollbar-thin touch-pan-x overscroll-x-contain"
+        >
           <div className="flex w-max space-x-4 pb-4">
             {allImages.map((image, index) => (
               <MomentCard key={image.src} image={image} preload={index < 2} />

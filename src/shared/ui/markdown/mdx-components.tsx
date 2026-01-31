@@ -37,24 +37,30 @@ export const MDXComponents = ({
 }
 
 const components: MDXContentProps["components"] = {
-  h1: (props: React.ComponentProps<"h1">) => (
-    <h1
-      className="text-lg font-bold not-first:mt-6"
-      {...props}
-    />
-  ),
-  h2: (props: React.ComponentProps<"h2">) => (
-    <h2
-      className="text-base font-semibold not-first:mt-6"
-      {...props}
-    />
-  ),
-  h3: (props: React.ComponentProps<"h3">) => (
-    <h3
-      className="text-sm font-medium not-first:mt-4"
-      {...props}
-    />
-  ),
+  h1: (props: React.ComponentProps<"h1">) => {
+    const { children, ...rest } = props
+    return (
+      <h1 className="text-lg font-bold not-first:mt-6" {...rest}>
+        {children}
+      </h1>
+    )
+  },
+  h2: (props: React.ComponentProps<"h2">) => {
+    const { children, ...rest } = props
+    return (
+      <h2 className="text-base font-semibold not-first:mt-6" {...rest}>
+        {children}
+      </h2>
+    )
+  },
+  h3: (props: React.ComponentProps<"h3">) => {
+    const { children, ...rest } = props
+    return (
+      <h3 className="text-sm font-medium not-first:mt-4" {...rest}>
+        {children}
+      </h3>
+    )
+  },
   p: (props: React.ComponentProps<"p">) => (
     <p
       className="text-xs/relaxed text-muted-foreground not-first:mt-1"

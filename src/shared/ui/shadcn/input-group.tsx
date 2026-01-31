@@ -47,6 +47,13 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
+    /**
+     * ESLint 접근성 규칙 비활성화
+     * - shadcn-ui 팀에서 해결 중인 알려진 이슈입니다.
+     * - 이슈가 해결되면 이 주석과 ESLint 비활성화를 제거할 수 있습니다.
+     * @see https://github.com/shadcn-ui/ui/issues/8377
+     */
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div
       role="group"
       data-slot="input-group-addon"

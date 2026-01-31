@@ -12,12 +12,12 @@ interface MomentCardProps {
     country: string
     city: string
   }
-  priority: boolean
+  preload: boolean
 }
 
 export const MomentCard = ({
   image,
-  priority,
+  preload,
 }: MomentCardProps) => {
   const [isImageLoaded, setIsImageLoaded] = React.useState(false)
 
@@ -30,11 +30,16 @@ export const MomentCard = ({
   }
 
   return (
-    <figure className="shrink-0">
+    <figure className="group shrink-0 select-none">
       <div className="relative w-80 h-60 overflow-hidden rounded-md">
         {!isImageLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-muted/25 z-10">
+          <div
+            role="status"
+            aria-live="polite"
+            className="absolute inset-0 flex items-center justify-center bg-muted/25 z-10"
+          >
             <Spinner className="size-4" />
+            <span className="sr-only">이미지 로딩 중</span>
           </div>
         )}
         <Image
@@ -42,14 +47,16 @@ export const MomentCard = ({
           alt={`${image.city}, ${image.country}`}
           fill
           sizes="320px"
-          loading={priority ? "eager" : "lazy"}
-          priority={priority}
+          loading={preload ? "eager" : "lazy"}
+          preload={preload}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          className={cn("object-cover grayscale dark:opacity-75 hover:grayscale-25 transition duration-300", {
+          className={cn("object-cover pointer-events-none",
+            "grayscale opacity-50 group-hover:grayscale-25 group-focus-visible:grayscale-25",
+            "transition duration-300", {
             "opacity-100": isImageLoaded,
-            "opacity-0": !isImageLoaded,
           })}
+          aria-hidden={!isImageLoaded}
         />
       </div>
       <figcaption className="text-muted-foreground pt-2 text-xs">

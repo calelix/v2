@@ -4,7 +4,7 @@ alwaysApply: true
 
 Git Commit Convention
 
-> 최신 업데이트: 2026년 01월 17일 05:10
+> 최신 업데이트: 2026년 01월 30일 01:30
 
 # Git 커밋 작성 규칙
 
@@ -41,11 +41,11 @@ JWT 토큰 기반 인증을 도입했습니다.
 - **test** - 테스트 코드 추가/수정
 - **style** - 코드 스타일 변경 (포맷팅, 세미콜론 등)
 - **docs** - 프로젝트 문서 변경 (README, 주석 등)
-- **build** - 빌드 시스템 변경
+- **build** - 빌드 시스템 변경 (webpack, npm scripts 등)
 - **ci** - CI/CD 설정 변경
 - **revert** - 변경 사항 되돌리기
 - **content** - 사용자에게 보이는 콘텐츠 문서 수정 (블로그, 이미지, 텍스트 등)
-- **chore** - 위 타입에 해당하지 않는 기타 작업
+- **chore** - 위 타입에 해당하지 않는 기타 작업 (의존성 추가/업데이트, 개발 환경 설정 등)
 
 ---
 
@@ -152,19 +152,23 @@ git diff
 10개 파일이 변경된 경우:
 
 ```
-변경됨: auth/jwt.ts              → 그룹 A (feat: JWT 구현)
-변경됨: auth/middleware.ts       → 그룹 A (feat: JWT 구현)
-변경됨: api/login.ts             → 그룹 B (feat: 로그인 API)
-변경됨: api/signup.ts            → 그룹 C (feat: 회원가입 API)
-변경됨: components/Button.tsx    → 그룹 D (refactor: 공통 컴포넌트)
-변경됨: components/Input.tsx     → 그룹 D (refactor: 공통 컴포넌트)
-변경됨: pages/login.tsx          → 그룹 E (fix: 로그인 버그)
-변경됨: utils/validator.ts       → 그룹 E (fix: 로그인 버그)
-변경됨: styles/theme.ts          → 그룹 F (style: 테마 업데이트)
-변경됨: README.md                → 그룹 G (docs: 문서 추가)
+변경됨: package.json             → 그룹 A (chore: 라이브러리 추가)
+변경됨: pnpm-lock.yaml           → 그룹 A (chore: 라이브러리 추가)
+변경됨: auth/jwt.ts              → 그룹 B (feat: JWT 구현)
+변경됨: auth/middleware.ts       → 그룹 B (feat: JWT 구현)
+변경됨: api/login.ts             → 그룹 C (feat: 로그인 API)
+변경됨: api/signup.ts            → 그룹 D (feat: 회원가입 API)
+변경됨: components/Button.tsx    → 그룹 E (refactor: 공통 컴포넌트)
+변경됨: components/Input.tsx     → 그룹 E (refactor: 공통 컴포넌트)
+변경됨: pages/login.tsx          → 그룹 F (fix: 로그인 버그)
+변경됨: utils/validator.ts       → 그룹 F (fix: 로그인 버그)
+변경됨: styles/theme.ts          → 그룹 G (style: 테마 업데이트)
+변경됨: README.md                → 그룹 H (docs: 문서 추가)
 ```
 
-결과: **7개의 독립적인 커밋** 생성
+결과: **8개의 독립적인 커밋** 생성
+
+**주의:** 의존성 추가(그룹 A)는 해당 기능 구현(그룹 B) 직전에 커밋하여 의존성 순서를 유지합니다.
 
 ### 3단계: 파일 단위 커밋 생성
 
@@ -273,24 +277,26 @@ git commit -m "feat: ..."
 
 의존성을 고려한 순서로 커밋:
 
-1. **유틸리티/공통 함수** 먼저
-2. **타입/인터페이스** 정의
-3. **비즈니스 로직** 구현
-4. **UI 컴포넌트** (로직 사용)
-5. **페이지/라우트** (컴포넌트 사용)
-6. **테스트 코드**
-7. **문서/스타일** 마지막
+1. **외부 의존성 추가** (package.json 등) - 제일 먼저
+2. **유틸리티/공통 함수**
+3. **타입/인터페이스** 정의
+4. **비즈니스 로직** 구현
+5. **UI 컴포넌트** (로직 사용)
+6. **페이지/라우트** (컴포넌트 사용)
+7. **테스트 코드**
+8. **문서/스타일** 마지막
 
 예시:
 
 ```bash
-1. feat: 인증 유틸리티 함수 추가
-2. feat: 사용자 타입 정의
-3. feat: JWT 인증 로직 구현
-4. feat: 로그인 컴포넌트 추가
-5. feat: 로그인 페이지 구현
-6. test: 로그인 플로우 테스트 추가
-7. docs: 인증 사용법 문서 추가
+1. chore: JWT 관련 라이브러리 추가
+2. feat: 인증 유틸리티 함수 추가
+3. feat: 사용자 타입 정의
+4. feat: JWT 인증 로직 구현
+5. feat: 로그인 컴포넌트 추가
+6. feat: 로그인 페이지 구현
+7. test: 로그인 플로우 테스트 추가
+8. docs: 인증 사용법 문서 추가
 ```
 
 ### 6단계: 커밋 완료 후 확인

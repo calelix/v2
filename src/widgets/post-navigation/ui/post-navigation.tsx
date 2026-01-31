@@ -32,8 +32,8 @@ export const PostNavigation = ({
           size="icon-lg"
           className="rounded-full border border-border"
         >
-          <span className="sr-only">Scroll to top</span>
           <IconArrowUp />
+          <span className="sr-only">Scroll to top</span>
         </ScrollToTopButton>
       </div>
       <nav className="grid grid-cols-2 gap-4">

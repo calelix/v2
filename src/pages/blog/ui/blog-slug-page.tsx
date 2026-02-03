@@ -1,11 +1,5 @@
 "use client"
 
-import {
-  format,
-  parseISO,
-} from "date-fns"
-import { ko } from "date-fns/locale"
-
 import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"
 import { Giscus } from "@/widgets/comments"
@@ -62,7 +56,9 @@ export const BlogSlugPage = ({
             </FadeUpItem>
             <FadeUpItem>
               <p className="mt-4 text-xs/relaxed text-muted-foreground">
-                Published on {format(parseISO(frontmatter.publishedAt), "MMMM dd, yyyy", { locale: ko })}
+                Published on <time dateTime={frontmatter.publishedAt}>
+                  {frontmatter.formattedPublishedAt}
+                </time>
               </p>
             </FadeUpItem>
             <FadeUpItem>

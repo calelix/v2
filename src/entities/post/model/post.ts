@@ -11,6 +11,7 @@ export interface PostFrontmatter {
   title: string
   description: string
   publishedAt: string
+  formattedPublishedAt: string
   author: {
     name: string
     picture?: string

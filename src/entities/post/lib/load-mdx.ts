@@ -8,6 +8,11 @@ import {
   transformerNotationHighlight,
 } from "@shikijs/transformers"
 import { visit } from "unist-util-visit"
+import { ko } from "date-fns/locale"
+import {
+  format,
+  parseISO,
+} from "date-fns"
 
 import { PostFrontmatter } from "../model/post"
 
@@ -56,8 +61,14 @@ export const getBundleMDX = async (category: string, slug: string) => {
     },
   })
 
+  const publishedDate = parseISO(source.frontmatter.publishedAt as string)
+  const formattedPublishedAt = format(publishedDate, "MMMM dd, yyyy", { locale: ko })
+
   return {
-    frontmatter: source.frontmatter as PostFrontmatter,
+    frontmatter: {
+      ...source.frontmatter,
+      formattedPublishedAt,
+    } as PostFrontmatter,
     code
   }
 }

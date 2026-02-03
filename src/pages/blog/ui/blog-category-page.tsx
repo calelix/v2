@@ -1,10 +1,5 @@
 import Link from "next/link"
 
-import {
-  format,
-  parseISO,
-} from "date-fns"
-import { ko } from "date-fns/locale"
 import { IconArrowRight } from "@tabler/icons-react"
 
 import { Header } from "@/widgets/header"
@@ -70,7 +65,7 @@ export const BlogCategoryPage = ({
                     <div className="hidden md:flex md:w-1/5 justify-start">
                       <div className="flex flex-col gap-2 md:gap-4 min-w-0">
                         <time dateTime={post.frontmatter.publishedAt} className="text-xs/relaxed text-muted-foreground">
-                          {format(parseISO(post.frontmatter.publishedAt), "dd MMM yyyy", { locale: ko })}
+                          {post.frontmatter.formattedPublishedAt}
                         </time>
                       </div>
                     </div>

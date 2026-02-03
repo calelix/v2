@@ -1,6 +1,11 @@
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
+import { ko } from "date-fns/locale"
+import {
+  format,
+  parseISO,
+} from "date-fns"
 
 import {
   type CategoryWithPosts,
@@ -75,9 +80,15 @@ export const getPostsByCategory = (directory: string, category: string): Categor
       const fileContents = fs.readFileSync(filePath, "utf8")
       const { data } = matter(fileContents)
 
+      const publishedDate = parseISO(data.publishedAt as string)
+      const formattedPublishedAt = format(publishedDate, "MMMM dd, yyyy", { locale: ko })
+
       return {
         slug: file.replace(/\.(md|mdx)$/, ""),
-        frontmatter: data as Post["frontmatter"],
+        frontmatter: {
+          ...data,
+          formattedPublishedAt,
+        } as Post["frontmatter"],
       }
     })
     .filter(post => post.frontmatter.status === "published")

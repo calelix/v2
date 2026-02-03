@@ -4,6 +4,7 @@ import {
   format,
   parseISO,
 } from "date-fns"
+import { ko } from "date-fns/locale"
 
 import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"

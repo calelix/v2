@@ -62,7 +62,7 @@ export const BlogSlugPage = ({
             </FadeUpItem>
             <FadeUpItem>
               <p className="mt-4 text-xs/relaxed text-muted-foreground">
-                Published on {format(parseISO(frontmatter.publishedAt), "MMMM dd, yyyy")}
+                Published on {format(parseISO(frontmatter.publishedAt), "MMMM dd, yyyy", { locale: ko })}
               </p>
             </FadeUpItem>
             <FadeUpItem>

@@ -1,6 +1,6 @@
 import { type ListBlobResultBlob } from "@vercel/blob"
 
-import { type Moment } from "./moment"
+import { type Moment } from "../model/moment"
 
 const IMAGE_REGEX = /\.(jpg|jpeg|png|gif|webp)$/i
 

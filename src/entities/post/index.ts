@@ -15,10 +15,10 @@ export {
   getCategoryMetadata,
   getPostsByCategory,
   getAdjacentPost,
-} from "./lib/posts"
+} from "./api/posts"
 export {
   getBundleMDX,
   getPostFrontmatter,
-} from "./lib/load-mdx"
+} from "./api/load-mdx"
 
 export { EmptyPost } from "./ui/empty-post"

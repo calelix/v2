@@ -1,6 +1,6 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
-import { getMoments } from "../api/get-moments"
+import { getMoments } from "@/entities/moment"
 
 export function useMomentsInfiniteQuery() {
   return useSuspenseInfiniteQuery({

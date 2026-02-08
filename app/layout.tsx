@@ -10,6 +10,7 @@ import {
   QueryProvider,
   ThemeProvider,
 } from "@/app/providers"
+import { Banner } from "@/widgets/banner"
 
 export const metadata: Metadata = {
   title: "JGPARK",
@@ -29,6 +30,11 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} font-sans antialiased`}>
         <ThemeProvider>
           <QueryProvider>
+            <Banner>
+              <p className="text-sm">
+                블로그 이전 중입니다.
+              </p>
+            </Banner>
             {children}
           </QueryProvider>
         </ThemeProvider>

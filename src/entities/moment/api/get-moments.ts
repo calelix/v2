@@ -3,6 +3,7 @@ import { APP_URL } from "@/shared/config/env"
 
 interface GetMomentsRequest {
   cursor?: string
+  pageSize?: number
 }
 
 interface GetMomentsResult {
@@ -11,13 +12,19 @@ interface GetMomentsResult {
 }
 
 export async function getMoments(params: GetMomentsRequest): Promise<GetMomentsResult> {
-  const { cursor } = params
+  const { cursor, pageSize } = params
 
-  const url = cursor
-    ? `${APP_URL}/api/moments?cursor=${encodeURIComponent(cursor)}`
-    : `${APP_URL}/api/moments`
+  const url = new URL("/api/moments", APP_URL)
 
-  const res = await fetch(url)
+  if (cursor) {
+    url.searchParams.set("cursor", cursor)
+  }
+
+  if (pageSize) {
+    url.searchParams.set("pageSize", String(pageSize))
+  }
+
+  const res = await fetch(url.toString())
 
   if (!res.ok) {
     throw new Error("Failed to fetch moments")

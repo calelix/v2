@@ -1,5 +1,3 @@
-import { type ListBlobResultBlob } from "@vercel/blob"
-
 import { type Moment } from "../model/moment"
 
 const IMAGE_REGEX = /\.(jpg|jpeg|png|gif|webp)$/i
@@ -8,11 +6,11 @@ export function isImage(path: string) {
   return IMAGE_REGEX.test(path)
 }
 
-export function blobToMoment(blob: ListBlobResultBlob): Moment {
-  const [country, city] = blob.pathname.split("/")
+export function r2ObjectToMoment(key: string): Moment {
+  const [country, city] = key.split("/")
 
   return {
-    src: blob.url,
+    src: `${process.env.R2_WORKER_IMAGE_BASE_URL}/${key}`,
     country,
     city,
   }

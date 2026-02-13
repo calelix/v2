@@ -3,7 +3,7 @@ import Link from "next/link"
 import { IconBrandGithub } from "@tabler/icons-react"
 
 import { cn } from "@/shared/lib/utils/tailwindcss"
-import { buttonVariants } from "@/shared/ui/shadcn/button"
+import { Button } from "@/shared/ui/shadcn/button"
 import { ModeToggle } from "@/shared/ui/mode-toggle/mode-toggle"
 import { BrandLogo } from "@/shared/ui/logo/brand-logo"
 import { navigations } from "../config/navigations"
@@ -28,26 +28,25 @@ export const Header = ({
           </Link>
           <nav className="flex items-center justify-between">
             {navigations.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={buttonVariants({ variant: "ghost", size: "lg" })}
-              >
-                {item.label}
-              </Link>
+              <Button key={item.href} variant="ghost" size="lg" asChild>
+                <Link href={item.href}>
+                  {item.label}
+                </Link>
+              </Button>
             ))}
           </nav>
         </div>
         <div className="flex items-center ml-auto">
-          <Link
-            href={informations.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={buttonVariants({ variant: "ghost", size: "lg" })}
-          >
-            <IconBrandGithub />
-            <span className="sr-only">Calelix Github</span>
-          </Link>
+          <Button variant="ghost" size="lg" asChild>
+            <Link
+              href={informations.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconBrandGithub />
+              <span className="sr-only">Calelix Github</span>
+            </Link>
+          </Button>
           <ModeToggle />
         </div>
       </div>

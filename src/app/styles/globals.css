@@ -54,11 +54,16 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  --blur-height: calc(var(--spacing) * 16);
+  --page-spacing: calc(var(--spacing) * 20);
+  --header-height: calc(var(--spacing) * 24);
+  --footer-height: calc(var(--spacing) * 32);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
+  --background: oklch(0.985 0.001 106.423);
+  --foreground: oklch(0.172 0.005 265.22);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.147 0.004 49.25);
   --popover: oklch(1 0 0);
@@ -92,8 +97,8 @@
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
-  --foreground: oklch(0.985 0.001 106.423);
+  --background: oklch(0.2178 0 0);
+  --foreground: oklch(0.9219 0 0);
   --card: oklch(0.216 0.006 56.043);
   --card-foreground: oklch(0.985 0.001 106.423);
   --popover: oklch(0.216 0.006 56.043);
@@ -123,6 +128,13 @@
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
+}
+
+@media (width >=theme(--breakpoint-lg)) {
+  :root {
+    --blur-height: calc(var(--spacing) * 24);
+    --page-spacing: calc(var(--spacing) * 28);
+  }
 }
 
 @layer base {
@@ -183,5 +195,26 @@
   to {
     clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
     opacity: 1;
+  }
+}
+
+.blur {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  height: var(--blur-height);
+  margin-bottom: calc(-1 * var(--blur-height));
+  opacity: 0.95;
+  backdrop-filter: blur(5px);
+  mask-image: linear-gradient(to bottom, var(--background) 25%, transparent);
+  user-select: none;
+  pointer-events: none;
+
+  &::after {
+    content: "";
+    background: linear-gradient(to bottom, var(--background), #0000);
+    position: absolute;
+    inset: 0;
   }
 }

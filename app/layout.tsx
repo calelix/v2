@@ -35,7 +35,10 @@ export default function RootLayout({
                 블로그 이전 중입니다.
               </p>
             </Banner>
-            {children}
+            <div className="blur" aria-hidden="true" />
+            <div className="pt-(--page-spacing)">
+              {children}
+            </div>
           </QueryProvider>
         </ThemeProvider>
       </body>

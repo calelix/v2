@@ -12,15 +12,7 @@ import {
 
 export const HomePage = () => {
   return (
-    <div
-      style={
-        {
-          "--header-height": "calc(var(--spacing)*32)",
-          "--footer-height": "calc(var(--spacing)*32)",
-        } as React.CSSProperties
-      }
-    >
-      <div aria-hidden="true" className="sticky top-0 z-50 h-(--header-height) bg-background" />
+    <>
       <main className="relative flex container-sm py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
         <FadeUpContainer className="flex flex-col w-full shrink-0">
           <FadeUpItem>
@@ -69,7 +61,6 @@ export const HomePage = () => {
           </FadeUpItem>
         </FadeUpContainer>
       </main>
-      <div aria-hidden="true" className="h-(--footer-height)" />
-    </div>
+    </>
   )
 }

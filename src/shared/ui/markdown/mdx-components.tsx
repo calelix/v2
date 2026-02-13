@@ -63,7 +63,7 @@ const components: MDXContentProps["components"] = {
   },
   p: (props: React.ComponentProps<"p">) => (
     <p
-      className="text-xs/relaxed text-muted-foreground not-first:mt-1"
+      className="text-xs/loose text-body not-first:mt-2"
       {...props}
     />
   ),
@@ -93,7 +93,7 @@ const components: MDXContentProps["components"] = {
   ),
   li: (props: React.ComponentProps<"li">) => (
     <li
-      className="text-xs/relaxed text-muted-foreground [&+li]:mt-1"
+      className="text-xs/relaxed text-body [&+li]:mt-1"
       {...props}
     />
   ),
@@ -163,13 +163,13 @@ const components: MDXContentProps["components"] = {
           <TabsList className="rounded-sm bg-transparent p-0">
             <TabsTrigger
               value="preview"
-              className="border-0 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-transparent data-[state=active]:text-foreground text-muted-foreground dark:data-[state=active]:bg-transparent dark:data-[state=active]:shadow-none dark:data-[state=active]:border-transparent dark:data-[state=active]:text-foreground dark:text-muted-foreground"
+              className="border-0 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-transparent data-[state=active]:text-foreground text-body dark:data-[state=active]:bg-transparent dark:data-[state=active]:shadow-none dark:data-[state=active]:border-transparent dark:data-[state=active]:text-foreground dark:text-body"
             >
               Preview
             </TabsTrigger>
             <TabsTrigger
               value="code"
-              className="border-0 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-transparent data-[state=active]:text-foreground text-muted-foreground dark:data-[state=active]:bg-transparent dark:data-[state=active]:shadow-none dark:data-[state=active]:border-transparent dark:data-[state=active]:text-foreground dark:text-muted-foreground"
+              className="border-0 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-transparent data-[state=active]:text-foreground text-body dark:data-[state=active]:bg-transparent dark:data-[state=active]:shadow-none dark:data-[state=active]:border-transparent dark:data-[state=active]:text-foreground dark:text-body"
             >
               Code
             </TabsTrigger>

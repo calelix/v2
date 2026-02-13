@@ -109,7 +109,7 @@ export const MomentsGallery = () => {
             <CarouselNext className="relative top-0 right-0 translate-none" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-body">
               {hasNextPage ? "스크롤하여 더 보기" : "모든 이미지를 불러왔습니다"}
             </span>
             {hasNextPage && <IconArrowRight className="size-4 animate-pulse" aria-hidden="true" />}

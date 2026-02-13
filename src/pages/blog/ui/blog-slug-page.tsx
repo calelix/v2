@@ -1,8 +1,9 @@
 "use client"
 
+import dynamic from "next/dynamic"
+
 import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"
-import { Giscus } from "@/widgets/comments"
 import { AppBreadcrumb } from "@/widgets/breadcrumb"
 import { PostNavigation } from "@/widgets/post-navigation"
 import { BlogToc } from "@/widgets/table-of-contents"
@@ -16,6 +17,8 @@ import {
 } from "@/shared/ui/fade-up/fade-up"
 import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
 import { Separator } from "@/shared/ui/shadcn/separator"
+
+const Giscus = dynamic(() => import("@/widgets/comments").then((m) => m.Giscus), { ssr: false })
 
 interface BlogSlugPageProps {
   category: string

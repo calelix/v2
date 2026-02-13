@@ -31,10 +31,10 @@ export const MomentsHomePage = () => {
             </h1>
           </FadeUpItem>
           <FadeUpItem className="mt-2">
-            <p className="text-xs/relaxed text-muted-foreground">
+            <p className="text-xs/loose text-body">
               쉽게 보내기 싫은 지나간 순간들을 사진으로 남깁니다.
             </p>
-            <p className="text-xs/relaxed text-muted-foreground">
+            <p className="text-xs/loose text-body">
               하루의 빛과 스치는 풍경, 사소한 감정들을 모아 흐릿해지기 전의 기억을 조용히 붙잡아 두었습니다.
             </p>
           </FadeUpItem>

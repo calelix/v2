@@ -15,7 +15,7 @@ export const MomentsGallerySkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-end gap-2 mt-4 text-muted-foreground">
+      <div className="flex items-center justify-end gap-2 mt-4 text-body">
         <span className="text-xs">
           <Skeleton className="w-24 h-3 bg-muted/50" />
         </span>

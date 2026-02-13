@@ -59,7 +59,7 @@ export const MomentCard = ({
           aria-hidden={!isImageLoaded}
         />
       </div>
-      <figcaption className="text-muted-foreground pt-2 text-xs">
+      <figcaption className="text-body pt-2 text-xs">
         Shot in{" "}
         <span className="text-accent font-semibold capitalize">
           {image.city}, {image.country}

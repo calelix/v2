@@ -43,7 +43,7 @@ export const BlogCategoryPage = ({
             </h1>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="mt-4 text-xs/relaxed text-muted-foreground">
+            <p className="mt-4 text-xs/loose text-body">
               {metadata.description}
             </p>
           </FadeUpItem>
@@ -57,7 +57,7 @@ export const BlogCategoryPage = ({
                   <Link href={`/blog/${category}/${post.slug}`} className="flex flex-row items-start justify-between gap-2">
                     <div className="hidden md:flex md:w-1/5 justify-start">
                       <div className="flex flex-col gap-2 md:gap-4 min-w-0">
-                        <time dateTime={post.frontmatter.publishedAt} className="text-xs/relaxed text-muted-foreground">
+                        <time dateTime={post.frontmatter.publishedAt} className="text-xs/loose text-body">
                           {post.frontmatter.formattedPublishedAt}
                         </time>
                       </div>
@@ -67,14 +67,14 @@ export const BlogCategoryPage = ({
                         <h2 className="text-base font-semibold hover:underline hover:underline-offset-4 hover:decoration-muted-foreground">
                           {post.frontmatter.title}
                         </h2>
-                        <p className="line-clamp-1 text-xs/relaxed text-muted-foreground">
+                        <p className="line-clamp-1 text-xs/loose text-body">
                           {post.frontmatter.description}
                         </p>
                       </div>
                     </div>
                     <div className="hidden md:flex md:w-1/5 justify-end">
                       <div className="group flex flex-col gap-2 md:gap-4 min-w-0">
-                        <span className="text-xs/relaxed group-hover:underline group-hover:underline-offset-4 group-hover:decoration-muted-foreground">
+                        <span className="text-xs/loose group-hover:underline group-hover:underline-offset-4 group-hover:decoration-muted-foreground">
                           Read more
                         </span>
                         <IconArrowRight className="size-4" />

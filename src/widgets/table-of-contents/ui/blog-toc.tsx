@@ -68,11 +68,11 @@ export const BlogToc = ({
         <div ref={setScrollContainerRef} className="w-full h-fit max-h-[50vh] overflow-y-auto no-scrollbar">
           <div className="w-full h-full">
             <TableOfContents aria-labelledby="on-this-page-heading" className="h-fit">
-              <TableOfContentsTitle id="on-this-page-heading" className="sticky top-0 bg-background h-6 text-xs/relaxed">
+              <TableOfContentsTitle id="on-this-page-heading" className="sticky top-0 bg-background h-6 text-xs/loose">
                 On This Page
               </TableOfContentsTitle>
               <div ref={topRef} className="pointer-events-none h-px" />
-              <TableOfContentsList className="w-full text-xs/relaxed text-muted-foreground">
+              <TableOfContentsList className="w-full text-xs/loose text-body">
                 {toc.map((item) => (
                   <TableOfContentsItem key={item.slug} indent>
                     <TableOfContentsLink href={`#${item.slug}`} isActive={activeId === item.slug}>
@@ -107,7 +107,7 @@ export const BlogToc = ({
           container="#container"
           variant="ghost"
           size="sm"
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-transparent dark:hover:bg-transparent"
+          className="flex items-center gap-2 text-body hover:text-foreground hover:bg-transparent dark:hover:bg-transparent"
         >
           <span>Scroll to top</span>
           <IconArrowUp />

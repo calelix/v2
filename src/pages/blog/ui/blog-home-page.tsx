@@ -20,10 +20,10 @@ export const BlogHomePage = () => {
             </h1>
           </FadeUpItem>
           <FadeUpItem className="mt-2">
-            <p className="text-xs/relaxed text-muted-foreground">
+            <p className="text-xs/loose text-body">
               지난 날을 떠올리다 보면, 기억은 종종 파편처럼 흩어져 잘 떠오르지 않을 때가 있습니다.
             </p>
-            <p className="text-xs/relaxed text-muted-foreground">
+            <p className="text-xs/loose text-body">
               간혹 적어 두었던 글과 순간들 역시 여기저기 흩어져 있었습니다. 이제는 그 조각들을 한곳에 모아두고 싶었습니다.
             </p>
           </FadeUpItem>
@@ -37,7 +37,7 @@ export const BlogHomePage = () => {
                   <h2 className="text-base font-semibold group-hover:text-primary transition-colors duration-250">
                     Craft
                   </h2>
-                  <p className="mt-2 text-xs/relaxed text-muted-foreground">
+                  <p className="mt-2 text-xs/loose text-body">
                     무언가를 만들고, 부수고, 고치고. 이 과정을 반복한다.
                   </p>
                 </article>
@@ -47,8 +47,8 @@ export const BlogHomePage = () => {
                   <h2 className="text-base font-semibold group-hover:text-primary transition-colors duration-250">
                     Insight
                   </h2>
-                  <p className="mt-2 text-xs/relaxed text-muted-foreground">
-                    생각은 천천히, 오랜 시간에 걸쳐, 서서히 싹텄다.
+                  <p className="mt-2 text-xs/loose text-body">
+                    생각은 천천히, 오랜 시간에 걸쳐, 서서히 싹튼다.
                   </p>
                 </article>
               </Link>
@@ -57,7 +57,7 @@ export const BlogHomePage = () => {
                   <h2 className="text-base font-semibold group-hover:text-primary transition-colors duration-250">
                     Digest
                   </h2>
-                  <p className="mt-2 text-xs/relaxed text-muted-foreground">
+                  <p className="mt-2 text-xs/loose text-body">
                     지식을 이해로 바꾸고, 진정으로 내 것으로 만들다.
                   </p>
                 </article>

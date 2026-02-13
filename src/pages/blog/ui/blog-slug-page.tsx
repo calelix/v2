@@ -50,14 +50,14 @@ export const BlogSlugPage = ({
             </h1>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="mt-4 text-xs/relaxed text-muted-foreground">
+            <p className="mt-4 text-xs/loose text-body">
               Published on <time dateTime={frontmatter.publishedAt}>
                 {frontmatter.formattedPublishedAt}
               </time>
             </p>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="mt-4 text-xs/relaxed">
+            <p className="mt-4 text-xs/loose">
               {frontmatter.description}
             </p>
           </FadeUpItem>

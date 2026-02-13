@@ -21,19 +21,20 @@ export const HomePage = () => {
             </h1>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="mt-4 text-xs/relaxed text-muted-foreground">
-              저는 프론트엔드 개발자입니다. 소설을 읽는 것을 좋아하고, 카페에 앉아 공부하며 생각을 정리하는 시간을 즐깁니다.
-              혼자 깊이 집중하는 순간을 좋아하면서도, 때로는 대화를 통해 생각이 확장되는 경험을 소중하게 여깁니다.
-            </p>
-            <p className="mt-4 text-xs/relaxed text-muted-foreground">
-              제가 만드는 서비스가 사용자에게 어떤 가치를 전하는지,
+            <p className="mt-4 text-xs/loose text-muted-foreground">
+              저는 개발자입니다. 제가 만드는 서비스가 사용자에게 어떤 가치를 전하는지,
               그 가치를 전달하는 과정에서 우리를 불필요하게 번거롭게 하거나 어렵게 만드는 요소는 무엇인지에 늘 관심이 있습니다.
               화면을 만드는 일에 그치지 않고, 그 화면이 실제로 의미 있는 경험으로 이어지도록 고민합니다.
             </p>
-            <p className="mt-4 text-xs/relaxed text-muted-foreground">
+            <p className="mt-4 text-xs/loose text-body">
               저의 개발자로서의 만족은 단순히 구현에서 끝나지 않습니다.
               제가 만든 화면이 사용자에게 닿고, 사용되며, 작은 도움이라도 될 때 비로소 기여했다고 느낍니다.
-              그래서 오늘도 화면이 화면으로만 남지 않도록, 묵묵히 땀을 흘리며 작업하고 있습니다.
+              그래서 오늘도 더 나은 선택을 하기 위해 끊임없이 사색하며,
+              화면이 화면으로만 남지 않도록, 묵묵히 땀을 흘리며 작업하고 있습니다.
+            </p>
+            <p className="mt-4 text-xs/loose text-body">
+              소설을 읽는 것을 좋아하고, 카페에 앉아 공부하며 생각을 정리하는 시간을 즐깁니다.
+              혼자 깊이 집중하는 순간을 좋아하면서도, 때로는 대화를 통해 생각이 확장되는 경험을 소중하게 여깁니다.
             </p>
           </FadeUpItem>
           <FadeUpItem>

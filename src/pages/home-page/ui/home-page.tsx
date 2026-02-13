@@ -21,7 +21,7 @@ export const HomePage = () => {
             </h1>
           </FadeUpItem>
           <FadeUpItem>
-            <p className="mt-4 text-xs/loose text-muted-foreground">
+            <p className="mt-4 text-xs/loose text-body">
               저는 개발자입니다. 제가 만드는 서비스가 사용자에게 어떤 가치를 전하는지,
               그 가치를 전달하는 과정에서 우리를 불필요하게 번거롭게 하거나 어렵게 만드는 요소는 무엇인지에 늘 관심이 있습니다.
               화면을 만드는 일에 그치지 않고, 그 화면이 실제로 의미 있는 경험으로 이어지도록 고민합니다.

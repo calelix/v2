@@ -59,6 +59,8 @@
   --page-spacing: calc(var(--spacing) * 20);
   --header-height: calc(var(--spacing) * 24);
   --footer-height: calc(var(--spacing) * 32);
+
+  --color-body: var(--text-body);
 }
 
 :root {
@@ -94,6 +96,8 @@
   --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
+
+  --text-body: oklch(0.371 0 0);
 }
 
 .dark {
@@ -128,6 +132,8 @@
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
+
+  --text-body: oklch(0.795 0 0);
 }
 
 @media (width >=theme(--breakpoint-lg)) {

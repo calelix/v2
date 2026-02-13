@@ -26,7 +26,7 @@ export const Banner = ({
 
   return (
     <div
-      className={cn("relative flex items-center gap-6 overflow-hidden bg-foreground/5 px-6 py-2.5 sm:px-4", className)}
+      className={cn("relative flex gap-8 bg-foreground/5 px-4 lg:px-8 py-2.5", className)}
       {...props}
     >
       <div className="flex flex-wrap items-center gap-4">

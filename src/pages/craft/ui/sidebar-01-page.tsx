@@ -26,7 +26,7 @@ export const Sidebar01Page = () => {
       }
     >
       <CraftSidebar />
-      <header className="bg-background fixed top-0 left-0 z-50 flex w-full h-16 items-center gap-4 border-b px-4">
+      <header className="fixed top-0 left-0 z-50 flex items-center w-full h-(--header-height) gap-4 border-b px-4 bg-background">
         <div className="flex items-center">
           <SidebarTrigger variant="outline" size="icon" />
         </div>
@@ -34,9 +34,9 @@ export const Sidebar01Page = () => {
           Sidebar with Layout Sticky Header
         </h2>
       </header>
-      <div className="flex-1 flex flex-col overflow-hidden pt-16">
+      <div className="flex-1 flex flex-col overflow-hidden pt-(--header-height)">
         <main className="flex-1 flex overflow-y-auto p-4">
-          <div className="flex-1 flex">
+          <div className="flex-1 flex h-1000">
             Content
           </div>
         </main>
@@ -94,7 +94,7 @@ const CraftSidebar = () => {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild className="hover:bg-muted hover:text-foreground">
                   <Link href="#">
-                    Sidebar with Layout Sticky Header
+                    Sidebar with Layout Fixed Header
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

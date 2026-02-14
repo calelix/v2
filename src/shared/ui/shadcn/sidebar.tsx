@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
 import { IconLayoutSidebar } from "@tabler/icons-react"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/shared/lib/hooks/use-mobile"
 import { cn } from "@/shared/lib/utils/tailwindcss"
 import { Button } from "@/shared/ui/shadcn/button"
 import { Input } from "@/shared/ui/shadcn/input"

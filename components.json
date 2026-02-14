@@ -15,8 +15,8 @@
     "components": "@/shared/ui/shadcn",
     "utils": "@/shared/lib/utils/tailwindcss",
     "ui": "@/shared/ui/shadcn",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "lib": "@/shared/lib/utils",
+    "hooks": "@/shared/lib/hooks"
   },
   "menuColor": "inverted",
   "menuAccent": "subtle",

@@ -10,7 +10,7 @@ import {
   QueryProvider,
   ThemeProvider,
 } from "@/app/providers"
-import { Banner } from "@/widgets/banner"
+import { TooltipProvider } from "@/shared/ui/shadcn/tooltip"
 
 export const metadata: Metadata = {
   title: "JGPARK",
@@ -23,22 +23,16 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} font-sans antialiased`}>
         <ThemeProvider>
           <QueryProvider>
-            <Banner>
-              <p className="text-sm">
-                블로그 이전 중입니다.
-              </p>
-            </Banner>
-            <div className="blur" aria-hidden="true" />
-            <div className="pt-(--page-spacing)">
+            <TooltipProvider>
               {children}
-            </div>
+            </TooltipProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

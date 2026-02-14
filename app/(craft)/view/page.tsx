@@ -1,7 +1,7 @@
-import { SidebarPage } from "@/pages/craft"
+import { Sidebar01Page } from "@/pages/craft"
 
 export default function Page() {
   return (
-    <SidebarPage />
+    <Sidebar01Page />
   )
 }

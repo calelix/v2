@@ -149,7 +149,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground selection:bg-primary/75 selection:text-primary-foreground;
   }
 }
 

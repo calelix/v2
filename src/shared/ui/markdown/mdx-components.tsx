@@ -315,7 +315,7 @@ const components: MDXContentProps["components"] = {
     }
 
     return (
-      <div className="relative w-full border">
+      <div className="relative w-full border not-first:mt-4">
         <Button
           title="전체화면"
           variant="ghost"

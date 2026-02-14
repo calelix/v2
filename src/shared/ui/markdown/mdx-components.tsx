@@ -5,10 +5,13 @@ import Link from "next/link"
 import Image from "next/image"
 
 import {
+  IconArrowUpRight,
+  IconMaximize,
+} from "@tabler/icons-react"
+import {
   getMDXComponent,
   type MDXContentProps,
 } from "mdx-bundler/client"
-import { IconArrowUpRight } from "@tabler/icons-react"
 
 import { cn } from "@/shared/lib/utils/tailwindcss"
 import { liveCodeScope } from "../../lib/markdown/live-code-scope"
@@ -18,6 +21,7 @@ import {
   TabsTrigger,
   TabsContent,
 } from "../shadcn/tabs"
+import { Button } from "../shadcn/button"
 import { LiveCode } from "./live-code"
 
 interface MDXComponentsProps {
@@ -285,6 +289,48 @@ const components: MDXContentProps["components"] = {
             {children}
           </pre>
         </div>
+      </div>
+    )
+  },
+  Iframe: (props: React.ComponentProps<"iframe">) => {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+    const iframeRef = React.useRef<HTMLIFrameElement>(null)
+
+    if (!baseUrl) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("NEXT_PUBLIC_APP_URL is not defined")
+      }
+      return null
+    }
+
+    const handleShowFullScreen = () => {
+      const iframe = iframeRef.current
+      if (!iframe) return
+
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen()
+      } else if ((iframe as any).webkitRequestFullscreen) {
+        (iframe as any).webkitRequestFullscreen()
+      }
+    }
+
+    return (
+      <div className="relative w-full border not-first:mt-4">
+        <Button
+          title="전체화면"
+          variant="ghost"
+          size="icon-sm"
+          onClick={handleShowFullScreen}
+          className="absolute top-2 right-2 z-9999 text-destructive hover:text-destructive/80"
+        >
+          <IconMaximize />
+          <span className="sr-only">전체화면 보기</span>
+        </Button>
+        <iframe
+          ref={iframeRef}
+          title={props.title || "iframe"}
+          src={`${baseUrl}${props.src}`} {...props}
+        />
       </div>
     )
   },

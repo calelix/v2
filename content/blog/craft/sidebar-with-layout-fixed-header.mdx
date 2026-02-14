@@ -1,0 +1,36 @@
+---
+status: 'published'
+title: 'shadcn/ui sidebar와 전체 레이아웃 Fixed Header'
+description: 'Sidebar가 fixed인 레이아웃에서, sidebar와 main 영역을 모두 포함하는 fixed header 동작을 보여주는 예제'
+publishedAt: '2026-02-15T04:00:00'
+author:
+  name: 'jgpark'
+slug: 'sidebar-with-layout-fixed-header'
+---
+
+## 들어가기 전에
+
+현재는 `(demo)/view/page.tsx`에 정적인 페이지로 구현되어 있지만, 앞으로는 **dynamic route(`/view/[slug]`)** 구조로 확장할 예정입니다.
+그렇게 되면 각 데모는 고유한 `slug`를 가지게 되고, `<Iframe />`으로 해당 고유한 `slug`를 포함한 경로를 불러오는 방식으로 사용하게 됩니다.
+
+## 데모 구성
+
+프로젝트를 진행하다 보면 shadcn/ui sidebar와 함께 상단에 고정되는 Header가 필요한 경우가 많이 있었습니다. sidebar와 main 영역을 모두 포함하는 Header 이거나 main 영역에만 동작하는 Header의 경우입니다.
+
+shadcn/ui 컴포넌트는 업스트림 변경으로 인해 주기적으로 수정될 수 있기 때문에, 가급적 원본 컴포넌트를 직접 수정하지 않는 방향을 선호합니다.
+필요한 경우에는 컴포넌트를 감싸거나, className을 전달하거나, 별도로 외부에서 커스텀하는 방식을 사용하고 있습니다.
+
+요구사항 자체는 복잡하지 않지만, 매번 구조를 다시 잡는 과정이 번거로워 재사용 가능한 형태로 미리 구성해 두고자 했습니다.
+
+조건은 아래와 같습니다.
+
+- **shadcn/ui sidebar**를 사용하며 해당 sidebar는 `fixed`로 동작한다.
+- header는 sidebar와 main 영역을 모두 포함하는 전체 레이아웃 기준 상단에 고정되어야 한다.
+- main 영역이 스크롤되더라도 header는 전체 상단에 고정된다.
+- main 영역이 스크롤될 정도의 높이를 가지지 않더라도 가시 영역 전체를 갖는다.
+
+## 예제 화면
+
+아래 iframe은 **고정 사이드바 + 전체 레이아웃 fixed header**가 적용된 데모 화면입니다.
+
+<Iframe src="/view" width="100%" height="500" />

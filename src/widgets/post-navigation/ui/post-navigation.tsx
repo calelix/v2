@@ -26,7 +26,6 @@ export const PostNavigation = ({
     <div className="flex flex-col gap-8 mt-12 pt-8">
       <div className="flex items-center justify-end">
         <ScrollToTopButton
-          container="#container"
           visibilityMode="always"
           variant="ghost"
           size="icon-lg"

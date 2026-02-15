@@ -37,7 +37,7 @@ export const BlogSlugPage = ({
 }: BlogSlugPageProps) => {
 
   return (
-    <div id="container">
+    <>
       <Header className="h-(--header-height) bg-background" />
       <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
         <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
@@ -75,6 +75,6 @@ export const BlogSlugPage = ({
         <BlogToc className="hidden xl:block w-48 shrink-0 sticky top-[calc(var(--header-height)+var(--spacing)*8)] self-start h-fit" />
       </main>
       <Footer className="h-(--footer-height)" />
-    </div>
+    </>
   )
 }

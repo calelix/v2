@@ -104,7 +104,6 @@ export const BlogToc = ({
       </div>
       <div className="mt-4">
         <ScrollToTopButton
-          container="#container"
           variant="ghost"
           size="sm"
           className="flex items-center gap-2 text-body hover:text-foreground hover:bg-transparent dark:hover:bg-transparent"

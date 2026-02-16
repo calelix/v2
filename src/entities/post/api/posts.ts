@@ -81,7 +81,7 @@ export const getPostsByCategory = (directory: string, category: string): Categor
       const { data } = matter(fileContents)
 
       const publishedDate = parseISO(data.publishedAt as string)
-      const formattedPublishedAt = format(publishedDate, "MMMM dd, yyyy", { locale: ko })
+      const formattedPublishedAt = format(publishedDate, "MM. dd.", { locale: ko })
 
       return {
         slug: file.replace(/\.(md|mdx)$/, ""),
@@ -103,6 +103,29 @@ export const getPostsByCategory = (directory: string, category: string): Categor
     metadata,
     posts,
   }
+}
+
+export const groupPostsByYear = (posts: Post[]) => {
+  const map = new Map<number, Post[]>()
+
+  posts.forEach(post => {
+    const year = new Date(post.frontmatter.publishedAt).getFullYear()
+
+    if (!map.has(year)) {
+      map.set(year, [])
+    }
+
+    const yearPosts = map.get(year)
+
+    if (yearPosts) {
+      yearPosts.push(post)
+    }
+  })
+
+  return Array.from(map.entries()).map(([year, posts]) => ({
+    year,
+    posts,
+  }))
 }
 
 export const getAdjacentPost = (

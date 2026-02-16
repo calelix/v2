@@ -15,6 +15,7 @@ export {
   getCategoryMetadata,
   getPostsByCategory,
   getAdjacentPost,
+  groupPostsByYear,
 } from "./api/posts"
 export {
   getBundleMDX,

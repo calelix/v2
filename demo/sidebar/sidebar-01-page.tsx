@@ -29,7 +29,7 @@ export const Sidebar01Page = () => {
           <SidebarTrigger variant="outline" size="icon" />
         </div>
         <h2 className="text-base font-semibold">
-          Sidebar with Layout Sticky Header
+          Sidebar with Layout Fixed Header
         </h2>
       </header>
       <div className="flex-1 flex flex-col overflow-hidden pt-(--header-height)">

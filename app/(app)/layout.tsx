@@ -14,7 +14,7 @@ export default function Layout({
         </p>
       </Banner>
       <div className="blur" aria-hidden="true" />
-      <div className="pt-(--page-spacing)">
+      <div className="pt-(--page-spacing) pb-6">
         {children}
       </div>
     </>

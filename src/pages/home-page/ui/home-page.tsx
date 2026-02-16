@@ -13,7 +13,7 @@ import {
 export const HomePage = () => {
   return (
     <main className="relative flex gap-8 container-sm min-h-[calc(100svh-var(--page-spacing))]">
-      <FadeUpContainer className="flex flex-col">
+      <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
         <FadeUpItem>
           <h1 className="text-lg font-bold">
             박종광

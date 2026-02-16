@@ -19,7 +19,7 @@ export const MomentsHomePage = () => {
     <>
       <Header className="h-(--header-height) bg-background" />
       <main className="relative flex gap-8 container py-8 min-h-[calc(100svh-var(--page-spacing))]">
-        <FadeUpContainer className="flex flex-col w-full max-w-4xl">
+        <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <h1 className="text-lg font-bold">
               Moments

@@ -24,7 +24,7 @@ export const NotFoundPage = () => {
     <>
       <Header className="h-(--header-height) bg-background" />
       <main className="relative flex container gap-8 py-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
-        <div className="flex flex-col w-full max-w-4xl">
+        <div className="flex flex-col w-full max-w-4xl shrink-0">
           <Empty>
             <EmptyHeader>
               <EmptyTitle>

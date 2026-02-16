@@ -13,6 +13,17 @@ interface PageProps {
   }>
 }
 
+export default async function Page({
+  params,
+}: PageProps) {
+  const { category } = await params
+  const categoryData = getPostsByCategory("blog", category)
+
+  return (
+    <BlogCategoryPage category={category} metadata={categoryData.metadata} posts={categoryData.posts} />
+  )
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -23,17 +34,6 @@ export async function generateMetadata({
     title: `${metadata.name} | JGPARK`,
     description: metadata.description,
   }
-}
-
-export default async function Page({
-  params,
-}: PageProps) {
-  const { category } = await params
-  const categoryData = getPostsByCategory("blog", category)
-
-  return (
-    <BlogCategoryPage category={category} metadata={categoryData.metadata} posts={categoryData.posts} />
-  )
 }
 
 export async function generateStaticParams() {

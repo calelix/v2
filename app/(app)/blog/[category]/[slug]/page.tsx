@@ -16,25 +16,6 @@ interface PageProps {
   }>
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { category, slug } = await params
-  const frontmatter = await getPostFrontmatter(category, slug)
-
-  if (!frontmatter) {
-    return {
-      title: "Not Found",
-      description: "The page you are looking for does not exist.",
-    }
-  }
-
-  return {
-    title: `${frontmatter.title} | JGPARK`,
-    description: frontmatter.description,
-  }
-}
-
 export default async function Page({
   params,
 }: PageProps) {
@@ -57,6 +38,25 @@ export default async function Page({
       next={next}
     />
   )
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { category, slug } = await params
+  const frontmatter = await getPostFrontmatter(category, slug)
+
+  if (!frontmatter) {
+    return {
+      title: "Not Found",
+      description: "The page you are looking for does not exist.",
+    }
+  }
+
+  return {
+    title: `${frontmatter.title} | JGPARK`,
+    description: frontmatter.description,
+  }
 }
 
 export async function generateStaticParams() {

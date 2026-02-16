@@ -5,6 +5,7 @@ import {
   getCategories,
   getCategoryMetadata,
   getPostsByCategory,
+  groupPostsByYear,
 } from "@/entities/post"
 
 interface PageProps {
@@ -19,8 +20,10 @@ export default async function Page({
   const { category } = await params
   const categoryData = getPostsByCategory("blog", category)
 
+  const postsByYear = groupPostsByYear(categoryData.posts)
+
   return (
-    <BlogCategoryPage category={category} metadata={categoryData.metadata} posts={categoryData.posts} />
+    <BlogCategoryPage category={category} metadata={categoryData.metadata} posts={postsByYear} />
   )
 }
 

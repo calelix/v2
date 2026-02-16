@@ -1,7 +1,5 @@
 import Link from "next/link"
 
-import { IconArrowRight } from "@tabler/icons-react"
-
 import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"
 import { AppBreadcrumb } from "@/widgets/breadcrumb"
@@ -10,16 +8,20 @@ import {
   type CategoryMetadata,
   EmptyPost,
 } from "@/entities/post"
+import { cn } from "@/shared/lib/utils/tailwindcss"
+import { Separator } from "@/shared/ui/shadcn/separator"
 import {
   FadeUpContainer,
   FadeUpItem,
 } from "@/shared/ui/fade-up/fade-up"
-import { Separator } from "@/shared/ui/shadcn/separator"
 
 interface BlogCategoryPageProps {
   category: string
   metadata: CategoryMetadata
-  posts: Post[]
+  posts: {
+    year: number
+    posts: Post[]
+  }[]
 }
 
 export const BlogCategoryPage = ({
@@ -32,7 +34,7 @@ export const BlogCategoryPage = ({
   return (
     <>
       <Header className="h-(--header-height) bg-background" />
-      <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
+      <main className="relative flex gap-8 container py-8 min-h-[calc(100svh-var(--page-spacing))]">
         <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <AppBreadcrumb />
@@ -51,42 +53,36 @@ export const BlogCategoryPage = ({
             <Separator className="my-8 lg:my-12" />
           </FadeUpItem>
           <FadeUpItem>
-            <div className="flex flex-col gap-8">
-              {posts.map((post) => (
-                <article key={post.slug}>
-                  <Link href={`/blog/${category}/${post.slug}`} className="flex flex-row items-start justify-between gap-2">
-                    <div className="hidden md:flex md:w-1/5 justify-start">
-                      <div className="flex flex-col gap-2 md:gap-4 min-w-0">
-                        <time dateTime={post.frontmatter.publishedAt} className="text-xs/loose text-body">
-                          {post.frontmatter.formattedPublishedAt}
-                        </time>
+            <div className="group flex flex-col">
+              {posts.map(({ year, posts }, yearIndex) => (
+                <div key={year} className={cn("border-b flex-1 flex items-start", yearIndex === 0 && "border-t")}>
+                  <div className="w-16 shrink-0 text-sm text-muted-foreground/75 py-4">
+                    {year}
+                  </div>
+                  <div className="flex-1 flex flex-col ml-8">
+                    {posts.map((post, postIndex) => (
+                      <div key={post.slug} className={cn("group/post relative flex-1")}>
+                        {postIndex !== 0 && (
+                          <div className="absolute left-0 right-0 top-0 h-px bg-linear-to-r from-transparent via-border to-transparent" />
+                        )}
+                        <Link href={`/blog/${category}/${post.slug}`} className="flex items-center cursor-pointer py-4">
+                          <p className="flex-1 min-w-0 text-sm font-medium truncate transition-colors group-hover:text-muted-foreground/75 group-hover/post:text-foreground">
+                            {post.frontmatter.title}
+                          </p>
+                          <time
+                            dateTime={post.frontmatter.publishedAt}
+                            className="w-16 shrink-0 text-xs text-right tabular-nums transition-colors text-muted-foreground/75 group-hover:text-muted-foreground/25 group-hover/post:text-muted-foreground"
+                          >
+                            {post.frontmatter.formattedPublishedAt}
+                          </time>
+                        </Link>
                       </div>
-                    </div>
-                    <div className="flex w-full md:w-3/5 justify-start">
-                      <div className="flex flex-col gap-2 md:gap-4 min-w-0">
-                        <h2 className="text-base font-semibold hover:underline hover:underline-offset-4 hover:decoration-muted-foreground">
-                          {post.frontmatter.title}
-                        </h2>
-                        <p className="line-clamp-1 text-xs/loose text-body">
-                          {post.frontmatter.description}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="hidden md:flex md:w-1/5 justify-end">
-                      <div className="group flex flex-col gap-2 md:gap-4 min-w-0">
-                        <span className="text-xs/loose group-hover:underline group-hover:underline-offset-4 group-hover:decoration-muted-foreground">
-                          Read more
-                        </span>
-                        <IconArrowRight className="size-4" />
-                      </div>
-                    </div>
-                  </Link>
-                </article>
+                    ))}
+                  </div>
+                </div>
               ))}
 
-              {isEmptyPosts && (
-                <EmptyPost backUrl="/blog" />
-              )}
+              {isEmptyPosts && <EmptyPost backUrl="/blog" />}
             </div>
           </FadeUpItem>
         </FadeUpContainer>

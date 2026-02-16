@@ -12,7 +12,7 @@ export const BlogHomePage = () => {
   return (
     <>
       <Header className="h-(--header-height) bg-background" />
-      <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
+      <main className="relative flex gap-8 container py-8 min-h-[calc(100svh-var(--page-spacing))]">
         <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <h1 className="text-lg font-bold">

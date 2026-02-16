@@ -17,13 +17,8 @@ import { MomentsGalleryError } from "./moments-gallery-error"
 export const MomentsHomePage = () => {
   return (
     <>
-      {/* <div className="fixed z-100 top-4 left-1/2 -translate-x-1/2 px-2.5 py-1.5 sm:px-4 sm:py-2 bg-foreground backdrop-blur-sm rounded-full shadow-lg">
-        <p className="text-xs font-medium text-background">
-          페이지 준비중입니다
-        </p>
-      </div> */}
       <Header className="h-(--header-height) bg-background" />
-      <main className="relative flex container py-8 gap-8 min-h-[calc(100svh-var(--header-height)-var(--footer-height))]">
+      <main className="relative flex gap-8 container py-8 min-h-[calc(100svh-var(--page-spacing))]">
         <FadeUpContainer className="flex flex-col w-full max-w-4xl shrink-0">
           <FadeUpItem>
             <h1 className="text-lg font-bold">

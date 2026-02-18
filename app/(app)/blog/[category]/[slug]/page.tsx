@@ -9,16 +9,9 @@ import {
   getPostFrontmatter,
 } from "@/entities/post"
 
-interface PageProps {
-  params: Promise<{
-    category: string
-    slug: string
-  }>
-}
-
 export default async function Page({
   params,
-}: PageProps) {
+}: PageProps<"/blog/[category]/[slug]">) {
   const { category, slug } = await params
 
   const bundledMDX = await getBundleMDX(category, slug)
@@ -42,7 +35,7 @@ export default async function Page({
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/blog/[category]/[slug]">): Promise<Metadata> {
   const { category, slug } = await params
   const frontmatter = await getPostFrontmatter(category, slug)
 

@@ -8,15 +8,9 @@ import {
   groupPostsByYear,
 } from "@/entities/post"
 
-interface PageProps {
-  params: Promise<{
-    category: string
-  }>
-}
-
 export default async function Page({
   params,
-}: PageProps) {
+}: PageProps<"/blog/[category]">) {
   const { category } = await params
   const categoryData = getPostsByCategory("blog", category)
 
@@ -29,7 +23,7 @@ export default async function Page({
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/blog/[category]">): Promise<Metadata> {
   const { category } = await params
   const metadata = getCategoryMetadata("blog", category)
 

@@ -41,12 +41,12 @@ const createTestCategory = (basePath: string, category: string, metadata: Catego
   return directory
 }
 
-const createTestPost = (basePath: string, category: string, slug: string, frontmatter: PostFrontmatter) => {
+const createTestPost = (basePath: string, category: string, post: string, frontmatter: PostFrontmatter) => {
   const directory = path.join(basePath, category)
   fs.mkdirSync(directory, { recursive: true })
 
   const fileContent = matter.stringify("Test content", frontmatter)
-  fs.writeFileSync(path.join(directory, `${slug}.mdx`), fileContent)
+  fs.writeFileSync(path.join(directory, `${post}.mdx`), fileContent)
 }
 
 describe("posts", () => {
@@ -127,8 +127,8 @@ describe("posts", () => {
       const posts = getAllPosts(CONTENT_DIRECTORY_NAME)
 
       expect(posts).toEqual([
-        { category: "category1", slug: "post1" },
-        { category: "category1", slug: "post2" },
+        { category: "category1", post: "post1" },
+        { category: "category1", post: "post2" },
       ])
     })
 
@@ -142,8 +142,8 @@ describe("posts", () => {
       const posts = getAllPosts(CONTENT_DIRECTORY_NAME)
 
       expect(posts).toEqual([
-        { category: "category1", slug: "post1" },
-        { category: "category2", slug: "post2" },
+        { category: "category1", post: "post1" },
+        { category: "category2", post: "post2" },
       ])
     })
   })
@@ -186,7 +186,7 @@ describe("posts", () => {
       const result = getPostsByCategory(CONTENT_DIRECTORY_NAME, "category1")
 
       expect(result.posts).toHaveLength(1)
-      expect(result.posts[0].slug).toBe("post1")
+      expect(result.posts[0].post).toBe("post1")
       expect(result.posts[0].frontmatter.title).toBe("Published Post")
     })
 
@@ -199,9 +199,9 @@ describe("posts", () => {
       const result = getPostsByCategory(CONTENT_DIRECTORY_NAME, "category1")
 
       expect(result.posts).toHaveLength(3)
-      expect(result.posts[0].slug).toBe("post2") // 2026-01-03
-      expect(result.posts[1].slug).toBe("post3") // 2026-01-02
-      expect(result.posts[2].slug).toBe("post1") // 2026-01-01
+      expect(result.posts[0].post).toBe("post2") // 2026-01-03
+      expect(result.posts[1].post).toBe("post3") // 2026-01-02
+      expect(result.posts[2].post).toBe("post1") // 2026-01-01
     })
 
     it("frontmatter에 formattedPublishedAt를 추가하여 반환한다", () => {
@@ -248,7 +248,7 @@ describe("posts", () => {
       const result = getAdjacentPost(CONTENT_DIRECTORY_NAME, "category1", "post1")
 
       expect(result.prev).not.toBeNull()
-      expect(result.prev?.slug).toBe("post2")
+      expect(result.prev?.post).toBe("post2")
       expect(result.next).toBeNull()
     })
 
@@ -261,7 +261,7 @@ describe("posts", () => {
 
       expect(result.prev).toBeNull()
       expect(result.next).not.toBeNull()
-      expect(result.next?.slug).toBe("post1")
+      expect(result.next?.post).toBe("post1")
     })
 
     it("중간 포스트는 prev와 next를 모두 반환한다", () => {
@@ -273,9 +273,9 @@ describe("posts", () => {
       const result = getAdjacentPost(CONTENT_DIRECTORY_NAME, "category1", "post2")
 
       expect(result.prev).not.toBeNull()
-      expect(result.prev?.slug).toBe("post3") // older post
+      expect(result.prev?.post).toBe("post3") // older post
       expect(result.next).not.toBeNull()
-      expect(result.next?.slug).toBe("post1") // newer post
+      expect(result.next?.post).toBe("post1") // newer post
     })
   })
 

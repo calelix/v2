@@ -61,11 +61,11 @@ export const BlogCategoryPage = ({
                   </div>
                   <div className="flex-1 flex flex-col ml-8">
                     {posts.map((post, postIndex) => (
-                      <div key={post.slug} className={cn("group/post relative flex-1")}>
+                      <div key={post.post} className={cn("group/post relative flex-1")}>
                         {postIndex !== 0 && (
                           <div className="absolute left-0 right-0 top-0 h-px bg-linear-to-r from-transparent via-border to-transparent" />
                         )}
-                        <Link href={`/blog/${category}/${post.slug}`} className="flex items-center cursor-pointer py-4">
+                        <Link href={`/blog/${category}/${post.post}`} className="flex items-center cursor-pointer py-4">
                           <p className="flex-1 min-w-0 text-sm font-medium truncate transition-colors group-hover:text-muted-foreground/75 group-hover/post:text-foreground">
                             {post.frontmatter.title}
                           </p>

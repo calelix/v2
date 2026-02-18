@@ -27,7 +27,7 @@ export const getCategories = (directory: string): string[] => {
     .map(item => item.name)
 }
 
-export const getAllPosts = (directory: string): Array<{ category: string; slug: string }> => {
+export const getAllPosts = (directory: string): Array<{ category: string; post: string }> => {
   const categories = getCategories(directory)
 
   return categories.flatMap(category => {
@@ -43,7 +43,7 @@ export const getAllPosts = (directory: string): Array<{ category: string; slug: 
       .filter(file => file.endsWith(".md") || file.endsWith(".mdx"))
       .map(file => ({
         category,
-        slug: file.replace(/\.(md|mdx)$/, ""),
+        post: file.replace(/\.(md|mdx)$/, ""),
       }))
   })
 }
@@ -84,7 +84,7 @@ export const getPostsByCategory = (directory: string, category: string): Categor
       const formattedPublishedAt = format(publishedDate, "MM. dd.", { locale: ko })
 
       return {
-        slug: file.replace(/\.(md|mdx)$/, ""),
+        post: file.replace(/\.(md|mdx)$/, ""),
         frontmatter: {
           ...data,
           formattedPublishedAt,
@@ -131,11 +131,11 @@ export const groupPostsByYear = (posts: Post[]) => {
 export const getAdjacentPost = (
   directory: string,
   category: string,
-  slug: string
+  post: string
 ) => {
   const { posts } = getPostsByCategory(directory, category)
 
-  const index = posts.findIndex(post => post.slug === slug)
+  const index = posts.findIndex(p => p.post === post)
 
   const isPostNotFound = index === -1
 

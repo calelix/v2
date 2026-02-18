@@ -22,9 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${hahmlet.variable} font-sans antialiased`}>

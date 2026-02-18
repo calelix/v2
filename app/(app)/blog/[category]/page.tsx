@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { BlogCategoryPage } from "@/pages/blog"
+import { BlogCategoryPage } from "@/pages/blog/category"
 import {
   getCategories,
   getCategoryMetadata,

@@ -8,6 +8,10 @@ import {
   groupPostsByYear,
 } from "@/entities/post"
 
+export const revalidate = false
+export const dynamicParams = false
+export const dynamic = "force-static"
+
 export default async function Page({
   params,
 }: PageProps<"/blog/[category]">) {

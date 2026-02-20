@@ -18,8 +18,8 @@ import { PostFrontmatter } from "../model/post"
 
 export const DATA_PATH = path.join(process.cwd(), "content/blog")
 
-export const getPostFrontmatter = async (category: string, slug: string) => {
-  const source = await getMarkdownContent(category, slug)
+export const getPostFrontmatter = async (category: string, post: string) => {
+  const source = await getMarkdownContent(category, post)
 
   if (!source) {
     return undefined
@@ -28,8 +28,8 @@ export const getPostFrontmatter = async (category: string, slug: string) => {
   return source.frontmatter as PostFrontmatter
 }
 
-export const getBundleMDX = async (category: string, slug: string) => {
-  const source = await getMarkdownContent(category, slug)
+export const getBundleMDX = async (category: string, post: string) => {
+  const source = await getMarkdownContent(category, post)
 
   if (!source) {
     return undefined
@@ -73,8 +73,8 @@ export const getBundleMDX = async (category: string, slug: string) => {
   }
 }
 
-const getMarkdownContent = async (category: string, slug: string) => {
-  const filePath = path.join(DATA_PATH, category, `${slug}.mdx`)
+const getMarkdownContent = async (category: string, post: string) => {
+  const filePath = path.join(DATA_PATH, category, `${post}.mdx`)
 
   const fileContents = await promises.readFile(filePath, "utf8").catch(() => undefined)
 

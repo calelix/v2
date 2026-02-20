@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { BlogSlugPage } from "@/pages/blog"
+import { BlogPostPage } from "@/pages/blog/post"
 import {
   getAdjacentPost,
   getAllPosts,
@@ -9,28 +9,25 @@ import {
   getPostFrontmatter,
 } from "@/entities/post"
 
-interface PageProps {
-  params: Promise<{
-    category: string
-    slug: string
-  }>
-}
+export const revalidate = false
+export const dynamicParams = false
+export const dynamic = "force-static"
 
 export default async function Page({
   params,
-}: PageProps) {
-  const { category, slug } = await params
+}: PageProps<"/blog/[category]/[post]">) {
+  const { category, post } = await params
 
-  const bundledMDX = await getBundleMDX(category, slug)
+  const bundledMDX = await getBundleMDX(category, post)
 
   if (!bundledMDX) {
     notFound()
   }
 
-  const { prev, next } = getAdjacentPost("blog", category, slug)
+  const { prev, next } = getAdjacentPost("blog", category, post)
 
   return (
-    <BlogSlugPage
+    <BlogPostPage
       category={category}
       frontmatter={bundledMDX.frontmatter}
       code={bundledMDX.code}
@@ -42,9 +39,9 @@ export default async function Page({
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
-  const { category, slug } = await params
-  const frontmatter = await getPostFrontmatter(category, slug)
+}: PageProps<"/blog/[category]/[post]">): Promise<Metadata> {
+  const { category, post } = await params
+  const frontmatter = await getPostFrontmatter(category, post)
 
   if (!frontmatter) {
     return {
@@ -62,8 +59,8 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const posts = getAllPosts("blog")
 
-  return posts.map(({ category, slug }) => ({
+  return posts.map(({ category, post }) => ({
     category,
-    slug,
+    post,
   }))
 }

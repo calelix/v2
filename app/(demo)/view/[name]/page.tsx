@@ -2,15 +2,9 @@ import type { Metadata } from "next"
 
 import { registry } from "@/demo/registry"
 
-interface PageProps {
-  params: Promise<{
-    name: string
-  }>
-}
-
 export default async function Page({
   params,
-}: PageProps) {
+}: PageProps<"/view/[name]">) {
   const { name } = await params
   const { Component } = registry[name]
 
@@ -21,7 +15,7 @@ export default async function Page({
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/view/[name]">): Promise<Metadata> {
   const { name } = await params
   const { metadata } = registry[name]
 

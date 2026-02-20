@@ -22,7 +22,7 @@ export interface PostFrontmatter {
 }
 
 export interface Post {
-  slug: string
+  post: string
   frontmatter: PostFrontmatter
 }
 

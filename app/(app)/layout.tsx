@@ -3,9 +3,7 @@ import { Banner } from "@/widgets/banner"
 
 export default function Layout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: LayoutProps<"/">) {
   return (
     <>
       <Banner>

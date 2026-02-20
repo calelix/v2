@@ -20,7 +20,7 @@ import { Separator } from "@/shared/ui/shadcn/separator"
 
 const Giscus = dynamic(() => import("@/widgets/comments").then((m) => m.Giscus), { ssr: false })
 
-interface BlogSlugPageProps {
+interface BlogPostPageProps {
   category: string
   frontmatter: PostFrontmatter
   code: string
@@ -28,13 +28,13 @@ interface BlogSlugPageProps {
   next: Post | null
 }
 
-export const BlogSlugPage = ({
+export const BlogPostPage = ({
   category,
   frontmatter,
   code,
   prev,
   next,
-}: BlogSlugPageProps) => {
+}: BlogPostPageProps) => {
 
   return (
     <>

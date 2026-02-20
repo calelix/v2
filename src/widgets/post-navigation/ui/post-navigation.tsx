@@ -39,7 +39,7 @@ export const PostNavigation = ({
         {prev && (
           <div className="grid justify-items-start">
             <Button variant="outline" size="lg" asChild>
-              <Link href={`/blog/${category}/${prev.slug}`} className="flex flex-col gap-2">
+              <Link href={`/blog/${category}/${prev.post}`} className="flex flex-col gap-2">
                 <div className="flex items-center justify-end gap-2">
                   <IconArrowLeft className="size-4" />
                   <span>
@@ -53,7 +53,7 @@ export const PostNavigation = ({
         {next && (
           <div className="grid col-[2/3] justify-items-end">
             <Button variant="outline" size="lg" asChild>
-              <Link href={`/blog/${category}/${next.slug}`} className="flex flex-col gap-2">
+              <Link href={`/blog/${category}/${next.post}`} className="flex flex-col gap-2">
                 <div className="flex items-center justify-end gap-2">
                   <span>
                     {next.frontmatter.title}

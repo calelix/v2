@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { BlogCategoryPage } from "@/pages/blog"
+import { BlogCategoryPage } from "@/pages/blog/category"
 import {
   getCategories,
   getCategoryMetadata,
@@ -8,15 +8,13 @@ import {
   groupPostsByYear,
 } from "@/entities/post"
 
-interface PageProps {
-  params: Promise<{
-    category: string
-  }>
-}
+export const revalidate = false
+export const dynamicParams = false
+export const dynamic = "force-static"
 
 export default async function Page({
   params,
-}: PageProps) {
+}: PageProps<"/blog/[category]">) {
   const { category } = await params
   const categoryData = getPostsByCategory("blog", category)
 
@@ -29,7 +27,7 @@ export default async function Page({
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/blog/[category]">): Promise<Metadata> {
   const { category } = await params
   const metadata = getCategoryMetadata("blog", category)
 

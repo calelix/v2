@@ -1,5 +1,8 @@
 import fs from "fs"
 import path from "path"
+
+import { cache } from "react"
+
 import matter from "gray-matter"
 import { ko } from "date-fns/locale"
 import {
@@ -48,7 +51,7 @@ export const getAllPosts = (directory: string): Array<{ category: string; post: 
   })
 }
 
-export const getCategoryMetadata = (directory: string, category: string): CategoryMetadata => {
+export const getCategoryMetadata = cache((directory: string, category: string): CategoryMetadata => {
   const contentDir = path.join(process.cwd(), "content", directory, category)
 
   if (!fs.existsSync(contentDir)) {
@@ -58,18 +61,16 @@ export const getCategoryMetadata = (directory: string, category: string): Catego
   const metadataPath = path.join(contentDir, "metadata.json")
 
   return JSON.parse(fs.readFileSync(metadataPath, "utf8")) as CategoryMetadata
-}
+})
 
-export const getPostsByCategory = (directory: string, category: string): CategoryWithPosts => {
+export const getPostsByCategory = cache((directory: string, category: string): CategoryWithPosts => {
   const contentDir = path.join(process.cwd(), "content", directory, category)
 
   if (!fs.existsSync(contentDir)) {
     throw new Error(`Category ${category} not found.`)
   }
 
-  const metadataPath = path.join(contentDir, "metadata.json")
-
-  const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8")) as CategoryMetadata
+  const metadata = getCategoryMetadata(directory, category)
 
   const files = fs.readdirSync(contentDir)
 
@@ -103,7 +104,7 @@ export const getPostsByCategory = (directory: string, category: string): Categor
     metadata,
     posts,
   }
-}
+})
 
 export const groupPostsByYear = (posts: Post[]) => {
   const map = new Map<number, Post[]>()
@@ -128,7 +129,7 @@ export const groupPostsByYear = (posts: Post[]) => {
   }))
 }
 
-export const getAdjacentPost = (
+export const getAdjacentPost = cache((
   directory: string,
   category: string,
   post: string
@@ -153,4 +154,4 @@ export const getAdjacentPost = (
     prev: older,
     next: newer,
   }
-}
+})

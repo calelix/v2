@@ -1,5 +1,8 @@
-import { promises } from "fs"
+import fs from "fs"
 import path from "path"
+
+import { cache } from "react"
+
 import matter from "gray-matter"
 import { bundleMDX } from "mdx-bundler"
 import rehypePrettyCode from "rehype-pretty-code"
@@ -18,7 +21,7 @@ import { PostFrontmatter } from "../model/post"
 
 export const DATA_PATH = path.join(process.cwd(), "content/blog")
 
-export const getPostFrontmatter = async (category: string, post: string) => {
+export const getPostFrontmatter = cache(async (category: string, post: string) => {
   const source = await getMarkdownContent(category, post)
 
   if (!source) {
@@ -26,9 +29,9 @@ export const getPostFrontmatter = async (category: string, post: string) => {
   }
 
   return source.frontmatter as PostFrontmatter
-}
+})
 
-export const getBundleMDX = async (category: string, post: string) => {
+export const getBundleMDX = cache(async (category: string, post: string) => {
   const source = await getMarkdownContent(category, post)
 
   if (!source) {
@@ -71,12 +74,12 @@ export const getBundleMDX = async (category: string, post: string) => {
     } as PostFrontmatter,
     code
   }
-}
+})
 
-const getMarkdownContent = async (category: string, post: string) => {
+const getMarkdownContent = cache(async (category: string, post: string) => {
   const filePath = path.join(DATA_PATH, category, `${post}.mdx`)
 
-  const fileContents = await promises.readFile(filePath, "utf8").catch(() => undefined)
+  const fileContents = await fs.promises.readFile(filePath, "utf8").catch(() => undefined)
 
   if (!fileContents) {
     return undefined
@@ -88,7 +91,7 @@ const getMarkdownContent = async (category: string, post: string) => {
     frontmatter: data,
     content,
   }
-}
+})
 
 const parseMetaString = (metaString: string): Record<string, string> => {
   const metaAttributes: Record<string, string> = {}

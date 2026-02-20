@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 import "@/app/styles/globals.css"
 import {
@@ -30,6 +32,8 @@ export default function RootLayout({
           <QueryProvider>
             <TooltipProvider>
               {children}
+              <SpeedInsights />
+              <Analytics />
             </TooltipProvider>
           </QueryProvider>
         </ThemeProvider>

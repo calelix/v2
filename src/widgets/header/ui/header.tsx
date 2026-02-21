@@ -2,6 +2,7 @@ import Link from "next/link"
 
 import { IconBrandGithub } from "@tabler/icons-react"
 
+import { SearchPost } from "@/features/post/search"
 import { cn } from "@/shared/lib/utils/tailwindcss"
 import { Button } from "@/shared/ui/shadcn/button"
 import { ModeToggle } from "@/shared/ui/mode-toggle/mode-toggle"
@@ -37,6 +38,7 @@ export const Header = ({
           </nav>
         </div>
         <div className="flex items-center ml-auto">
+          <SearchPost />
           <Button variant="ghost" size="lg" asChild>
             <Link
               href={informations.github}

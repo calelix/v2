@@ -13,8 +13,7 @@ import {
   type MDXContentProps,
 } from "mdx-bundler/client"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
-import { liveCodeScope } from "../../lib/markdown/live-code-scope"
+import { cn } from "@/shared/lib/classnames/cn"
 import {
   Tabs,
   TabsList,
@@ -22,6 +21,7 @@ import {
   TabsContent,
 } from "../shadcn/tabs"
 import { Button } from "../shadcn/button"
+import { liveCodeScope } from "./live-code-scope"
 import { LiveCode } from "./live-code"
 
 interface MDXComponentsProps {

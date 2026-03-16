@@ -16,6 +16,7 @@ import {
 } from "@/shared/ui/shadcn/carousel"
 import { useMomentsInfiniteQuery } from "../model/use-moments-infinite"
 import { MomentCard } from "./moment-card"
+import { MomentsGallerySkeleton } from "./moments-gallery-skeleton"
 
 export const MomentsGallery = () => {
   const previousPageCountRef = React.useRef(0)
@@ -47,15 +48,11 @@ export const MomentsGallery = () => {
   })
 
   const allImages = React.useMemo(
-    () => data.pages.flatMap((page) => page.images),
+    () => data?.pages.flatMap((page) => page.images) ?? [],
     [data]
   )
 
   React.useEffect(() => {
-    if (previousPageCountRef.current < 0) {
-      return
-    }
-
     if (isFetchingNextPage) {
       return
     }
@@ -76,6 +73,10 @@ export const MomentsGallery = () => {
     previousPageCountRef.current = currentImageCount
   }, [allImages.length, hasNextPage, isFetchingNextPage])
 
+  if (!data) {
+    return <MomentsGallerySkeleton />
+  }
+
   return (
     <>
       <Carousel
@@ -89,7 +90,7 @@ export const MomentsGallery = () => {
       >
         <CarouselContent className="-ml-4">
           {allImages.map((image, index) => (
-            <CarouselItem key={image.src} className="pl-4 basis-auto">
+            <CarouselItem key={`${image.src}-${index}`} className="pl-4 basis-auto">
               <MomentCard image={image} preload={index < 2} />
             </CarouselItem>
           ))}

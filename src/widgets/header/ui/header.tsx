@@ -3,7 +3,7 @@ import Link from "next/link"
 import { IconBrandGithub } from "@tabler/icons-react"
 
 import { SearchPost } from "@/features/post/search"
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Button } from "@/shared/ui/shadcn/button"
 import { ModeToggle } from "@/shared/ui/mode-toggle/mode-toggle"
 import { BrandLogo } from "@/shared/ui/logo/brand-logo"

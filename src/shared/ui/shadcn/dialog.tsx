@@ -4,7 +4,7 @@ import * as React from "react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 
 import { IconX } from "@tabler/icons-react"
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Button } from "@/shared/ui/shadcn/button"
 
 function Dialog({

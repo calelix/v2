@@ -1,9 +1,9 @@
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { getMoments } from "@/entities/moment"
 
 export function useMomentsInfiniteQuery() {
-  return useSuspenseInfiniteQuery({
+  return useInfiniteQuery({
     queryKey: ["moments"],
     queryFn: ({ pageParam }) => getMoments({ cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,

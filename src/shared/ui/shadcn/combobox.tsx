@@ -4,7 +4,7 @@ import * as React from "react"
 import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 
 import { IconChevronDown, IconX, IconCheck } from "@tabler/icons-react"
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Button } from "@/shared/ui/shadcn/button"
 import {
   InputGroup,

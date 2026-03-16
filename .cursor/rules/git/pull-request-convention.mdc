@@ -1,173 +1,171 @@
 ---
-alwaysApply: true
+description: "PR title format, body template, and auto-PR workflow via GitHub CLI when user requests PR creation"
+alwaysApply: false
 ---
 
-Pull Request Convention
+# Pull Request Convention
 
-> 최신 업데이트: 2026년 01월 30일 01:30
+## PR Title Format
 
-# PR 작성 규칙
-
-## PR 제목 형식
 ```
-<타입>: <설명>
+<type>: <description>
 ```
 
-## PR 본문 필수 체크리스트
+## PR Body Required Checklist
+
 ```markdown
-- [ ] 풀 리퀘스트에는 의미 있는 제목을 사용하세요. 수정된 패키지의 이름을 포함하세요.
-- [ ] 자신의 코드에서 변경 사항을 테스트해 보세요.
-- [ ] PR 본문에 변경 사항을 테스트할 수 있는 URL을 포함하세요.
+- [ ] Use a meaningful PR title. Include the name of the modified package.
+- [ ] Test your changes in your code.
+- [ ] Include URLs to test the changes in the PR body.
 
-이 풀 리퀘스트는:
+This pull request:
 
-- [ ] 버그를 수정합니다
-- [ ] 추가 기능을 구현합니다
-- [ ] 문서 또는 예제 코드를 업데이트합니다
-- [ ] 기타
+- [ ] Fixes a bug
+- [ ] Implements a new feature
+- [ ] Updates documentation or example code
+- [ ] Other
 
-## 변경 사항
+## Changes
 
-### 주요 변경 사항
-1. 변경 사항 1
-2. 변경 사항 2
+### Key Changes
+1. Change 1
+2. Change 2
 
-테스트 URL: 
+Test URL:
 - <URL 1>
 - <URL 2>
 ```
 
-## 타입 (Type)
-- **feat** - 새로운 기능 추가
-- **fix** - 버그 수정
-- **refactor** - 코드 리팩토링 (기능 변경 없이 구조 개선)
-- **test** - 테스트 코드 추가/수정
-- **style** - 코드 스타일 변경 (포맷팅, 세미콜론 등)
-- **docs** - 프로젝트 문서 변경 (README, 주석 등)
-- **build** - 빌드 시스템 변경 (webpack, npm scripts 등)
-- **ci** - CI/CD 설정 변경
-- **revert** - 변경 사항 되돌리기
-- **content** - 사용자에게 보이는 콘텐츠 문서 수정 (블로그, 이미지, 텍스트 등)
-- **chore** - 위 타입에 해당하지 않는 기타 작업 (의존성 추가/업데이트, 개발 환경 설정 등)
+## Types (Type)
+
+- **feat** - New feature
+- **fix** - Bug fix
+- **refactor** - Code refactoring (structure improvement without behavior change)
+- **test** - Test code addition/modification
+- **style** - Code style changes (formatting, semicolons, etc.)
+- **docs** - Project documentation (README, comments, etc.)
+- **build** - Build system changes (webpack, npm scripts, etc.)
+- **ci** - CI/CD configuration changes
+- **revert** - Revert changes
+- **content** - User-facing content (blog, images, text, etc.)
+- **chore** - Other tasks (dependencies, dev environment, etc.)
 
 ---
 
-# PR 자동 생성 가이드 (GitHub CLI 사용)
+# Auto PR Generation Guide (GitHub CLI)
 
-사용자가 **"PR을 작성하라"** 등의 요청을 하면 다음 프로세스를 따라 자동으로 PR을 생성합니다.
+When the user requests **"create a PR"** or similar, follow this process to automatically create a PR.
 
-## 자동 생성 프로세스
+## Auto Generation Process
 
-### 1단계: 브랜치 및 커밋 정보 수집
-다음 명령어들을 병렬로 실행하여 정보를 수집합니다:
+### Step 1: Collect Branch and Commit Info
+
+Run these commands in parallel:
 
 ```bash
-# 현재 브랜치명 확인
+# Current branch name
 git branch --show-current
 
-# 원격 추적 브랜치 확인 (push 여부 체크)
+# Remote tracking (check if pushed)
 git status
 
-# main 브랜치부터의 커밋 목록 확인
+# Commits since main
 git log main..HEAD --oneline
 
-# 상세 커밋 로그 (제목과 본문 포함)
+# Detailed commit log (title + body)
 git log main..HEAD --format="%s%n%b"
 
-# 전체 변경사항 확인
+# Full change stats
 git diff main...HEAD --stat
 ```
 
-### 2단계: PR 제목 자동 생성
-- 커밋 메시지들을 분석하여 주요 위에서 정의한 "PR 작성 규칙" 템플릿의 타입을 파악
-- 여러 타입이 섞여있으면 가장 중요하거나 많이 등장하는 타입 선택
-- 커밋들의 공통 주제나 패턴을 파악하여 간결한 설명 작성
-- **형식**: `<타입>: <변경사항 요약>`
+### Step 2: Generate PR Title
 
-### 3단계: PR 본문 자동 작성
-위에서 정의한 "PR 작성 규칙" 템플릿을 기반으로 작성하되, 커밋 내역과 diff를 분석하여 구체적인 내용을 채워넣습니다:
+- Analyze commit messages to determine the primary type from the PR template
+- If multiple types: pick the most important or most frequent
+- Identify common theme/pattern across commits for a concise description
+- **Format**: `<type>: <change summary>`
 
-**체크리스트 자동 체크:**
-- 첫 두 항목은 자동으로 `[x]`로 체크
-- "이 풀 리퀘스트는" 섹션은 커밋 타입 분석 결과로 자동 체크
-  - `feat` 타입이 있으면 "추가 기능을 구현합니다" 체크
-  - `fix` 타입이 있으면 "버그를 수정합니다" 체크
-  - `docs` 타입이 있으면 "문서 또는 예제 코드를 업데이트합니다" 체크
-  - 기타 타입이면 "기타" 체크
+### Step 3: Generate PR Body
 
-**변경 사항 섹션:**
-- 각 커밋 메시지를 분석하여 주요 변경사항을 항목별로 나열
-- 커밋별로 그룹핑하거나 기능별로 정리
-- 변경된 파일 목록과 커밋 목록 및 통계 등 "PR 작성 규칙"에 존재하지 않는 내용은 작성 불필요
+Fill the PR template based on commit history and diff analysis:
 
-### 4단계: 원격 푸시 확인 및 실행
+**Checklist auto-check:**
+- First two items: auto-check as `[x]`
+- "This pull request" section: auto-check based on commit types
+  - `feat` → check "Implements a new feature"
+  - `fix` → check "Fixes a bug"
+  - `docs` → check "Updates documentation or example code"
+  - Other → check "Other"
+
+**Changes section:**
+- List main changes from commit messages
+- Group by commit or by feature
+- Do not include file lists, commit lists, or stats — keep it focused on the template
+
+### Step 4: Push to Remote
+
 ```bash
-# 브랜치가 원격에 push되지 않았다면 먼저 push
+# Push if not already pushed
 git push -u origin HEAD
 ```
 
-### 5단계: GitHub CLI로 PR 생성
+### Step 5: Create PR via GitHub CLI
+
 ```bash
-gh pr create --title "제목" --body "$(cat <<'EOF'
-[위에서 생성한 본문 내용]
+gh pr create --title "Title" --body "$(cat <<'EOF'
+[Generated body content]
 EOF
 )"
 ```
 
-**heredoc 사용 예시:**
-
-명령어 형식:
+**Heredoc example:**
 
 ```bash
-gh pr create --title "feat: 사용자 인증 기능 추가" --body "$(cat <<'EOF'
-[여기에 PR 본문이 들어감 - 아래 예시 참조]
-EOF
-)"
-```
+gh pr create --title "feat: Add user authentication" --body "$(cat <<'EOF'
+- [x] Use a meaningful PR title. Include the name of the modified package.
+- [x] Test your changes in your code.
+- [ ] Include URLs to test the changes in the PR body.
 
-PR 본문 예시 (EOF 사이에 들어갈 내용):
+This pull request:
 
-```markdown
-- [x] 풀 리퀘스트에는 의미 있는 제목을 사용하세요. 수정된 패키지의 이름을 포함하세요.
-- [x] 자신의 코드에서 변경 사항을 테스트해 보세요.
-- [ ] PR 본문에 변경 사항을 테스트할 수 있는 URL을 포함하세요.
+- [ ] Fixes a bug
+- [x] Implements a new feature
+- [ ] Updates documentation or example code
+- [ ] Other
 
-이 풀 리퀘스트는:
+## Changes
 
-- [ ] 버그를 수정합니다
-- [x] 추가 기능을 구현합니다
-- [ ] 문서 또는 예제 코드를 업데이트합니다
-- [ ] 기타
+### Key Changes
+1. Add JWT auth flow
+   - Login, signup, token refresh
+2. Add auth middleware
+   - Protected routes
+3. Add login page
+   - Form validation, error handling
 
-## 변경 사항
-
-### 주요 변경 사항
-1. 내용 1
-  - 내용 1-1
-2. 내용 2
-  - 내용 2-1
-3. 내용 3
-  - 내용 3-1
-
-테스트 URL: 
+Test URL:
 - http://localhost:3000/login
+EOF
+)"
 ```
 
-### 6단계: PR URL 반환
-- PR 생성 성공 후 반환되는 URL을 사용자에게 표시
-- 사용자가 추가로 수정할 수 있도록 안내
+### Step 6: Return PR URL
 
-## 주의사항 및 예외처리
+- Show the PR URL returned after creation
+- Inform user they can edit further in the GitHub UI
 
-- **gh CLI 미설치**: `gh` 명령어가 없으면 설치 안내
-- **gh 인증 안됨**: `gh auth login` 실행 안내
-- **원격 브랜치 없음**: 자동으로 `git push -u origin HEAD` 실행
-- **main 브랜치에서 실행**: PR 생성 불가 경고 및 브랜치 생성 제안
-- **커밋 없음**: main과 차이가 없으면 PR 생성 불필요 안내
-- **충돌 발생**: merge conflict 확인 및 해결 안내
+## Exceptions and Edge Cases
 
-## 베이스 브랜치 결정 규칙
+- **gh CLI not installed**: Guide user to install
+- **gh not authenticated**: Run `gh auth login`
+- **Branch not pushed**: Run `git push -u origin HEAD`
+- **On main branch**: Warn that PR cannot be created; suggest creating a branch
+- **No commits vs main**: Inform that no PR is needed
+- **Merge conflict**: Check for conflicts and guide resolution
 
-기본적으로 `main` 브랜치를 베이스로 사용하되, 다음 경우 다르게 처리:
-- repository의 기본 브랜치가 `main`이 아닌 경우 (`master`, `develop` 등): `gh repo view --json defaultBranchRef` 로 확인
-- 현재 브랜치명이 특정 패턴인 경우 (예: `feature/xxx`): 명시적으로 베이스 브랜치 지정
+## Base Branch Rules
+
+Default base: `main`. Override when:
+- Default branch is not `main` (`master`, `develop`, etc.): Check with `gh repo view --json defaultBranchRef`
+- Branch name follows a pattern (e.g., `feature/xxx`): Specify base branch explicitly

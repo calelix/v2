@@ -6,8 +6,8 @@ import * as React from "react"
 import { IconArrowUp } from "@tabler/icons-react"
 import { useInView } from "react-intersection-observer"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
-import { useToc } from "@/shared/lib/hooks/use-toc"
+import { cn } from "@/shared/lib/classnames/cn"
+import { useToc } from "@/shared/lib/toc/use-toc"
 import { ScrollToTopButton } from "@/shared/ui/scroll-top/scroll-top-button"
 import {
   TableOfContents,

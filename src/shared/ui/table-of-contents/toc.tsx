@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 
 interface TableOfContentsProps extends React.ComponentProps<"nav"> {
   asChild?: boolean

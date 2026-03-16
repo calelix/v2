@@ -6,7 +6,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react"
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Button } from "@/shared/ui/shadcn/button"
 
 type CarouselApi = UseEmblaCarouselType[1]

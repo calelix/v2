@@ -4,7 +4,7 @@ import * as React from "react"
 
 import { IconX } from "@tabler/icons-react"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Button } from "@/shared/ui/shadcn/button"
 
 type BannerProps = React.ComponentProps<"div">

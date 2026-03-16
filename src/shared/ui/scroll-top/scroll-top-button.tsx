@@ -5,9 +5,10 @@ import React, {
   useEffect,
   useRef,
   useCallback,
+  startTransition,
 } from "react"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Button } from "@/shared/ui/shadcn/button"
 
 const SHOW_AFTER_SCROLL_POSITION = 300
@@ -26,7 +27,7 @@ export const ScrollToTopButton = ({
   visibilityMode = "scroll",
   ...rest
 }: ScrollToTopButtonProps) => {
-  const [isVisible, setIsVisible] = useState(() => getInitialVisibility(visibilityMode, container))
+  const [isVisible, setIsVisible] = useState(visibilityMode === "always")
 
   const scrollContainerRef = useRef<HTMLElement | Window | null>(null)
 
@@ -38,7 +39,9 @@ export const ScrollToTopButton = ({
       ? window.scrollY
       : (current as HTMLElement).scrollTop
 
-    setIsVisible(scrollTop > SHOW_AFTER_SCROLL_POSITION)
+    startTransition(() => {
+      setIsVisible(scrollTop > SHOW_AFTER_SCROLL_POSITION)
+    })
   }, [])
 
   const scrollToTop = useCallback(() => {
@@ -64,7 +67,11 @@ export const ScrollToTopButton = ({
       return
     }
 
-    currentContainer.addEventListener("scroll", toggleVisibility)
+    startTransition(() => {
+      toggleVisibility()
+    })
+
+    currentContainer.addEventListener("scroll", toggleVisibility, { passive: true })
 
     return () => {
       currentContainer.removeEventListener("scroll", toggleVisibility)
@@ -83,25 +90,4 @@ export const ScrollToTopButton = ({
       {children}
     </Button>
   )
-}
-
-const getInitialVisibility = (visibilityMode: VisibilityMode, container?: string) => {
-  if (visibilityMode === "always") {
-    return true
-  }
-
-  if (typeof window === "undefined") {
-    return false
-  }
-
-  let scrollTop = 0
-
-  if (container) {
-    const element = document.querySelector(container) as HTMLElement | null
-    scrollTop = element?.scrollTop ?? window.scrollY
-  } else {
-    scrollTop = window.scrollY
-  }
-
-  return scrollTop > SHOW_AFTER_SCROLL_POSITION
 }

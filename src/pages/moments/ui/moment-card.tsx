@@ -3,15 +3,12 @@
 import * as React from "react"
 import Image from "next/image"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { type Moment } from "@/entities/moment"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Spinner } from "@/shared/ui/shadcn/spinner"
 
 interface MomentCardProps {
-  image: {
-    src: string
-    country: string
-    city: string
-  }
+  image: Moment
   preload: boolean
 }
 

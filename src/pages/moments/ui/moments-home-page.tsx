@@ -1,7 +1,5 @@
 "use client"
 
-import { Suspense } from "react"
-
 import { Header } from "@/widgets/header"
 import { Footer } from "@/widgets/footer"
 import { Separator } from "@/shared/ui/shadcn/separator"
@@ -11,7 +9,6 @@ import {
 } from "@/shared/ui/fade-up/fade-up"
 import { ErrorBoundary } from "@/shared/ui/error-boundary/error-boundary"
 import { MomentsGallery } from "./moments-gallery"
-import { MomentsGallerySkeleton } from "./moments-gallery-skeleton"
 import { MomentsGalleryError } from "./moments-gallery-error"
 
 export const MomentsHomePage = () => {
@@ -38,9 +35,7 @@ export const MomentsHomePage = () => {
           </FadeUpItem>
           <FadeUpItem>
             <ErrorBoundary fallback={<MomentsGalleryError />}>
-              <Suspense fallback={<MomentsGallerySkeleton />}>
-                <MomentsGallery />
-              </Suspense>
+              <MomentsGallery />
             </ErrorBoundary>
           </FadeUpItem>
         </FadeUpContainer>

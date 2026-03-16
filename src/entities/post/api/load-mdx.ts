@@ -10,6 +10,10 @@ import {
   transformerNotationDiff,
   transformerNotationHighlight,
 } from "@shikijs/transformers"
+import {
+  type Element,
+  type Root,
+} from "hast"
 import { visit } from "unist-util-visit"
 import { ko } from "date-fns/locale"
 import {
@@ -93,10 +97,11 @@ const getMarkdownContent = cache(async (category: string, post: string) => {
   }
 })
 
+const META_STRING_PATTERN = /\b([-\w]+)(?:=(?:"([^"]*)"|'([^']*)'|([^"'\s]+)))?/g
+
 const parseMetaString = (metaString: string): Record<string, string> => {
   const metaAttributes: Record<string, string> = {}
-
-  const pattern = /\b([-\w]+)(?:=(?:"([^"]*)"|'([^']*)'|([^"'\s]+)))?/g
+  const pattern = new RegExp(META_STRING_PATTERN.source, META_STRING_PATTERN.flags)
 
   let match: RegExpExecArray | null
 
@@ -112,17 +117,22 @@ const parseMetaString = (metaString: string): Record<string, string> => {
   return metaAttributes
 }
 
+interface CodeElementData {
+  meta?: string
+}
+
 const rehypeMetaAttributes = () => {
-  return (tree: any) => {
-    visit(tree, "element", (node: any) => {
-      if (node.tagName === "code" && node.data?.meta) {
+  return (tree: Root) => {
+    visit(tree, "element", (node: Element) => {
+      const meta = (node.data as CodeElementData | undefined)?.meta
+      if (node.tagName === "code" && meta) {
         if (!node.properties) {
           node.properties = {}
         }
 
-        node.properties["data-meta"] = node.data.meta
+        node.properties["data-meta"] = meta
 
-        const metaObject = parseMetaString(node.data.meta)
+        const metaObject = parseMetaString(meta)
 
         Object.entries(metaObject).forEach(([key, value]) => {
           node.properties[`data-${key}`] = value

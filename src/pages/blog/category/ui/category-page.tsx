@@ -8,7 +8,7 @@ import {
   type CategoryMetadata,
   EmptyPost,
 } from "@/entities/post"
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 import { Separator } from "@/shared/ui/shadcn/separator"
 import {
   FadeUpContainer,
@@ -61,7 +61,7 @@ export const BlogCategoryPage = ({
                   </div>
                   <div className="flex-1 flex flex-col ml-8">
                     {posts.map((post, postIndex) => (
-                      <div key={post.post} className={cn("group/post relative flex-1")}>
+                      <div key={`${year}-${post.post}`} className="group/post relative flex-1">
                         {postIndex !== 0 && (
                           <div className="absolute left-0 right-0 top-0 h-px bg-linear-to-r from-transparent via-border to-transparent" />
                         )}

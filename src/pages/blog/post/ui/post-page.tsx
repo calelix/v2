@@ -1,5 +1,3 @@
-"use client"
-
 import dynamic from "next/dynamic"
 
 import { Header } from "@/widgets/header"
@@ -18,7 +16,7 @@ import {
 import { MDXComponents } from "@/shared/ui/markdown/mdx-components"
 import { Separator } from "@/shared/ui/shadcn/separator"
 
-const Giscus = dynamic(() => import("@/widgets/comments").then((m) => m.Giscus), { ssr: false })
+const Giscus = dynamic(() => import("@/widgets/comments").then((m) => m.Giscus))
 
 interface BlogPostPageProps {
   category: string

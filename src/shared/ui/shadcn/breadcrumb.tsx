@@ -2,7 +2,7 @@ import * as React from "react"
 import { Slot } from "radix-ui"
 
 import { IconChevronRight, IconDots } from "@tabler/icons-react"
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (

@@ -13,7 +13,7 @@
   "iconLibrary": "tabler",
   "aliases": {
     "components": "@/shared/ui/shadcn",
-    "utils": "@/shared/lib/utils/tailwindcss",
+    "utils": "@/shared/lib/classnames/cn",
     "ui": "@/shared/ui/shadcn",
     "lib": "@/lib",
     "hooks": "@/shared/lib/hooks"

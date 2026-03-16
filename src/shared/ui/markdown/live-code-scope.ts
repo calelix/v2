@@ -1,8 +1,8 @@
 import * as React from "react"
 import Link from "next/link"
 
-import * as Button from "../../ui/shadcn/button"
-import * as Tooltip from "../../ui/shadcn/tooltip"
+import * as Button from "../shadcn/button"
+import * as Tooltip from "../shadcn/tooltip"
 
 type LiveScope = Record<string, unknown>
 

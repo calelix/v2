@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { useTheme } from "next-themes"
 
-import { cn } from "@/shared/lib/utils/tailwindcss"
+import { cn } from "@/shared/lib/classnames/cn"
 
 const COMMENTS_ID = "comments"
 

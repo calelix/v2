@@ -9,7 +9,7 @@ import {
   isImage,
   r2ObjectToMoment,
 } from "@/entities/moment"
-import { r2 } from "@/shared/lib/r2/client"
+import { r2 } from "@/shared/api/r2/client"
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)

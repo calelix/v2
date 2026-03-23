@@ -10,9 +10,9 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
         node-version: lts/*
     
@@ -40,7 +40,7 @@ jobs:
       if: steps.check_e2e_tests.outputs.has_tests == 'false'
       run: echo "No E2E test files found in e2e directory. Skipping tests."
     
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       if: steps.check_e2e_tests.outputs.has_tests == 'true' && !cancelled()
       with:
         name: playwright-report

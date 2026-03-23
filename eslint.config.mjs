@@ -9,6 +9,8 @@ import pluginJsxA11y from "eslint-plugin-jsx-a11y"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
+const boundariesPlugin = pluginBoundaries.default ?? pluginBoundaries
+
 /**
  * ESLint configuration for Next.js project with FSD architecture
  *
@@ -67,7 +69,7 @@ const eslintConfig = [
   {
     plugins: {
       import: pluginImport,
-      boundaries: pluginBoundaries,
+      boundaries: boundariesPlugin,
     },
     settings: {
       "boundaries/elements": [

@@ -1,0 +1,22 @@
+# Dependabot version updates (scheduled) + security updates (repo setting:
+# Settings → Code security → Dependabot security updates).
+# Security fixes each get a dedicated branch and PR (e.g. dependabot/npm_and_yarn/...).
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - ci
+      - dependencies
+    open-pull-requests-limit: 5

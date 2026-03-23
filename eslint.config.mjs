@@ -122,17 +122,33 @@ const eslintConfig = [
         },
       ],
       "import/no-internal-modules": "off",
-      "boundaries/element-types": [
+      "boundaries/dependencies": [
         "error",
         {
           default: "disallow",
           rules: [
-            { from: "app", allow: ["app", "pages", "widgets", "features", "entities", "shared"] },
-            { from: "pages", allow: ["widgets", "features", "entities", "shared"] },
-            { from: "widgets", allow: ["features", "entities", "shared"] },
-            { from: "features", allow: ["entities", "shared"] },
-            { from: "entities", allow: ["shared"] },
-            { from: "shared", allow: ["shared"] },
+            {
+              from: { type: "app" },
+              allow: {
+                to: {
+                  type: ["app", "pages", "widgets", "features", "entities", "shared"],
+                },
+              },
+            },
+            {
+              from: { type: "pages" },
+              allow: { to: { type: ["widgets", "features", "entities", "shared"] } },
+            },
+            {
+              from: { type: "widgets" },
+              allow: { to: { type: ["features", "entities", "shared"] } },
+            },
+            {
+              from: { type: "features" },
+              allow: { to: { type: ["entities", "shared"] } },
+            },
+            { from: { type: "entities" }, allow: { to: { type: ["shared"] } } },
+            { from: { type: "shared" }, allow: { to: { type: ["shared"] } } },
           ],
         },
       ],

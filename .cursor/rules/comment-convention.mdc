@@ -1,0 +1,157 @@
+---
+description: "JSDoc comment convention for TypeScript projects — when and how to write documentation comments"
+alwaysApply: true
+---
+
+# Comment Convention
+
+## Philosophy
+
+Comments exist for **consumers**, not narrators. TypeScript already conveys types, structure, and control flow — comments must add value that the code and type system cannot express on their own.
+
+## Two Categories of Comments
+
+### 1. Doc Comments (`/** */`) — For Public API Surface
+
+Write JSDoc-style doc comments on every **exported** symbol: functions, interfaces, type aliases, constants, classes, and hook return values. These comments appear in editor tooltips and drive documentation generation.
+
+### 2. Inline Comments (`//`) — For Non-Obvious Implementation
+
+Use sparingly inside function bodies to explain **why**, not **what**. If the code needs a "what" comment, refactor the code to be self-explanatory first.
+
+---
+
+## Doc Comment Rules
+
+### Required Tags
+
+- **`@param`** — One line per parameter. Describe purpose/semantics, never the type (TypeScript provides it).
+- **`@returns`** — Describe the return value's meaning when not immediately obvious from the function name.
+- **`@example`** — Provide at least one usage example for any function, hook, or utility that is part of a public API or shared package.
+- **`@throws`** — Document every exception a function can throw and under what conditions.
+- **`@see`** — Link to related functions, types, or external references when it helps the reader.
+- **`@deprecated`** — Always include a migration path or replacement when deprecating.
+
+### Forbidden Tags (TypeScript Makes Them Redundant)
+
+Do NOT use the following tags — TypeScript's type system already expresses this information:
+
+- `@type` — Redundant; the type annotation is in the code.
+- `@typedef` — Use `interface` or `type` instead.
+- `@callback` — Use a type alias with a function signature instead.
+- `@template` — Generic type parameters are already declared in the signature.
+- `@enum` — Use a const object or union type instead.
+- `@readonly` — Use the `readonly` modifier.
+- `@implements` — Visible in the class declaration.
+- `@extends` — Visible in the class/interface declaration.
+
+### Description Guidelines
+
+- First line is a **concise summary** (one sentence, imperative mood). This is what appears in autocomplete.
+- If more detail is needed, leave a blank JSDoc line after the summary and add a longer explanation.
+- Describe **behavior and intent**, not implementation details.
+- For hooks: describe what the hook provides to the consumer and when/why to use it.
+- For utility functions: describe the transformation or side effect.
+
+---
+
+## When to Write / When to Skip
+
+### MUST Write Doc Comments
+
+- Exported functions, hooks, components, types, interfaces, and constants
+- Any symbol consumed by another package in a monorepo
+- Complex configuration objects or option interfaces
+- Functions with non-trivial error handling or side effects
+
+### MUST NOT Write Comments
+
+- Internal helper functions where the name and signature are self-documenting
+- Obvious one-liner implementations
+- Re-exports (document at the source, not the re-export)
+- Comments that restate the code: `// increment counter` above `counter++`
+
+### Use Inline Comments (`//`) Only When
+
+- There is a non-obvious **business rule** or **domain constraint**
+- A workaround exists and needs a **reason** (link to issue/PR when possible)
+- An algorithm's **intent** differs from what the code appears to do at first glance
+- A `setTimeout` / `requestAnimationFrame` / `queueMicrotask` is used (explain why timing matters)
+
+---
+
+## Formatting
+
+- Wrap doc comment lines at **100 characters** for readability.
+- Use **blank JSDoc lines** to separate the summary, description, and tag sections.
+- Group tags in this order: `@param` → `@returns` → `@throws` → `@example` → `@see` → `@deprecated`.
+- For multiline `@example`, use a fenced code block inside the tag.
+- Keep `@param` descriptions on the **same line** as the tag when they fit in 100 characters; otherwise, continue on the next line indented by two spaces.
+
+### Enumerating Multiple Items
+
+When a description references multiple items (APIs, parameters, steps, etc.), **separate the enumeration from the surrounding prose** so readers can scan the list at a glance. Choose the pattern that fits:
+
+#### 1. Colon + Separate Line (2–4 items, no individual descriptions)
+
+End the introductory sentence with a colon, then list items on the next line.
+
+```
+ * Check the following APIs at mount time:
+ * `A`, `B`, `C`.
+ *
+ * Return the result as an async state object.
+```
+
+#### 2. Bullet List (3+ items, or each item needs its own description)
+
+Surround the list with blank JSDoc lines (`*`) so markdown renderers parse it correctly.
+
+```
+ * Verify the following APIs in order:
+ *
+ * - `A` — description of A
+ * - `B` — description of B
+ * - `C` — description of C
+ *
+ * Return an error message for the first missing API.
+```
+
+#### 3. Parenthetical Group (2–3 short items, prose flow is priority)
+
+Wrap items in parentheses to keep the sentence unbroken.
+
+```
+ * Check required APIs (`A`, `B`, `C`) for
+ * availability.
+```
+
+#### Selection Guide
+
+| Criteria | Pattern |
+|---|---|
+| 2–4 items, no individual descriptions needed | **Colon + Separate Line** |
+| 3+ items, or each item needs its own description | **Bullet List** |
+| 2–3 short items, maintaining prose flow | **Parenthetical Group** |
+
+---
+
+## Hooks
+
+For React hooks, the doc comment must answer three questions:
+
+1. **What does this hook return?** — Describe the shape and meaning of the return value.
+2. **When should a consumer use it?** — Describe the intended use case.
+3. **What side effects or subscriptions does it create?** — Describe cleanup behavior if applicable.
+
+---
+
+## AI Behavior
+
+When the AI generates or modifies code:
+
+1. **Always** add or update doc comments on exported symbols.
+2. **Never** add comments that narrate what the code does line-by-line.
+3. **Preserve** existing doc comments unless the function signature or behavior has changed.
+4. When modifying a function's parameters or return type, **update** the corresponding `@param` and `@returns` tags.
+5. When adding a `setTimeout`, `requestAnimationFrame`, or any timing-based hack, **always** add an inline comment explaining why.

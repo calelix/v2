@@ -4,7 +4,7 @@ import * as React from "react"
 
 interface MediaSupportInternal {
   phase: "pending" | "resolved"
-  error: string | undefined
+  error: string | null
 }
 
 export interface MediaSupportStatePending {
@@ -41,7 +41,7 @@ export type MediaSupportStatus = MediaSupportState["status"]
 export function useMediaSupport(): MediaSupportState {
   const [internal, setInternal] = React.useState<MediaSupportInternal>({
     phase: "pending",
-    error: undefined,
+    error: null,
   })
 
   React.useEffect(() => {
@@ -54,7 +54,7 @@ export function useMediaSupport(): MediaSupportState {
   return toMediaSupportState(internal)
 }
 
-export function getMediaSupportError(): string | undefined {
+export function getMediaSupportError(): string | null {
   if (typeof navigator === "undefined") {
     return "서버 환경에서 미디어 장치에 접근할 수 없습니다."
   }
@@ -75,7 +75,7 @@ export function getMediaSupportError(): string | undefined {
     return "브라우저가 미디어 장치 목록 조회를 지원하지 않습니다."
   }
 
-  return undefined
+  return null
 }
 
 function toMediaSupportState(internal: MediaSupportInternal): MediaSupportState {
@@ -89,7 +89,7 @@ function toMediaSupportState(internal: MediaSupportInternal): MediaSupportState 
     }
   }
 
-  if (internal.error !== undefined) {
+  if (internal.error != null) {
     return {
       status: "error",
       isPending: false,

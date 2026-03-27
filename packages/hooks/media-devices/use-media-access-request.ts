@@ -95,6 +95,8 @@ export interface MediaAccessRequestPending {
   isSuccess: false
   isError: false
   error: null
+  /** 이번 `request` 호출에서 요청 중인 비디오·오디오 여부. */
+  constraints: MediaAccessConstraints
   /** 이전 호출에서 누적된 비디오 결과. 최초 요청이면 `null`. */
   video: MediaAccessDeviceResult | null
   /** 이전 호출에서 누적된 오디오 결과. 최초 요청이면 `null`. */
@@ -482,6 +484,38 @@ export function useMediaAccessRequest(options: UseMediaAccessRequestOptions = {}
       return
     }
 
+    const constraints = mergeConstraints(defaultConstraintsRef.current, constraintsPartial)
+
+    if (!constraints.video && !constraints.audio) {
+      deviceResultsRef.current = { video: null, audio: null }
+      setState({
+        status: "error",
+        isIdle: false,
+        isPending: false,
+        isSuccess: false,
+        isError: true,
+        error: "At least one of video or audio must be true to request media access.",
+        video: null,
+        audio: null,
+      } satisfies MediaAccessRequestError)
+      return
+    }
+
+    if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+      deviceResultsRef.current = { video: null, audio: null }
+      setState({
+        status: "error",
+        isIdle: false,
+        isPending: false,
+        isSuccess: false,
+        isError: true,
+        error: "getUserMedia is not available in this environment.",
+        video: null,
+        audio: null,
+      } satisfies MediaAccessRequestError)
+      return
+    }
+
     inFlightRef.current = true
     const currentRequestId = ++requestIdRef.current
 
@@ -492,43 +526,12 @@ export function useMediaAccessRequest(options: UseMediaAccessRequestOptions = {}
       isSuccess: false,
       isError: false,
       error: null,
+      constraints,
       video: deviceResultsRef.current.video,
       audio: deviceResultsRef.current.audio,
     } satisfies MediaAccessRequestPending)
 
     try {
-      const constraints = mergeConstraints(defaultConstraintsRef.current, constraintsPartial)
-
-      if (!constraints.video && !constraints.audio) {
-        deviceResultsRef.current = { video: null, audio: null }
-        setState({
-          status: "error",
-          isIdle: false,
-          isPending: false,
-          isSuccess: false,
-          isError: true,
-          error: "At least one of video or audio must be true to request media access.",
-          video: null,
-          audio: null,
-        } satisfies MediaAccessRequestError)
-        return
-      }
-
-      if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
-        deviceResultsRef.current = { video: null, audio: null }
-        setState({
-          status: "error",
-          isIdle: false,
-          isPending: false,
-          isSuccess: false,
-          isError: true,
-          error: "getUserMedia is not available in this environment.",
-          video: null,
-          audio: null,
-        } satisfies MediaAccessRequestError)
-        return
-      }
-
       const shouldStopTracks = stopTracksImmediatelyRef.current
 
       // 순차 실행: 브라우저가 권한 프롬프트를 한 번에 하나만 표시하므로,

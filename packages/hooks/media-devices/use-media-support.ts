@@ -2,35 +2,38 @@
 
 import * as React from "react"
 
-import {
-  type AsyncState,
-  type AsyncStatePending,
-  type AsyncStateSuccess,
-  type AsyncStateError,
-  createAsyncStateSchema,
-} from "./create-async-state-schema"
-
-const mediaSupportSchemas = createAsyncStateSchema()
-
-/**
- * 미디어 장치 지원 여부를 검증하는 비동기 상태의
- * Zod discriminated union 스키마.
- *
- * @see {@link useMediaSupport} 이 스키마를 소비하는 훅
- */
-export const mediaSupportStateSchema = mediaSupportSchemas.schema
-
-/** 미디어 장치 지원 검사의 전체 비동기 상태 유니온. */
-export type MediaSupportState = AsyncState<typeof mediaSupportSchemas>
-
 /** 아직 클라이언트 환경 검사가 완료되지 않은 대기 상태. */
-export type MediaSupportStatePending = AsyncStatePending<typeof mediaSupportSchemas>
+export interface MediaSupportStatePending {
+  status: "pending"
+  isPending: true
+  isSuccess: false
+  isError: false
+  error: null
+}
 
 /** 브라우저가 필요한 미디어 API를 모두 지원하는 성공 상태. */
-export type MediaSupportStateSuccess = AsyncStateSuccess<typeof mediaSupportSchemas>
+export interface MediaSupportStateSuccess {
+  status: "success"
+  isPending: false
+  isSuccess: true
+  isError: false
+  error: null
+}
 
 /** 하나 이상의 필수 API가 누락되었을 때의 오류 상태. */
-export type MediaSupportStateError = AsyncStateError<typeof mediaSupportSchemas>
+export interface MediaSupportStateError {
+  status: "error"
+  isPending: false
+  isSuccess: false
+  isError: true
+  error: string
+}
+
+/** 미디어 장치 지원 검사의 전체 비동기 상태 유니온. */
+export type MediaSupportState =
+  | MediaSupportStatePending
+  | MediaSupportStateSuccess
+  | MediaSupportStateError
 
 /** `MediaSupportState`의 `status` 필드에 올 수 있는 리터럴 유니온. */
 export type MediaSupportStatus = MediaSupportState["status"]

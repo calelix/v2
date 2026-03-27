@@ -2,18 +2,7 @@
 
 import * as React from "react"
 
-import { z } from "zod"
 import { ResultAsync } from "neverthrow"
-
-import {
-  type AsyncState,
-  type AsyncStatePending,
-  type AsyncStateSuccess,
-  type AsyncStateError,
-  createAsyncStateSchema,
-} from "./create-async-state-schema"
-
-const mediaPermissionStatusSchema = z.enum(["granted", "denied", "prompt", "unknown"])
 
 /**
  * 개별 미디어 장치 유형의 권한 상태.
@@ -23,36 +12,53 @@ const mediaPermissionStatusSchema = z.enum(["granted", "denied", "prompt", "unkn
  * - `"prompt"` — 아직 권한을 요청하지 않음
  * - `"unknown"` — 쿼리가 지원되지 않거나 실패함
  */
-export type MediaPermissionStatus = z.infer<typeof mediaPermissionStatusSchema>
+export type MediaPermissionStatus = "granted" | "denied" | "prompt" | "unknown"
 
-const permissionsDataSchema = z.object({
-  video: mediaPermissionStatusSchema,
-  audio: mediaPermissionStatusSchema,
-})
-
-const mediaPermissionSchemas = createAsyncStateSchema({
-  permissions: permissionsDataSchema,
-  isQuerySupported: z.boolean(),
-})
-
-/**
- * 미디어 권한 비동기 상태의 Zod discriminated union 스키마.
- *
- * @see {@link useMediaPermission} 이 스키마를 소비하는 훅
- */
-export const mediaPermissionStateSchema = mediaPermissionSchemas.schema
-
-/** 미디어 권한 조회의 전체 비동기 상태 유니온. */
-export type MediaPermissionState = AsyncState<typeof mediaPermissionSchemas>
+const validPermissionStatuses: ReadonlySet<string> = new Set<MediaPermissionStatus>([
+  "granted",
+  "denied",
+  "prompt",
+  "unknown",
+])
 
 /** 권한 조회가 완료되기 전의 대기 상태. */
-export type MediaPermissionStatePending = AsyncStatePending<typeof mediaPermissionSchemas>
+export interface MediaPermissionStatePending {
+  status: "pending"
+  isPending: true
+  isSuccess: false
+  isError: false
+  error: null
+  permissions: null
+  isQuerySupported: null
+}
 
 /** 권한이 성공적으로 조회된 상태. */
-export type MediaPermissionStateSuccess = AsyncStateSuccess<typeof mediaPermissionSchemas>
+export interface MediaPermissionStateSuccess {
+  status: "success"
+  isPending: false
+  isSuccess: true
+  isError: false
+  error: null
+  permissions: { video: MediaPermissionStatus; audio: MediaPermissionStatus }
+  isQuerySupported: boolean
+}
 
 /** 권한 조회가 실패한 오류 상태. */
-export type MediaPermissionStateError = AsyncStateError<typeof mediaPermissionSchemas>
+export interface MediaPermissionStateError {
+  status: "error"
+  isPending: false
+  isSuccess: false
+  isError: true
+  error: string
+  permissions: null
+  isQuerySupported: null
+}
+
+/** 미디어 권한 조회의 전체 비동기 상태 유니온. */
+export type MediaPermissionState =
+  | MediaPermissionStatePending
+  | MediaPermissionStateSuccess
+  | MediaPermissionStateError
 
 /**
  * {@link useMediaPermission}의 반환값.
@@ -246,7 +252,7 @@ function toMediaPermissionState(internal: MediaPermissionInternal): MediaPermiss
 }
 
 function toMediaPermissionStatus(state: string): MediaPermissionStatus {
-  const result = mediaPermissionStatusSchema.safeParse(state)
-
-  return result.success ? result.data : "unknown"
+  return validPermissionStatuses.has(state)
+    ? (state as MediaPermissionStatus)
+    : "unknown"
 }

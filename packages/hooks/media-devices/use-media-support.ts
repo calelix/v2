@@ -80,7 +80,11 @@ export function useMediaSupport(): MediaSupportState {
     })
   }, [])
 
-  return toMediaSupportState(internal)
+  const state = React.useMemo(() => {
+    return toMediaSupportState(internal)
+  }, [internal])
+
+  return state
 }
 
 /**

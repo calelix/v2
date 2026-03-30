@@ -206,8 +206,12 @@ export function useMediaPermission(): UseMediaPermissionResult {
     setQueryKey((prev) => prev + 1)
   }, [])
 
+  const state = React.useMemo(() => {
+    return toMediaPermissionState(internal)
+  }, [internal])
+
   return {
-    state: toMediaPermissionState(internal),
+    state,
     refresh,
   }
 }

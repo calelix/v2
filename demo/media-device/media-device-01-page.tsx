@@ -15,11 +15,13 @@ import {
   type MediaAccessErrorCause,
   type MediaAccessPrecheck,
   type MediaAccessRequestState,
+  type MediaDeviceListState,
   type MediaPermissionState,
   type MediaPermissionStatus,
   type MediaSupportState,
   evaluateMediaAccessPrecheck,
   useMediaAccessRequest,
+  useMediaDeviceList,
   useMediaPermission,
   useMediaSupport,
 } from "@/packages/hooks/media-devices"
@@ -51,6 +53,11 @@ const ACCESS_REQUEST_DESCRIPTION =
   "단계 2에서 해당 종류가 denied이면 호출하지 않고 설정 안내로 보낼 수 있습니다. " +
   "성공 후 트랙을 즉시 stop()하면 프리뷰 없이 권한만 연 상태로 끝낼 수 있습니다."
 
+const DEVICE_LIST_DESCRIPTION =
+  "navigator.mediaDevices.enumerateDevices()로 연결된 카메라·마이크를 나열합니다. " +
+  "권한 부여 전에는 레이블이 비어 있는 경우가 많으므로 단계 3 이후에 다시 열거하는 패턴이 일반적입니다. " +
+  "devicechange 이벤트를 구독하여 USB 연결·해제 시 자동으로 목록을 갱신합니다."
+
 type PipelineBadge = "waiting" | "active" | "done" | "failed" | "blocked"
 
 export function MediaDevice01Page() {
@@ -61,12 +68,20 @@ export function MediaDevice01Page() {
   } = useMediaPermission()
 
   const {
+    state: deviceList,
+    refresh: onRefreshDeviceList,
+  } = useMediaDeviceList()
+
+  const {
     state: accessState,
     request: requestAccess,
     reset: resetAccess,
   } = useMediaAccessRequest({
     stopTracksImmediately: true,
-    onSettled: onRefreshPermission,
+    onSettled: () => {
+      onRefreshPermission()
+      onRefreshDeviceList()
+    },
   })
 
   const envBadge = envPipelineBadge(support)
@@ -88,8 +103,10 @@ export function MediaDevice01Page() {
     envBlocked,
     allBlocked,
   )
+  const deviceListBadge = deviceListPipelineBadge(support, permission, deviceList, envBlocked)
   const canRequest = !envBlocked && !permission.isPending && !permission.isError && !accessState.isPending
   const step3Ready = !envBlocked && permission.isSuccess
+  const step4Ready = !envBlocked && deviceList.isSuccess
 
   return (
     <div className={cn("flex flex-col gap-6 p-4 text-sm")}>
@@ -230,6 +247,60 @@ export function MediaDevice01Page() {
           </div>
         </div>
       </section>
+
+      {/* ── 단계 4: 장치 목록 ── */}
+      <section className="flex flex-col gap-2">
+        <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          4. 장치 목록 (useMediaDeviceList)
+        </h2>
+        <ol className="m-0 flex list-none flex-col gap-3 p-0" aria-live="polite">
+          <li>
+            <PipelineStepCard
+              title="장치 열거"
+              badge={deviceListBadge}
+              staticBody={DEVICE_LIST_DESCRIPTION}
+              errorDetail={deviceList.isError ? deviceList.error : undefined}
+            />
+          </li>
+        </ol>
+
+        <div
+          className={cn(
+            "flex flex-col gap-3 rounded-md border border-border/70 bg-muted/25 px-3 py-2.5",
+            transitionClasses,
+            !step4Ready && "opacity-50",
+          )}
+        >
+          <p className="text-muted-foreground text-xs leading-snug">
+            enumerateDevices로 연결된 장치를 나열합니다.
+            권한 획득 전에는 레이블이 비어 있을 수 있습니다.
+          </p>
+
+          <DeviceListGroup
+            label="카메라"
+            kind="videoinput"
+            devices={deviceList.isSuccess ? deviceList.devices.video : []}
+            ready={step4Ready}
+          />
+          <DeviceListGroup
+            label="마이크"
+            kind="audioinput"
+            devices={deviceList.isSuccess ? deviceList.devices.audio : []}
+            ready={step4Ready}
+          />
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className={cn("w-fit", transitionClasses)}
+          disabled={!deviceList.isSuccess}
+          onClick={onRefreshDeviceList}
+        >
+          장치 목록 다시 조회
+        </Button>
+      </section>
     </div>
   )
 }
@@ -290,6 +361,27 @@ function accessRequestPipelineBadge(
     return "done"
   }
   return "waiting"
+}
+
+function deviceListPipelineBadge(
+  support: MediaSupportState,
+  permission: MediaPermissionState,
+  deviceListState: MediaDeviceListState,
+  envFailed: boolean,
+): PipelineBadge {
+  if (envFailed || permission.isError) {
+    return "blocked"
+  }
+  if (support.isPending || permission.isPending) {
+    return "waiting"
+  }
+  if (deviceListState.isPending) {
+    return "active"
+  }
+  if (deviceListState.isError) {
+    return "failed"
+  }
+  return "done"
 }
 
 function devicePipelineBadge(
@@ -614,4 +706,67 @@ function permissionPresentation(status: MediaPermissionStatus): {
         detail: "쿼리를 지원하지 않거나 조회에 실패한 경우 이 값이 됩니다.",
       }
   }
+}
+
+function DeviceListGroup({
+  label,
+  kind,
+  devices,
+  ready,
+}: {
+  label: string
+  kind: string
+  devices: readonly MediaDeviceInfo[]
+  ready: boolean
+}) {
+  return (
+    <div className="space-y-1.5">
+      <p className="text-xs font-medium text-foreground">
+        {label}
+        <span className="font-normal text-muted-foreground"> ({devices.length})</span>
+      </p>
+      {ready && devices.length === 0 && (
+        <p className="pl-2 text-xs text-muted-foreground">
+          연결된 {label} 장치 없음
+        </p>
+      )}
+      {devices.map((device, i) => (
+        <DeviceInfoRow key={device.deviceId || `${kind}-${i}`} device={device} />
+      ))}
+    </div>
+  )
+}
+
+function DeviceInfoRow({ device }: { device: MediaDeviceInfo }) {
+  const hasLabel = device.label !== ""
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col gap-0.5 rounded border border-border/50 bg-background/50 px-2.5 py-1.5",
+        transitionClasses,
+      )}
+    >
+      <p className="text-xs leading-snug">
+        <span
+          className={cn(
+            "font-medium",
+            hasLabel ? "text-foreground" : "italic text-muted-foreground",
+          )}
+        >
+          {hasLabel ? device.label : "(레이블 없음 — 권한 획득 후 갱신)"}
+        </span>
+      </p>
+      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+        <p className="truncate font-mono text-[11px] leading-snug text-muted-foreground">
+          id: {device.deviceId || "—"}
+        </p>
+        {device.groupId !== "" && (
+          <p className="truncate font-mono text-[11px] leading-snug text-muted-foreground">
+            group: {device.groupId}
+          </p>
+        )}
+      </div>
+    </div>
+  )
 }

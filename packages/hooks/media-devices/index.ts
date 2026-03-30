@@ -19,6 +19,16 @@ export {
 } from "./use-media-support"
 
 export {
+  type MediaDeviceListState,
+  type MediaDeviceListStateError,
+  type MediaDeviceListStatePending,
+  type MediaDeviceListStateSuccess,
+  type MediaDeviceListStatus,
+  type UseMediaDeviceListResult,
+  useMediaDeviceList,
+} from "./use-media-device-list"
+
+export {
   type MediaAccessConstraints,
   type MediaAccessDeviceResult,
   type MediaAccessErrorCause,

@@ -1,5 +1,5 @@
 ---
-description: "Git commit message format, auto-commit workflow, and logical grouping when user requests commit creation"
+description: "Git commit message format (type + subject only, no scope), auto-commit workflow, and logical grouping when user requests commit creation"
 alwaysApply: false
 ---
 
@@ -28,6 +28,17 @@ feat: Add JWT-based authentication system
 Replaces session-based auth to reduce server load and support
 stateless authentication in a microservices architecture.
 ```
+
+### Title: no scope (mandatory)
+
+This repository does **not** use a parenthetical **scope** after the type (unlike some Conventional Commits variants).
+
+- **Correct:** `feat: Add useMediaDeviceList for enumerated devices`
+- **Wrong:** `feat(hooks): ...`, `feat(demo): ...`, `refactor(media-devices): ...`
+
+Put context in the **subject** or **body** in plain language (e.g. “Add … hook”, “Update media device demo”), not between `type` and the colon.
+
+**AI and automation:** When generating commit titles or `git commit -m` strings, **never** insert `(anything)` between the type and the colon. If you catch yourself writing `type(` — stop and rewrite as `type: ` only.
 
 ## Types (Type)
 
@@ -103,6 +114,7 @@ Proceed? (or auto proceed)
 3. Each commit must be **independently meaningful and buildable**
 4. Consider **dependencies** in commit order (util → component that uses it)
 5. Clearly state **"why"** in each commit message
+6. **NEVER** put a scope in the title — use `type: Subject` only (see **Title: no scope** above)
 
 ## Commit Creation Process
 
@@ -137,7 +149,7 @@ Analyze changes and group by these criteria:
    - e.g., auth logic vs UI component → separate commits
    - e.g., database migration vs API endpoint → separate commits
 
-4. **Different scope**
+4. **Different codebase area** (not a commit-title “scope”; see **Title: no scope**)
    - e.g., frontend vs backend → separate commits
 
 5. **Temporal independence**
@@ -336,6 +348,7 @@ Create a new branch? (e.g., feature/xxx)"
 - [ ] Title under 50 characters
 - [ ] Title in imperative mood (e.g., "Add" not "Added")
 - [ ] Clear type (feat, fix, refactor, etc.)
+- [ ] **No scope** — title matches `type: Subject` with no `(area)` after the type
 - [ ] Clear "what"
 - [ ] Body explains "why" (for significant changes)
 - [ ] Buildable state

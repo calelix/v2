@@ -15,12 +15,4 @@ export const registry: Record<string, {
     },
     Component: dynamic(() => import("./sidebar/sidebar-01-page").then((m) => m.Sidebar01Page)),
   },
-  "media-device-01": {
-    name: "media-device-01",
-    metadata: {
-      title: "Media Device 01",
-      description: "Basic media device example",
-    },
-    Component: dynamic(() => import("./media-device/media-device-01-page").then((m) => m.MediaDevice01Page)),
-  },
 }
